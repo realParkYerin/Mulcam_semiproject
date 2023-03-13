@@ -19,10 +19,10 @@ public class MemberDto implements Serializable{
 		
 	}
 
-	public MemberDto(String userid, String username, String pwd, String email, String nickname, String img_path,
+	public MemberDto(String user_seq, String username, String pwd, String email, String nickname, String img_path,
 			Date reg_date, Date modify_date, int auth) {
 		super();
-		this.user_seq = userid;
+		this.user_seq = user_seq;
 		this.username = username;
 		this.pwd = pwd;
 		this.email = email;
@@ -33,12 +33,12 @@ public class MemberDto implements Serializable{
 		this.auth = auth;
 	}
 
-	public String getUserid() {
+	public String getUser_seq() {
 		return user_seq;
 	}
 
-	public void setUserid(String userid) {
-		this.user_seq = userid;
+	public void setUser_seq(String user_seq) {
+		this.user_seq = user_seq;
 	}
 
 	public String getUsername() {
