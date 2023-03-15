@@ -24,6 +24,7 @@ public class MyPageController {
 		return "login";
 	}
 	
+	// 로그인 시 세션 설정 및 메인 이동
 	@PostMapping("loginAf.do")
 	public String loginAf(HttpServletRequest req, MemberDto dto) {
 		MemberDto mem = service.login(dto);
@@ -36,6 +37,7 @@ public class MyPageController {
 		}
 	}
 	
+	// 세션 만료 시 message.jsp로 이동
 	@GetMapping("sessionOut.do")
 	public String sessionOut(Model model) {
 		String sessionOut = "logout";
@@ -44,16 +46,18 @@ public class MyPageController {
 		return "message";
 	}
 	
-	@GetMapping("myPage.do")
+	// 마이 페이지 입장 시 세션 검사
+	@GetMapping("memberUpdate.do")
 	public String memberUpdate(HttpServletRequest req, Model model) {
-		if (req.getSession().getAttribute("login") != null) { 
+		if (req.getSession().getAttribute("login") != null) {
 			return "memberUpdate";
-		} else {
+		} else { // 세션 만료됨
 			model.addAttribute("sessionOut" , "logout");
 			return "message";
 		}
 	}
 	
+	// 회원 정보 수정 시 비밀번호 재확인
 	@ResponseBody
 	@PostMapping("pwdcheck.do")
 	public String pwdCheck(HttpServletRequest req, String pwd) {
@@ -66,6 +70,7 @@ public class MyPageController {
 			return "NO";
 	}
 	
+	// 회원 정보 수정 진행 중 닉네임 변경 시 중복 확인
 	@ResponseBody
 	@PostMapping("nickcheck.do")
 	public String nickCheck(String nickname) {
@@ -75,6 +80,28 @@ public class MyPageController {
 			return "NO";
 		else
 			return "YES";
+	}
+	
+	// 정보 수정 완료 후 message.jsp로 이동
+	@PostMapping("updateAf.do")
+	public String updateAf(Model model, MemberDto dto) {
+		boolean isS = service.updateMember(dto);
+		String message = "";
+		
+		if (isS) {
+			message = "UPDATE_SUCCESS";
+		} else {
+			message = "UPDATE_FAIL";
+		}
+		model.addAttribute("updateMsg", message);
+		
+		return "message";
+	}
+	
+	// 내 반려동물 관리 페이지로 이동
+	@GetMapping("petUpdate.do")
+	public String petUpdate() {
+		return "petUpdate";
 	}
 
 }
