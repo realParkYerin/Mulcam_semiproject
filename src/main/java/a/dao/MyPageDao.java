@@ -7,5 +7,6 @@ public interface MyPageDao {
 	MemberDto login(MemberDto dto);
 	String pwdCheck(String user_id);
 	int nickCheck(String nickname);
+	int updateMember(MemberDto dto);
 
 }

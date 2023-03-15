@@ -23,12 +23,18 @@ public class MyPageDaoImpl implements MyPageDao {
 
 	@Override
 	public String pwdCheck(String user_id) {
-		return session.selectOne(ns2 + "pwdCheck", user_id);
+		return session.selectOne(ns1 + "pwdCheck", user_id);
 	}
 	
 	@Override
 	public int nickCheck(String nickname) {
-		int n = session.selectOne(ns2 + "nickCheck", nickname);
+		int n = session.selectOne(ns1 + "nickCheck", nickname);
+		return n;
+	}
+	
+	@Override
+	public int updateMember(MemberDto dto) {
+		int n = session.update(ns1 + "updateMember", dto);
 		return n;
 	}
 	

@@ -16,12 +16,12 @@
 		<div>
 			<ul>
 				<li>
-					<a href="myPage.do">
+					<a href="memberUpdate.do">
 						<span>회원정보 수정</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="petUpdate.do">
 						<span>내 반려동물 관리</span>
 					</a>
 				</li>
@@ -50,7 +50,6 @@
 						<td>이름</td>
 						<td>
 							<%=login.getUsername() %>
-							<input type="hidden" value="<%=login.getUsername() %>" name="username">
 						</td>
 					</tr>
 					<tr>
@@ -71,28 +70,33 @@
 					<tr>
 						<td>이메일</td>
 						<td>
-							<input type="text" value="<%=login.getEmail()%>" name="email">
+							<input type="text" value="<%=login.getEmail()%>" id="email" name="email">
 						</td>
 					</tr>
 					<tr>
 						<td>새 비밀번호</td>
 						<td>
-							<input type="text" placeholder="●●●●●●●●">
+							<input type="password" placeholder="●●●●●●●●" id="newPwd1">
 						</td>
 					</tr>
 					<tr>
 						<td>비밀번호 확인</td>
 						<td>
-							<input type="text" placeholder="●●●●●●●●">
+							<input type="password" placeholder="●●●●●●●●" id="newPwd2" onchange="newPwdChk()" name="pwd">
+							<p id="newPwdCheck" />
 						</td>
 					</tr>
 					<tr style="height: 100px;">
 						<td>프로필 사진</td>
-						<td></td>
+						<td>
+							<img src="asdf">
+							<input type="text" value="이미지 경로" readonly="readonly">
+							<button type="button">찾아보기</button>
+						</td>
 					</tr>
 				</table>
 				<br>
-				<button type="submit">저장</button>
+				<button type="button" id="updateSaveBtn">저장</button>
 			</form>
 		</div>
 	</div>
@@ -119,7 +123,6 @@
 		
 		// 닉네임 중복확인
 		$("#nickChkBtn").click(function() {
-			
 			// 빈칸 조사
 			if ($("#nickname").val() == "" || $("#nickname").val() == null) {
 				$("#nickCheck").css("color", "#ff0000");
@@ -138,7 +141,6 @@
 					} else {
 						$("#nickCheck").css("color", "#ff0000");
 						$("#nickCheck").text("사용중인 닉네임입니다");
-						$("#nickname").val("");
 					}
 				},
 				error : function() {
@@ -147,9 +149,72 @@
 			})
 		})
 		
-		// 변경된 값에 대해서만 수정 반영 되도록 해야 함
 		// update Member2 set [column_name] = if([condition], [true case], [false case]) 이용
 		// [false case]에 [column_name] 그대로 입력하면 false 시 원래 값 입력됨
+		
+		// 새 비밀번호 확인
+		function newPwdChk() {
+			if ($("#newPwd1").val() == $("#newPwd2").val()) {
+				$("#newPwdCheck").text("");
+				return;
+			} else {
+				$("#newPwdCheck").css("color", "#ff0000");
+				$("#newPwdCheck").text("비밀번호를 다시 확인해주세요");
+				$("#newPwd1").val("");
+				$("#newPwd2").val("");
+			}
+		}
+		
+		// 각 항목 변경 여부 체크
+		let isNickChanged = 0;
+		let isEmailChanged = 0;
+		let isPwdChanged = 0;
+		let isPhotoChanged = 0;
+		
+		// 닉네임
+		$("#nickname").change(function() {
+			isNickChanged = 1;
+			if ($("#nickname").val() == '<%=login.getNickname()%>') {
+				isNickChanged = 0;
+			}
+		})
+		
+		// 이메일
+		$("#email").change(function() {
+			isEmailChanged = 1;
+			if ($("#email").val() == '<%=login.getEmail()%>') {
+				isEmailChanged = 0;
+			}
+		})
+		
+		// 비밀번호
+		$("#newPwd2").change(function() {
+			isPwdChanged = 1;
+			if ($("#newPwd2").val() == null || $("#newPwd2").val() == "") {
+				isPwdChanged = 0;
+			}
+		})
+		
+		// 프사
+		
+		
+		// 변경 여부 체크 끝
+		
+		// 수정 사항 저장
+		$("#updateSaveBtn").click(function() {
+			if (isNickChanged == 0 && isEmailChanged == 0 && isPwdChanged == 0) {
+				alert("변경 사항이 없습니다");
+				return;
+			}
+			
+			// 닉네임 수정 후 중복확인 미 실시 혹은 중복된 닉네임일 경우 alert
+			if (isNickChanged > 0 && ($("#nickCheck").html() == "" || $("#nickCheck").html() == "사용중인 닉네임입니다")) {
+				alert("닉네임을 확인해주세요");
+				return;
+			}
+			
+			$("#frm").submit();
+		})
 	</script>
 </body>
 </html>

@@ -6,14 +6,4 @@
 		from Member2
 		where user_id=#{user_id} and pwd=#{pwd}
 	</select>
-	<select id="pwdCheck" parameterType="String" resultType="String">
-		select pwd
-		from Member2
-		where user_id=#{user_id}
-	</select>
-	<select id="nickCheck" parameterType="String" resultType="Integer">
-		select count(*)
-		from Member2
-		where nickname=#{nickname}
-	</select>
 </mapper>

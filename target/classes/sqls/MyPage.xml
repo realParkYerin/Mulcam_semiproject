@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MyPage">
-	<select id="">
+	<select id="pwdCheck" parameterType="String" resultType="String">
+		select pwd
+		from Member2
+		where user_id=#{user_id}
 	</select>
+	<select id="nickCheck" parameterType="String" resultType="Integer">
+		select count(*)
+		from Member2
+		where nickname=#{nickname}
+	</select>
+	<update id="updateMember" parameterType="a.dto.MemberDto">
+		update Member2
+		set nickname=if(#{nickname} is null, nickname, #{nickname}),
+			email=if(#{email} is null, email, #{email}),
+			pwd=if(#{pwd} is null or #{pwd}="", pwd, #{pwd})
+			<!-- img_path=if(, , ), -->
+		where user_id=#{user_id}
+	</update>
 </mapper>

@@ -28,4 +28,10 @@ public class MyPageServiceImpl implements MyPageService {
 		return dao.nickCheck(nickname);
 	}
 	
+	@Override
+	public boolean updateMember(MemberDto dto) {
+		int n = dao.updateMember(dto);
+		return n > 0 ? true : false;
+	}
+	
 }

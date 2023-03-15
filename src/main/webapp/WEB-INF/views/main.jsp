@@ -45,7 +45,7 @@
         </li>
         
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="myPage.do" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+          <a class="nav-link dropdown-toggle" href="memberUpdate.do" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"
           style="font-family: 'Lobster', cursive">
             MyPage
           </a>
