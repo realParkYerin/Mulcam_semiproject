@@ -1,6 +1,7 @@
 package a.service;
 
 import a.dto.MemberDto;
+import a.dto.PetDto;
 
 public interface MyPageService {
 	
@@ -8,5 +9,8 @@ public interface MyPageService {
 	String pwdCheck(String user_id);
 	int nickCheck(String nickname);
 	boolean updateMember(MemberDto dto);
+	PetDto getMyPet(MemberDto dto);
+	boolean insertPet(PetDto pet);
+	boolean updatePet(PetDto pet);
 
 }

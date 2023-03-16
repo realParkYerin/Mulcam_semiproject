@@ -16,7 +16,21 @@
 		set nickname=if(#{nickname} is null, nickname, #{nickname}),
 			email=if(#{email} is null, email, #{email}),
 			pwd=if(#{pwd} is null or #{pwd}="", pwd, #{pwd})
-			<!-- img_path=if(, , ), -->
+			<!-- img_path=if(, , ) -->
+		where user_id=#{user_id}
+	</update>
+	<select id="getMyPet" parameterType="a.dto.MemberDto" resultType="a.dto.PetDto">
+		select pet_seq, species, kind, pet_name, pet_yy, user_id, gender
+		from Pet
+		where user_id=#{user_id}
+	</select>
+	<insert id="insertPet" parameterType="a.dto.PetDto">
+		insert into Pet(species, kind, pet_name, pet_yy, user_id, gender)
+		values(#{species}, #{kind}, #{pet_name}, #{pet_yy}, #{user_id}, #{gender})
+	</insert>
+	<update id="updatePet" parameterType="a.dto.PetDto">
+		update Pet
+		set species=#{species}, kind=#{kind}, pet_name=#{pet_name}, pet_yy=#{pet_yy}, gender=#{gender}
 		where user_id=#{user_id}
 	</update>
 </mapper>

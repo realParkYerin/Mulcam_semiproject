@@ -57,6 +57,28 @@ if(register != null && !register.equals("")){
 	}
 }
 
+// 내 반려동물 등록/수정 후 메시지 출력
+String petUpdateMsg = (String) request.getAttribute("petUpdateMsg");
+if (petUpdateMsg != null && !petUpdateMsg.equals("")) {
+	if (petUpdateMsg.equals("UPDATE_PET_SUCCESS")) {
+		%>
+		<script type="text/javascript">
+			alert("확인되었습니다. 정보 반영을 위해 다시 로그인 해 주세요.");
+			<%
+			session.invalidate();
+			%>
+			location.href ="login.do";
+		</script>
+		<%
+	} else {
+		%>
+		<script type="text/javascript">
+			alert("오류가 발생하였습니다 : " + <%=petUpdateMsg%>);
+			location.href = "petUpdate.do";
+		</script>
+		<%
+	}
+}
 %>
 
 
