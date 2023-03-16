@@ -18,11 +18,7 @@ public class MyPageController {
 	@Autowired
 	MyPageService service;
 	
-	// 로그인 해야만 메인 볼 수 있게 임시 세팅해 둠. 나중에 바꿔야 함
-	@GetMapping("login.do")
-	public String login() {
-		return "login";
-	}
+
 	
 	// 로그인 시 세션 설정 및 메인 이동
 	@PostMapping("loginAf.do")
