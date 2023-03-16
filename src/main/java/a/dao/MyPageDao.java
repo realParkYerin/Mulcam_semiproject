@@ -10,5 +10,7 @@ public interface MyPageDao {
 	int nickCheck(String nickname);
 	int updateMember(MemberDto dto);
 	PetDto getMyPet(MemberDto dto);
+	int insertPet(PetDto pet);
+	int updatePet(PetDto pet);
 
 }

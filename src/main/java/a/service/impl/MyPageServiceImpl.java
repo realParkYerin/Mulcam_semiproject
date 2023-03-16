@@ -40,4 +40,16 @@ public class MyPageServiceImpl implements MyPageService {
 		return dao.getMyPet(dto);
 	}
 	
+	@Override
+	public boolean insertPet(PetDto pet) {
+		int n = dao.insertPet(pet);
+		return n > 0 ? true : false;
+	}
+	
+	@Override
+	public boolean updatePet(PetDto pet) {
+		int n = dao.updatePet(pet);
+		return n > 0 ? true : false;
+	}
+	
 }

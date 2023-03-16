@@ -8,11 +8,13 @@ public class PetDto {
 	private String pet_name;
 	private int pet_yy;
 	private String user_id;
-	
+	private String gender;
+
 	public PetDto() {
 	}
 
-	public PetDto(int pet_seq, String species, String kind, String pet_name, int pet_yy, String user_id) {
+	public PetDto(int pet_seq, String species, String kind, String pet_name, int pet_yy, String user_id,
+			String gender) {
 		super();
 		this.pet_seq = pet_seq;
 		this.species = species;
@@ -20,6 +22,7 @@ public class PetDto {
 		this.pet_name = pet_name;
 		this.pet_yy = pet_yy;
 		this.user_id = user_id;
+		this.gender = gender;
 	}
 
 	public int getPet_seq() {
@@ -70,10 +73,18 @@ public class PetDto {
 		this.user_id = user_id;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	@Override
 	public String toString() {
 		return "PetDto [pet_seq=" + pet_seq + ", species=" + species + ", kind=" + kind + ", pet_name=" + pet_name
-				+ ", pet_yy=" + pet_yy + ", user_id=" + user_id + "]";
+				+ ", pet_yy=" + pet_yy + ", user_id=" + user_id + ", gender=" + gender + "]";
 	}
 	
 }

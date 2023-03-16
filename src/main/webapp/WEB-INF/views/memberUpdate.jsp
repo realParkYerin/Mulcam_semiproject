@@ -44,7 +44,7 @@
 			<button type="button" id="pwdChkBtn">확인</button>
 		</div>
 		<div style="display: none;" id="updateDetail">
-			<form action="updateAf.do" method="post" id="frm">
+			<form action="memberUpdateAf.do" method="post" id="frm">
 				<table border="1" style="width: 500px; text-align: center;">
 					<tr>
 						<td>이름</td>
@@ -96,7 +96,7 @@
 					</tr>
 				</table>
 				<br>
-				<button type="button" id="updateSaveBtn">저장</button>
+				<button type="button" id="memberUpdateBtn">저장</button>
 			</form>
 		</div>
 	</div>
@@ -198,7 +198,7 @@
 		// 변경 여부 체크 끝
 		
 		// 수정 사항 저장
-		$("#updateSaveBtn").click(function() {
+		$("#memberUpdateBtn").click(function() {
 			if (isNickChanged == 0 && isEmailChanged == 0 && isPwdChanged == 0) {
 				alert("변경 사항이 없습니다");
 				return;

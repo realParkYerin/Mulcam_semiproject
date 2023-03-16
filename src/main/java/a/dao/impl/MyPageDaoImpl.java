@@ -44,4 +44,16 @@ public class MyPageDaoImpl implements MyPageDao {
 		return session.selectOne(ns1 + "getMyPet", dto);
 	}
 	
+	@Override
+	public int insertPet(PetDto pet) {
+		int n = session.insert(ns1 + "insertPet", pet);
+		return n;
+	}
+	
+	@Override
+	public int updatePet(PetDto pet) {
+		int n = session.update(ns1 + "updatePet", pet);
+		return n;
+	}
+	
 }

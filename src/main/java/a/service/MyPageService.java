@@ -10,5 +10,7 @@ public interface MyPageService {
 	int nickCheck(String nickname);
 	boolean updateMember(MemberDto dto);
 	PetDto getMyPet(MemberDto dto);
+	boolean insertPet(PetDto pet);
+	boolean updatePet(PetDto pet);
 
 }
