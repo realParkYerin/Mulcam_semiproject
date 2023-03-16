@@ -25,7 +25,7 @@
 	<!-- 회원가입 -->
 	<insert id="addmember" parameterType="a.dto.MemberDto">
 		insert into member2(user_id, username, pwd, email, nickname, img_path, reg_date, modify_date, auth)
-		values(#{user_id}, #{username}, #{pwd}, #{email}, #{nickname}, ifnull(#{img_path}, img_path) , now(), now(), 1)
+		values(#{user_id}, #{username}, #{pwd}, #{email}, #{nickname}, #{img_path}, now(), now(), 1)
 	</insert>
 
 </mapper>
