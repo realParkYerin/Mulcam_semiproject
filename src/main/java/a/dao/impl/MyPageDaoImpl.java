@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import a.dao.MyPageDao;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 
 @Repository
 public class MyPageDaoImpl implements MyPageDao {
@@ -36,6 +37,11 @@ public class MyPageDaoImpl implements MyPageDao {
 	public int updateMember(MemberDto dto) {
 		int n = session.update(ns1 + "updateMember", dto);
 		return n;
+	}
+	
+	@Override
+	public PetDto getMyPet(MemberDto dto) {
+		return session.selectOne(ns1 + "getMyPet", dto);
 	}
 	
 }

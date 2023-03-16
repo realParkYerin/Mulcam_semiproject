@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import a.dto.MemberDto;
+import a.dto.PetDto;
 import a.service.MyPageService;
 
 @Controller
@@ -18,18 +19,14 @@ public class MyPageController {
 	@Autowired
 	MyPageService service;
 	
-	// 로그인 해야만 메인 볼 수 있게 임시 세팅해 둠. 나중에 바꿔야 함
-	@GetMapping("login.do")
-	public String login() {
-		return "login";
-	}
-	
 	// 로그인 시 세션 설정 및 메인 이동
 	@PostMapping("loginAf.do")
 	public String loginAf(HttpServletRequest req, MemberDto dto) {
 		MemberDto mem = service.login(dto);
+		PetDto pet = service.getMyPet(dto);
 		if (mem != null) {
 			req.getSession().setAttribute("login", mem); // session에 저장
+			req.getSession().setAttribute("pet", pet);
 			req.getSession().setMaxInactiveInterval(60 * 60 * 2);
 			return "main";
 		} else {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import a.dao.MyPageDao;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 import a.service.MyPageService;
 
 @Service
@@ -32,6 +33,11 @@ public class MyPageServiceImpl implements MyPageService {
 	public boolean updateMember(MemberDto dto) {
 		int n = dao.updateMember(dto);
 		return n > 0 ? true : false;
+	}
+	
+	@Override
+	public PetDto getMyPet(MemberDto dto) {
+		return dao.getMyPet(dto);
 	}
 	
 }

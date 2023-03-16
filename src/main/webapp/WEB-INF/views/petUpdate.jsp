@@ -43,7 +43,12 @@
 					<tr>
 						<td>종</td>
 						<td>
-							<input type="text" value="" id="nickname" name="nickname">
+							<select>
+								<option>종을 선택해주세요</option>
+								<option>강아지</option>
+								<option>고양이</option>
+								<option>기타</option>
+							</select>
 						</td>
 					</tr>
 					<tr>

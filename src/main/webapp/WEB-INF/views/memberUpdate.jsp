@@ -149,9 +149,6 @@
 			})
 		})
 		
-		// update Member2 set [column_name] = if([condition], [true case], [false case]) 이용
-		// [false case]에 [column_name] 그대로 입력하면 false 시 원래 값 입력됨
-		
 		// 새 비밀번호 확인
 		function newPwdChk() {
 			if ($("#newPwd1").val() == $("#newPwd2").val()) {
