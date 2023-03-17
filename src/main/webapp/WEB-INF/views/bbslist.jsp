@@ -21,6 +21,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
 
@@ -46,7 +48,7 @@ if(search == null){
 <h1>게시판</h1>
 <hr>
 <!-- 변수 임시확인용도 -->
-<p><%=pageBbs  %>|<%=pageNumber %>|<%=choice %>|<%=search %><p>
+<!-- <p><%=pageBbs  %>|<%=pageNumber %>|<%=choice %>|<%=search %><p>  -->
 <div align="center">
 
 <table class="table table-hover table-sm" style="width: 1000px">
@@ -68,43 +70,24 @@ if(list == null || list.size() == 0){
     /* 이미지경로 이렇게 불러오지말고 추후에 controller에서 이미지경로를 반환하는 xml쿼리문을 model에 추가해서 가져오도록 수정. */
     /* 파지네이션과 검색이 초기설정이 되지 않는 오류 있음. */
 }else{	
-    try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "1234")) {
+    
         for(int i = 0;i < list.size(); i++)
         {
             FreePostDto dto = list.get(i);
-            %>
-            <%
-            String sql = "SELECT i.img_path "
-                       + "FROM MultiImg i "
-                       + "JOIN IMG_REL r ON i.img_seq = r.img_seq "
-                       + "WHERE r.bbs_seq = ? "
-                       + "ORDER BY r.img_seq ASC LIMIT 1";
-
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, dto.getBbs_seq()); // 수정된 부분
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-            %>
-                    <img src="<%= rs.getString("img_path") %>">
-            <%
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            %>
+            	%>
             <tr>
                 <th><%=i + 1 + (pageNumber * 10) %></th>
                 
                 <%
-                if(dto.isDel() == false){
+                if(dto.isDel() == 0){
                     %>
-                    <td>
+                    <td>	<!-- 조회수 로직은 bbsdetail과 관련된 Dao에서 추가로 서비스 호출하도록 작성하겠습니다. -->
                         <a href="bbsdetail.do?bbs_seq=<%=dto.getBbs_seq() %>">
                             <%=dto.getTitle() %>
                         </a>
                     </td>            
                     <%
-                }else if(dto.isDel() == true){
+                }else if(dto.isDel() == 1){
                     %>
                     <td>
                         <font color="#ff0000">*** 이 글은 삭제되었습니다 ***</font>    
@@ -118,9 +101,7 @@ if(list == null || list.size() == 0){
             </tr>
             <%
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
+
 }
 %>
 

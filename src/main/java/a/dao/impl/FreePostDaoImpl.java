@@ -5,9 +5,12 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import a.dto.FreePostDto;
+import a.dto.BbsImgVO;
 import a.dto.BbsParam;
+import a.dto.FpdImgDto;
 
 @Repository
 public class FreePostDaoImpl {
@@ -25,30 +28,68 @@ public class FreePostDaoImpl {
         return sqlSession.selectOne(ns + "getAllBbs", param);
     }
     
+    
+     
+     
+    // 사진이 없다면.
     public int writeBbs(FreePostDto dto) {
 		return sqlSession.insert(ns + "writeBbs", dto);
 	}
     
-
+    
+    
+    /*
+	public int writeImg(List<BbsImgVO> bbsImglist) {
+		int n = 0;
+		for (BbsImgVO bbsImg : bbsImglist) {
+			// 각각의 모든 img를 콘트롤러에서 set된 dto for문 돌면서 모두 추가.
+			sqlSession.insert(ns + "writeImg", bbsImg);
+			n++;
+		}
+		return n;
+	}
+    */
+	
+    // 사진이 있다면.
+	public int writeBbs(FreePostDto dto, List<BbsImgVO> bbsImglist) {
+		sqlSession.insert(ns + "writeBbs", dto);
+		System.out.println("DAO.writeBbs");
+		// 글 내용 DB에 추가
+		int n=0;
+		
+		for (BbsImgVO bbsImg : bbsImglist) {
+			// 각각의 모든 img를 콘트롤러에서 set된 dto for문 돌면서 모두 추가.
+			System.out.println("multiimg + img_rel");
+			sqlSession.insert(ns + "multiimg", bbsImg);
+			sqlSession.insert(ns + "img_rel");
+			
+			n++;
+		}
+		
+		return n;
+	}
     
     
     // 게시물 상세보기
     
-    public FreePostDto getBbs(int seq) {
-    	return sqlSession.selectOne(ns + "getBbs", seq);
+    public FpdImgDto getBbs(int bbs_seq) {
+
+    	sqlSession.update(ns + "increaseReadcount", bbs_seq);
+    	FpdImgDto dto = new FpdImgDto();
+    	
+    	FreePostDto fdto = sqlSession.selectOne(ns + "getBbs", bbs_seq);
+    	List<BbsImgVO> ivo = sqlSession.selectList(ns + "getImg", bbs_seq);
+    	
+    	
+    	// System.out.println(ivo.toString());
+    	dto.setFreepostdto(fdto);
+    	dto.setBbsimgvo(ivo);
+    	return dto;
     }
     
-    public FreePostDto getFreePostDetail(int bbs_seq) {
-        FreePostDto freePostDetail = null;
-        freePostDetail = sqlSession.selectOne("freePost.getFreePostDetail", bbs_seq);
-        return freePostDetail;
-    }
+
     
-    // 게시물 작성
-    public int writeFreePost(FreePostDto dto) {
-        int res = sqlSession.insert("freePost.writeFreePost", dto);
-        return res;
-    }
+
     
     // 게시물 수정
     public int updateFreePost(FreePostDto dto) {
@@ -73,7 +114,13 @@ public class FreePostDaoImpl {
         String firstImage = sqlSession.selectOne("freePost.getFreePostFirstImage", postId);
         return firstImage;
     }
-    
+
+
+
+
+
+
+
 
 
 

@@ -13,7 +13,7 @@ public class FreePostDto {
     private int cmtcount;       // 댓글 수
     private Date wdate;         // 작성일
     private Date update_date;   // 수정일
-    private boolean del;        // 삭제 여부
+    private int del;        // 삭제 여부
 
     // 생성자
     public FreePostDto() {}
@@ -97,11 +97,11 @@ public class FreePostDto {
         this.update_date = update_date;
     }
 
-    public boolean isDel() {
+    public int isDel() {
         return del;
     }
 
-    public void setDel(boolean del) {
+    public void setDel(int del) {
         this.del = del;
     }
 
