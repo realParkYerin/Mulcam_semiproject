@@ -1,5 +1,8 @@
 package a.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
 import a.service.MyPageService;
@@ -24,14 +28,23 @@ public class MyPageController {
 	public String loginAf(HttpServletRequest req, MemberDto dto) {
 		MemberDto mem = service.login(dto);
 		PetDto pet = service.getMyPet(dto);
+		List<FreePostDto> post = new ArrayList<>();
+		post = service.getAllPost(dto);
 		if (mem != null) {
 			req.getSession().setAttribute("login", mem); // session에 로그인 정보 저장
 			req.getSession().setAttribute("pet", pet); // session에 펫 정보 저장
+			req.getSession().setAttribute("post", post); // session에 내 글 정보 저장
 			req.getSession().setMaxInactiveInterval(60 * 60 * 2);
 			return "main";
 		} else {
 			return "";
 		}
+	}
+	
+	// 메인화면으로 이동
+	@GetMapping("main.do")
+	public String goMain() {
+		return "main";
 	}
 	
 	// 세션 만료 시 message.jsp로 이동
@@ -125,6 +138,20 @@ public class MyPageController {
 		model.addAttribute("petUpdateMsg", message);
 		
 		return "message";
+	}
+	
+	// 내 글 관리 페이지로 이동
+	@GetMapping("postManage.do")
+	public String postManage() {
+		return "postmanage";
+	}
+	
+	
+	
+	// 내 댓글 관리 페이지로 이동
+	@GetMapping("commentManage.do")
+	public String commentmanage() {
+		return "commentmanage";
 	}
 
 }
