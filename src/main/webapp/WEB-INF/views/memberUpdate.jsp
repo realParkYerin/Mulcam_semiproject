@@ -16,6 +16,11 @@
 		<div>
 			<ul>
 				<li>
+					<a href="main.do">
+						<span>메인화면으로</span>
+					</a>
+				</li>			
+				<li>
 					<a href="memberUpdate.do">
 						<span>회원정보 수정</span>
 					</a>
@@ -27,8 +32,20 @@
 				</li>
 				<li>
 					<a href="#">
-						<span>내 활동 관리</span>
+						<span id="manageMenu">내 활동 관리</span>
 					</a>
+					<ul id="manageSubmenu" style="display: none;">
+						<li>
+							<a href="postManage.do">
+								<span>내 글 관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="commentManage.do">
+								<span>내 댓글 관리</span>
+							</a>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="#">
@@ -101,6 +118,11 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		// 내 활동 관리 클릭 시 마다 show / hide 토글
+		$("#manageMenu").click(function() {
+			$("#manageSubmenu").toggle();
+		})
+	
 		// 정보 수정 메뉴 입장 시, 비밀번호 재입력 및 확인
 		$("#pwdChkBtn").click(function() {
 			$.ajax({

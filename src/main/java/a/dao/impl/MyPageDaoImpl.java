@@ -1,10 +1,13 @@
 package a.dao.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import a.dao.MyPageDao;
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
 
@@ -54,6 +57,11 @@ public class MyPageDaoImpl implements MyPageDao {
 	public int updatePet(PetDto pet) {
 		int n = session.update(ns1 + "updatePet", pet);
 		return n;
+	}
+	
+	@Override
+	public List<FreePostDto> getAllPost(MemberDto dto) {
+		return session.selectList(ns1 + "getAllPost", dto);
 	}
 	
 }

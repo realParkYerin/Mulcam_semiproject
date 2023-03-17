@@ -1,5 +1,8 @@
 package a.dao;
 
+import java.util.List;
+
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
 
@@ -12,5 +15,6 @@ public interface MyPageDao {
 	PetDto getMyPet(MemberDto dto);
 	int insertPet(PetDto pet);
 	int updatePet(PetDto pet);
+	List<FreePostDto> getAllPost(MemberDto dto);
 
 }
