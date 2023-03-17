@@ -5,10 +5,14 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import a.dao.impl.FreePostDaoImpl;
 import a.dto.FreePostDto;
+import a.util.PdsUtil;
+import a.dto.BbsImgVO;
 import a.dto.BbsParam;
+import a.dto.FpdImgDto;
 
 @Service
 public class FreePostServiceImpl {
@@ -24,8 +28,24 @@ public class FreePostServiceImpl {
         return freePostDAO.getAllBbs(param);
     }
     
+
+	// 사진이 없다면.
 	public boolean writeBbs(FreePostDto dto) {
 		int n = freePostDAO.writeBbs(dto);
+		return n>0?true:false;
+	}
+	
+    
+    /*
+	public boolean writeImg(List<BbsImgVO> bbsImglist) {
+		int n = freePostDAO.writeImg(bbsImglist);
+		return n>0?true:false;
+	}
+	*/
+    
+	// 사진이 있다면.
+	public boolean writeBbs(FreePostDto dto, List<BbsImgVO> bbsImglist) {
+		int n = freePostDAO.writeBbs(dto, bbsImglist);
 		return n>0?true:false;
 	}
 
@@ -36,14 +56,11 @@ public class FreePostServiceImpl {
 
 
     // 게시물 상세보기
-    public FreePostDto getBbs(int seq) {
-        return freePostDAO.getBbs(seq);
+    public FpdImgDto getBbs(int bbs_seq) {
+        return freePostDAO.getBbs(bbs_seq);
     }
 
-    // 게시물 등록하기
-    public void addFreePost(FreePostDto freePost) {
-    	freePostDAO.writeFreePost(freePost);
-    }
+
 
     // 게시물 수정하기
     public void updateFreePost(FreePostDto freePost) {
@@ -59,4 +76,16 @@ public class FreePostServiceImpl {
     public String getFreePostFirstImagePath(int postId) {
         return freePostDAO.getFreePostFirstImage(postId);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -1,10 +1,11 @@
+<%@page import="a.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
- <%-- 세션을 가져와야함. --%>
-<%-- <%
+
+<%
 	MemberDto login = (MemberDto)session.getAttribute("login");		
-%>  --%>
+%> 
 
 <!DOCTYPE html>
 <html>
@@ -85,7 +86,7 @@
 </head>
 
 <%-- 세션검사해서 없으면 list.do로 이동추가--%>
-
+<br>
 <div class="container my-5">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -95,6 +96,7 @@
 
                 <div class="form-group">
                     <label for="title">제목</label>
+					<input type="hidden" name="user_id" id="user_id" value="<%=login.getUser_id() %>">
                     <input type="text" id="title" name="title" class="form-control form-control-lg" placeholder="제목을 입력하세요">
                 </div>
 
@@ -104,10 +106,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="file">첨부 파일</label>
+                    <label for="file">첨부 파일 load</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="file" id="file" multiple>
                         <label class="custom-file-label" for="file">파일을 선택하세요</label>
+                        <!-- 본래는 특수기호 못들어가게 AJAX에서 또한 걸러내야합니다. 시연할거니까 문제는 되지 않을거 같아요~ -->
                     </div>
                 </div>
 
@@ -141,7 +144,11 @@ $(document).ready(function() {
     });
 
     $("#frmsubmit").click(function() {
-        if($("#title").val().trim() == "" ){
+    	 if($("#user_id").val().trim() == "" || $("#user_id").val() == null){
+    		alert("세션이 만료되었습니다. 다시 로그인 해주세요.");
+    		location.href = "login.do";
+    	}
+    	else if($("#title").val().trim() == "" ){
             alert("제목을 기입해 주십시오");
             return;
         }else if($("#content").val().trim() == "" ){
@@ -149,7 +156,17 @@ $(document).ready(function() {
             return;
         }else{
             $("#frm").submit();
-        }       
+        }       // 파일 확장자명 jpg , gif, png, jpeg등등 이미지파일만 받을수 있게 AJAX하나 추가하기.
+    }); 
+    
+    // 파일 선택 시 선택한 파일 개수 출력
+    $('#file').on('change', function() {
+        var fileList = $(this)[0].files;
+        var fileName = "";
+        for(var i=0; i<fileList.length; i++){
+            fileName += fileList[i].name + " ";
+        }
+        $('.custom-file-label').text(fileName.slice(0, -2));
     }); 
 });
 </script>

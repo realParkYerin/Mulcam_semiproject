@@ -2,9 +2,12 @@ package a.controller;
 
 
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import a.dto.FreePostDto;
 import a.service.impl.FreePostServiceImpl;
+import a.util.BbsUtil;
+import a.dto.BbsImgVO;
 import a.dto.BbsParam;
+import a.dto.FpdImgDto;
 
 @Controller
 public class FreePostController {
@@ -62,25 +68,65 @@ public class FreePostController {
 		return "bbswrite";
 	}
 	
+	
+	
 	@PostMapping(value = "bbswriteAf.do")
-	public String bbswriteAf(Model model, FreePostDto dto) {
-		boolean isS = freePostService.writeBbs(dto);
-		String bbswrite = "";		
-		if(isS) {	// 사실상 isS로 그냥 return해서 이동하면 됩니다. OK NG 필요없음.
-			bbswrite = "BBS_ADD_OK";
-		}else {
-			bbswrite = "BBS_ADD_NG";
+	public String bbswriteAf(Model model, @RequestParam(value="file", required = false) List<MultipartFile> files, FreePostDto dto) {
+		
+		
+		// 문자열만 들어가도 파일이 들어가는 오류가 있음. 따라서 조건문 아래와 같이 작성했습니다.
+		// System.out.println("files.get(0):" + files.get(0));
+		// System.out.println("filename:" + files.get(0).getOriginalFilename());
+		
+		if(files.get(0).getOriginalFilename() != null && !files.get(0).getOriginalFilename().equals("")) {	// 파일이 있는경우
+			// 임시 절대경로
+			String uploadPath = "C:\\Users\\kstur\\AppData\\Roaming\\SPB_Data\\git\\Mulcam_semiproject\\src\\main\\webapp\\resources\\upload\\";
+			// fileName = 원본 파일 이름,
+		    List<BbsImgVO> BbsImglist = new ArrayList<BbsImgVO>();
+		    for (MultipartFile file : files) {
+		    	BbsImgVO imgdto = new BbsImgVO();
+		    	imgdto.setImg_name(BbsUtil.getNewFileName(file.getOriginalFilename()));
+		    	imgdto.setImg_path(uploadPath);
+		        String mimeType = file.getContentType();
+		        imgdto.setImg_type(mimeType.substring(mimeType.lastIndexOf("/") + 1));
+		        
+		        
+		        // 파일을 지정한 경로에 저장하는 부분
+		        try {
+		            byte[] bytes = file.getBytes();
+		            Path path = Paths.get(uploadPath + imgdto.getImg_name());
+		            Files.write(path, bytes);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+
+		        System.out.println("파일 상세정보: "+ imgdto.toString());
+		        BbsImglist.add(imgdto);
+	    	} // for문의 끝 (모든 들어온 파일 list에 다 담기.)
+	    	  // 
+			// System.out.println(dto.getBbs_seq()); DB에서 자동설정..
+			// model.addAttribute("bbswrite", bbswrite);
+		    
+		    boolean isS = freePostService.writeBbs(dto, BbsImglist);
+			if(isS) {	
+				return "redirect:/bbslist.do";
+			}else {
+				System.out.println("등록 실패");
+			}
+		} else {
+			boolean isS = freePostService.writeBbs(dto);
 		}
-		model.addAttribute("bbswrite", bbswrite);
+		
 		
 		// return "message";
 		return "redirect:/bbslist.do";	// controller에서  controller로 이동시 == sendRedirect
 		// return "forward:/bbslist.do";	// controller에서  controller로 이동시 == forward
 	}
 	
+	// seq번호를 받아와서 글 dto들과 이미지 경로 받아서 불러오기. 
 	@GetMapping(value = "bbsdetail.do")
 	public String bbsdetail(Model model, int bbs_seq) {
-		FreePostDto dto = freePostService.getBbs(bbs_seq);
+		FpdImgDto dto = freePostService.getBbs(bbs_seq);
 		model.addAttribute("bbsdto", dto);
 		
 		return "bbsdetail";
