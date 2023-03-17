@@ -94,19 +94,19 @@
 			let postRow = "";
 			postRow += "<tr>";
 			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getBbs_seq() %>";
+			postRow += "		<%=post.get(1).getBbs_seq() %>";
 			postRow += "	</td>";
 			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getContent() %>";
+			postRow += "		<%=post.get(1).getContent() %>";
 			postRow += "	</td>";
 			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getCmtcount() %>";
+			postRow += "		<%=post.get(1).getCmtcount() %>";
 			postRow += "	</td>";
 			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getLikecount() %>";
+			postRow += "		<%=post.get(1).getLikecount() %>";
 			postRow += "	</td>";
 			postRow += "</tr>";
-			$("#myPost").before(noPostRow);
+			$("#myPost").before(postRow);
 			<%
 		}
 		%>
