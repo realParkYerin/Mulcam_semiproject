@@ -9,4 +9,6 @@ public interface MemberService {
 	boolean nicknameCheck(String nickname);
 	
 	boolean addMember(MemberDto memDto);
+	
+	MemberDto login(MemberDto memDto);
 }

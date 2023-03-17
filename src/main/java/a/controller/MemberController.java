@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,13 @@ public class MemberController {
 	@Autowired
 	MemberService memService;
 	
-	// 로그인 화면 이동(임시)
+	// 메인화면으로 이동
+	@GetMapping(value = "main.do")
+	public String main() {
+		return "main";
+	}
+	
+	// 로그인 화면 이동
 	@GetMapping(value = "login.do")
 	public String login() {
 		return "login";
@@ -37,6 +44,12 @@ public class MemberController {
 	@GetMapping(value = "register.do")
 	public String register() {
 		return "register";
+	}
+	
+	// 게시판 이동(로그인 확인용 - 수정 필요)
+	@GetMapping(value = "bbslist.do")
+	public String bbslist() {
+		return "bbslist";
 	}
 	
 	// 아이디 중복확인
@@ -72,7 +85,7 @@ public class MemberController {
 							MultipartFile memberImg,
 							HttpServletRequest req,
 							Model model) {
-		System.out.println("MemberController registerAf " + new Date());
+	//	System.out.println("MemberController registerAf " + new Date());
 		
 		// 1. 사용자가 프로필 사진을 업로드 했는지 확인
 		if(!memberImg.isEmpty()) { // 업로드한 파일이 존재
@@ -119,10 +132,25 @@ public class MemberController {
 		model.addAttribute("register", msg);	
 		
 		
-		return "message";
-					
+		return "message";		
 	}
 	
+	// 로그인 처리
+	@PostMapping(value = "loginAf.do")
+	public String loginAf(HttpServletRequest req, Model model, MemberDto memDto) {
+		
+		MemberDto mem = memService.login(memDto);
+		String msg = "";
+		if(mem != null) { // 로그인 성공
+			req.getSession().setAttribute("login", mem); // 로그인 정보를 세션에 저장
+			msg = "LOGIN_OK";
+		}else { // 로그인 실패
+			msg = "LOGIN_FAIL";
+		}
+		model.addAttribute("login", msg);
+		
+		return "message";
+	}
 	
 	
 }

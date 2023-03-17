@@ -1,4 +1,4 @@
-package a.dao.impl;
+package a.dao.Impl;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int addMember(MemberDto memDto) {
 		return session.insert(ns + "addmember", memDto);
+	}
+
+	@Override
+	public MemberDto login(MemberDto memDto) {
+		return session.selectOne(ns + "login", memDto);
 	}
 	
 	

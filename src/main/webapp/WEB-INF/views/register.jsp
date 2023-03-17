@@ -7,6 +7,7 @@
 <title>회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
 *{
     padding: 0;
     margin: auto;
@@ -14,7 +15,7 @@
 }
 body{
     font-size: 14px;
-    font-family: sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .regi-container{
 	width: 450px;
@@ -66,9 +67,8 @@ body{
     background-color: black;
     border-radius: 3px;
     margin-top: 20px;
-    margin: auto;
-    display:block;
     text-align: center;
+    margin: 20px 85px;
 }
 </style>
 </head>
@@ -136,9 +136,9 @@ $(document).ready(function() {
 	    // test(string) 함수는 인자로 전달된 문자열이 정규표현식의 패턴과 일치하면 true를 리턴하며 그렇지 않으면 false를 리턴
 	    if(!regExp.test(id)){ 
 	        $("#checkId").text("숫자, 영문을 포함한 6 ~ 20자로 입력해주세요.").css("color", "red");
-	        validateCheck.id = false;
+	        validateCheck.user_id = false;
 	    } else{
-	        $("#checkId").text("정확한 아이디 형식입니다.").css("color", "green");
+	        $("#checkId").text("정확한 아이디 형식입니다. 중복확인을 해주세요.").css("color", "green");
 	    }
 	});
 	
@@ -147,7 +147,7 @@ $(document).ready(function() {
 		// 공백 상태
 		if($("#user_id").val().trim() == ''){
 			$("#checkId").text("아이디를 입력해주세요.").css("color", "red");
-			validateCheck.id = false;
+			validateCheck.user_id = false;
 			return;
 		}
 		
@@ -159,7 +159,7 @@ $(document).ready(function() {
 			success:function(msg){				
 				if(msg == "YES"){
 					$("#checkId").text("사용할 수 있는 아이디입니다.").css("color", "green");
-					validateCheck.id = true;
+					validateCheck.user_id = true;
 				}else{
 					$("#checkId").text("사용중인 아이디입니다.").css("color", "red");
 					$("#user_id").val("");
@@ -212,10 +212,10 @@ $(document).ready(function() {
 		    let name = $("#username").val();
 		    if(!regExp.test(name)){
 		        $("#checkName").text("이름 형식이 유효하지 않습니다.").css("color", "red");
-	            validateCheck.name = false;
+	            validateCheck.username = false;
 		    }else {
 		        $("#checkName").text("정확한 이름 형식입니다.").css("color", "green");
-	            validateCheck.name = true;
+	            validateCheck.username = true;
 		    }
 	});
 				
@@ -243,7 +243,8 @@ $(document).ready(function() {
 		        $("#checkNickname").text("닉네임은 한글, 숫자, 영문만 입력해주세요.").css("color", "red");
 		        validateCheck.nickname = false;
 		    } else{
-		        $("#checkNickname").text("정확한 닉네임 형식입니다.").css("color", "green");
+		        $("#checkNickname").text("정확한 닉네임 형식입니다. 중복확인을 해주세요.").css("color", "green");
+		        validateCheck.id = true;
 		    }
 	});
 		
@@ -276,6 +277,17 @@ $(document).ready(function() {
 		});
 	});
 		
+	// 전체 유효성 검사
+	$("#regiBtn").click(function() {
+		for(let key in validateCheck){
+			if(!validateCheck[key]){
+				alert("정확한 정보를 입력해주세요");
+				return false;
+			}
+		}
+		return true;
+	});
+				
 });
 
 </script>
