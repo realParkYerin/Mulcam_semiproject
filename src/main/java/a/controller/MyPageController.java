@@ -24,28 +24,28 @@ public class MyPageController {
 	MyPageService service;
 	
 	// 로그인 시 세션 설정 및 메인 이동
-	@PostMapping("loginAf.do")
-	public String loginAf(HttpServletRequest req, MemberDto dto) {
-		MemberDto mem = service.login(dto);
-		PetDto pet = service.getMyPet(dto);
-		List<FreePostDto> post = new ArrayList<>();
-		post = service.getAllPost(dto);
-		if (mem != null) {
-			req.getSession().setAttribute("login", mem); // session에 로그인 정보 저장
-			req.getSession().setAttribute("pet", pet); // session에 펫 정보 저장
-			req.getSession().setAttribute("post", post); // session에 내 글 정보 저장
-			req.getSession().setMaxInactiveInterval(60 * 60 * 2);
-			return "main";
-		} else {
-			return "";
-		}
-	}
+//	@PostMapping("loginAf.do")
+//	public String loginAf(HttpServletRequest req, MemberDto dto) {
+//		MemberDto mem = service.login(dto);
+//		PetDto pet = service.getMyPet(dto);
+//		List<FreePostDto> post = new ArrayList<>();
+//		post = service.getAllPost(dto);
+//		if (mem != null) {
+//			req.getSession().setAttribute("login", mem); // session에 로그인 정보 저장
+//			req.getSession().setAttribute("pet", pet); // session에 펫 정보 저장
+//			req.getSession().setAttribute("post", post); // session에 내 글 정보 저장
+//			req.getSession().setMaxInactiveInterval(60 * 60 * 2);
+//			return "main";
+//		} else {
+//			return "";
+//		}
+//	}
 	
 	// 메인화면으로 이동
-	@GetMapping("main.do")
-	public String goMain() {
-		return "main";
-	}
+//	@GetMapping("main.do")
+//	public String goMain() {
+//		return "main";
+//	}
 	
 	// 세션 만료 시 message.jsp로 이동
 	@GetMapping("sessionOut.do")

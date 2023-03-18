@@ -20,7 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import a.dto.BbsParam;
+import a.dto.Choice;
+import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.service.AdminService;
@@ -55,16 +60,30 @@ public class AdminController {
 	}
 	
 	//회원목록 조회
-	   @RequestMapping("admin/memberlist.do")
-	   public String memberList(Model model) {
-		   System.out.println("AdminController memberList " + new Date());
-		   //logger.info("MemberController memberList....");
-		   
-		   List<MemberDto> list = service.memberList();
-		   model.addAttribute("list",list);
-		   
-		   return "admin/memberlist";
-	   }
+	@RequestMapping(value = "admin/memberlist.do", method = RequestMethod.GET)
+	public String memberList(Model model, @RequestParam(defaultValue = "1") int page,
+	        @RequestParam(defaultValue = "user_id") String choice, @RequestParam(defaultValue = "") String search) {
+	        System.out.println("AdminController memberList " + new Date());
+	        //logger.info("MemberController memberList....");
+			choice = validation(choice);
+
+			PageHelper.startPage(page, 10);
+	        PageInfo<MemberDto> memberDtoPageInfo = service.searchByMemberList(search, choice);
+	        model.addAttribute("dto", memberDtoPageInfo);
+	        model.addAttribute("choice", choice);
+	        model.addAttribute("search", search);
+	        System.out.println("AdminController memberDtoPageInfo = " + memberDtoPageInfo);
+        return "admin/memberlist";
+    }
+
+	private static String validation(String choice) {
+		try {
+			Choice.valueOf(choice);
+		} catch (Exception e) {
+			choice = "user_id";
+		}
+		return choice;
+	}
 
 
 	//아이디를 누르면 그 회원의 상세 정보 조회
@@ -80,38 +99,40 @@ public class AdminController {
 	}
 	
 	//게시글 목록 - 자유게시판
-	@GetMapping("admin/freepostList.do")
-	public String bbsList(BbsParam param, Model model) {
+	@GetMapping(value="admin/freepostList.do")
+	public String freepostList(Model model, @RequestParam(defaultValue ="1")int page, 
+			@RequestParam(defaultValue = "user_id")String choice, @RequestParam(defaultValue = "") String search) {
 		System.out.println("AdminController freepostList" + new Date());
 		
-		//글의 시작과 끝
-		int pn = param.getPageNumber();  // 0 1 2 3 4
-		int start = 1 + (pn * 10);	// 1  11
-		int end = (pn + 1) * 10;	// 10 20 
+		choice = validation(choice);
 		
-		param.setStart(start);
-		param.setEnd(end);
+		PageHelper.startPage(page,10);
+		PageInfo<FreePostDto> freepostDtoPageInfo = service.searchByFreePostList(search, choice);
 		
-		List<FreePostDto> list = service.bbsList(param);
-		int len = service.getAllBbs(param);
-		
-		int pageBbs = len / 10;		// 25 / 10 -> 2
-		if((len % 10) > 0) {
-			pageBbs = pageBbs + 1;
-		}
-		
-		if(param.getChoice()==null || param.getChoice().equals("")
-				|| param.getSearch() == null || param.getSearch().equals("")) {
-			param.setChoice("검색");
-			param.setSearch("");
-		}
-		
-		model.addAttribute("bbslist", list); // 게시판 리스트
-		model.addAttribute("pageBbs", pageBbs);	// 총 페이지수
-		model.addAttribute("pageNumber", param.getPageNumber()); // 현재 페이지
-		model.addAttribute("choice", param.getChoice()); // 검색 카테고리
-		model.addAttribute("search", param.getSearch()); // 검색어
+		model.addAttribute("dto", freepostDtoPageInfo);
+		model.addAttribute("choice", choice);
+		model.addAttribute("search", search);
+		System.out.println("AdminController freepostDtoPageInfo=" + freepostDtoPageInfo);
 		
 		return "admin/freepostList";
+	}
+
+	//자유게시판 댓글 목록 - 검색, 페이징
+	@GetMapping(value="admin/commentList.do")
+	public String commentList(Model model, @RequestParam(defaultValue ="1")int page, 
+			@RequestParam(defaultValue = "user_id")String choice, @RequestParam(defaultValue = "") String search) {
+		System.out.println("AdminController commentList" + new Date());
+		
+		choice = validation(choice);
+		
+		PageHelper.startPage(page,10);
+		PageInfo<FreeCommentVO> freecommentVOPageInfo = service.searchByFreeCommentList(search, choice);
+		
+		model.addAttribute("dto", freecommentVOPageInfo);
+		model.addAttribute("choice", choice);
+		model.addAttribute("search", search);
+		System.out.println("AdmiinController freecommentVOPageInfo=" + freecommentVOPageInfo);
+		
+		return "admin/commentList";
 	}
 }

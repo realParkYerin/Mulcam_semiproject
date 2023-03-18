@@ -26,7 +26,7 @@
     <li><a href="freepostList.do">자유게시판 관리</a></li><br>
     <li><a href="">Q&A 관리</a></li><br><br>
     <a>댓글 관리</a><br><br>
-    <li><a href="">자유게시판 댓글 관리</a></li><br>
+    <li><a href="commentList.do">자유게시판 댓글 관리</a></li><br>
     <li><a href="">Q&A 댓글 관리</a></li><br><br>
 <%-- </c:if> --%>
 </body>

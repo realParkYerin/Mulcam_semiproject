@@ -28,7 +28,7 @@ public class MemberController {
 	@Autowired
 	MemberService memService;
 	
-	// 메인화면으로 이동
+	/* 메인화면으로 이동 */
 	@GetMapping(value = "main.do")
 	public String main() {
 		return "main";
@@ -47,10 +47,10 @@ public class MemberController {
 	}
 	
 	// 게시판 이동(로그인 확인용 - 수정 필요)
-	@GetMapping(value = "bbslist.do")
-	public String bbslist() {
-		return "bbslist";
-	}
+//	@GetMapping( value = "bbslist.do" )
+//	public String bbslist() {
+//		return "bbslist";
+//	}
 	
 	// 아이디 중복확인
 	@ResponseBody
