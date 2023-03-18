@@ -38,20 +38,6 @@ public class AdminController {
 
 	//로깅
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
-	//관리자용 페이지 입장 시 권한 검사(auth=2) -> 추후 수정 필요
-	/*
-	 * @GetMapping("admin/adminview.do")
-	 * public String adminMain(Model model,HttpSession session) { 
-	 * System.out.println("AdminController adminMain" + new Date());
-	 * 
-	 * MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
-	 * if(loginUser==null || loginUser.getAuth() !=2) { //로그인한 회원이 없거나, 권한이 없는 경우
-	 * return "redirect:/main"; //main페이지로 이동 
-	 * }
-	 *  return "admin/adminview"; //권한값이 2,즉 관리자라면 adminview로 이동 
-	 * }
-	 */
 
 	//adminview(관리자 메인 페이지) mapping
 	@GetMapping("admin/adminview.do")

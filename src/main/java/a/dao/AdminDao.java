@@ -12,10 +12,7 @@ import a.dto.MemberDto;
 import com.github.pagehelper.PageInfo;
 
 public interface AdminDao {
-	
-	//로그인한 회원이 관리자인지 확인 -> 추후 수정 필요
-	/* MemberDto selectMemberById(String user_id); */
-	
+
 	//회원 목록
 	List<MemberDto> memberList();
 	PageInfo <MemberDto> searchByMemberList(String keyword, String choice);
@@ -35,4 +32,5 @@ public interface AdminDao {
 	List<FreeCommentVO> getComment();
 	PageInfo<FreeCommentVO> searchByFreeCommentList(String keyword, String choice);
 
+	
 }

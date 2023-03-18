@@ -127,7 +127,6 @@
 		<c:set var="choiceParam" value="&choice=${choice}"/>
 	</c:if>
 
-
     <!-- 이전 버튼 -->
     <c:if test="${dto.hasPreviousPage}">
         <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.prePage}${searchParam}${choiceParam}">이전</a>
@@ -148,10 +147,7 @@
     <c:if test="${dto.hasNextPage}">
         <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.nextPage}${searchParam}${choiceParam}">다음</a>
     </c:if>
-
 </div>
-
-
 
 </body>
 </html>

@@ -24,11 +24,7 @@ public class AdminDaoImpl implements AdminDao {
 	SqlSession sqlSession;
 	
 	//로그인한 회원이 관리자인지 확인 -> 추후 수정
-	/*
-	 * @Override public MemberDto selectMemberById(String user_id) { return
-	 * sqlSession.selectOne("admin.selectMemberById", user_id); }
-	 */
-	
+
 	//회원 목록 - 조회
 	@Override
 	public List<MemberDto> memberList() {

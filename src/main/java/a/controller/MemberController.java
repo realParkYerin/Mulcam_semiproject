@@ -152,5 +152,4 @@ public class MemberController {
 		return "message";
 	}
 	
-	
 }

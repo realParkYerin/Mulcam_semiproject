@@ -52,5 +52,6 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 	</tr>
 	</table>
 </form>
+
 </body>
 </html>

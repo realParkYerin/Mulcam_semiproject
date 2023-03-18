@@ -153,5 +153,4 @@ public class MyPageController {
 	public String commentmanage() {
 		return "commentmanage";
 	}
-
 }
