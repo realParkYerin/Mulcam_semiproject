@@ -25,12 +25,6 @@ public class AdminServiceImpl implements AdminService {
 	AdminDao dao;
 	
 	//로그인한 회원이 관리자인지 확인
-	/*
-	 * @Override public boolean isAdmin(String user_id) { MemberDto loginUser =
-	 * dao.selectMemberById(user_id);
-	 * 
-	 * return loginUser != null && loginUser.getAuth() ==2; }
-	 */
 
 	//회원목록 조회
 	@Override

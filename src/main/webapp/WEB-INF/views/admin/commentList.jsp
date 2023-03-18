@@ -162,7 +162,6 @@ if(list == null || list.size() == 0){
     <c:if test="${dto.hasNextPage}">
         <a href="${pageContext.request.contextPath}/admin/commentList.do?page=${dto.nextPage}${searchParam}${choiceParam}">다음</a>
     </c:if>
-
 </div>
 </body>
 </html>

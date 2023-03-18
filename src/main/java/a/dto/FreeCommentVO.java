@@ -97,5 +97,6 @@ public class FreeCommentVO {
 		return "FreeCommentVO [comment_seq=" + comment_seq + ", user_id=" + user_id + ", bbs_seq=" + bbs_seq
 				+ ", cmt_content=" + cmt_content + ", target_id=" + target_id + ", comment_group=" + comment_group
 				+ ", del_cmt=" + del_cmt + ", reg_cmtdate=" + reg_cmtdate + "]";
-	}    
+	} 
+	
 }

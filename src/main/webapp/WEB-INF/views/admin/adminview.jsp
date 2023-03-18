@@ -19,6 +19,7 @@
 <body>
 <h1>관리자 페이지</h1>
 
+
 <!-- 관리자일때만 확인 가능 ***추후 수정 필요***-->
 <%-- <c:if test="${loginUser!=null || loginUser.auth() ==2}"> --%>
     <a href="memberlist.do">회원 관리</a><br><br>
