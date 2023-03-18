@@ -92,6 +92,9 @@
 
 <script type="text/javascript">
 <%-- 세션검사해서 없으면 login.do로 이동추가--%>
+<%
+	int bbs_seq = (int)request.getAttribute("bbs_seq");
+%>
 <%	// or 조건으로 묶었습니다.
 if(login == null || login.getUser_id() == "" || login.getUser_id() == null){
 	%>
@@ -103,16 +106,18 @@ if(login == null || login.getUser_id() == "" || login.getUser_id() == null){
 
 
 <br>
+<%-- <p><%=bbs_seq %></p> --%>
 <div class="container my-5">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h2 class="mb-4">게시글 작성</h2>
+            <h2 class="mb-4">게시글 수정</h2>
 
-            <form action="bbswriteAf.do" id="frm" method="post" enctype="multipart/form-data">
+            <form action="bbsupdateAf.do" id="frm" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="title">제목</label>
-					<input type="hidden" name="user_id" id="user_id" value="<%=login.getUser_id() %>">
+                    <input type="hidden" name="user_id" id="user_id" value="<%=login.getUser_id() %>">
+					<input type="hidden" name="bbs_seq" id="bbs_seq" value="<%=bbs_seq %>">
                     <input type="text" id="title" name="title" class="form-control form-control-lg" placeholder="제목을 입력하세요">
                 </div>
 
@@ -128,7 +133,7 @@ if(login == null || login.getUser_id() == "" || login.getUser_id() == null){
                         <label class="custom-file-label" for="file">이미지를 업로드 할 수 있습니다.</label>
                     </div>
                 </div>
-				
+
                 <div class="text-right">
                     <button type="button" class="btn btn-secondary mr-2" id="cancelBtn">취소</button>
                     <button type="button" class="btn btn-primary" id="frmsubmit">작성완료</button>

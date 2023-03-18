@@ -60,22 +60,37 @@ public class FreePostServiceImpl {
         return freePostDAO.getBbs(bbs_seq);
     }
 
-
-
-    // 게시물 수정하기
-    public void updateFreePost(FreePostDto freePost) {
-    	freePostDAO.updateFreePost(freePost);
-    }
+    // 게시물 수정(사진이 있다면)
+	public boolean updateBbs(FreePostDto dto, List<BbsImgVO> bbsImglist, int bbs_seq) {
+		int n = freePostDAO.updateBbs(dto, bbsImglist, bbs_seq);
+		return false;
+	}
+	
+	// 게시물 수정(사진이 없다면)
+	public boolean updateBbs(FreePostDto dto, int bbs_seq) {
+		int n = freePostDAO.updateBbs(dto, bbs_seq);
+		return false;
+	}
 
     // 게시물 삭제하기
-    public void deleteFreePost(int postId) {
-    	freePostDAO.deleteFreePost(postId);
-    }
-
+	public boolean deleteFreePost(int bbs_seq) {
+		return freePostDAO.deleteFreePost(bbs_seq);
+	}
+	
+	
+	
+	
+	
     // 게시물의 첫 번째 이미지 경로 가져오기
     public String getFreePostFirstImagePath(int postId) {
         return freePostDAO.getFreePostFirstImage(postId);
     }
+
+
+
+
+    
+
 
 
 
