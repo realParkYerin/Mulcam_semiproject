@@ -59,12 +59,12 @@
 			</ul>
 		</div>
 		<div>
-			<table border="1" width="300px">
+			<table border="1" width="500px" style="text-align: center;">
 				<tr>
-					<th>게시판 구분</th>
 					<th>제목</th>
 					<th>댓글</th>
 					<th>좋아요</th>
+					<th>작성일</th>
 				</tr>
 				<!-- 이 행 위로 추가되게 함. 빈 행이므로 숨김 처리 -->
 				<tr id="myPost" style="display: none;"></tr>
@@ -92,22 +92,27 @@
 		} else {
 			%>
 			let postRow = "";
-			postRow += "<tr>";
-			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getBbs_seq() %>";
-			postRow += "	</td>";
-			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getContent() %>";
-			postRow += "	</td>";
-			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getCmtcount() %>";
-			postRow += "	</td>";
-			postRow += "	<td>";
-			postRow += "		<%=post.get(0).getLikecount() %>";
-			postRow += "	</td>";
-			postRow += "</tr>";
-			$("#myPost").before(noPostRow);
 			<%
+			for (int i = 0; i < post.size(); i++) {
+				%>
+				postRow = "";
+				postRow += "<tr>";
+				postRow += "	<td>";
+				postRow += "		<%=post.get(i).getTitle() %>";
+				postRow += "	</td>";
+				postRow += "	<td>";
+				postRow += "		<%=post.get(i).getCmtcount() %>";
+				postRow += "	</td>";
+				postRow += "	<td>";
+				postRow += "		<%=post.get(i).getLikecount() %>";
+				postRow += "	</td>";
+				postRow += "	<td>";
+				postRow += "		<%=post.get(i).getWdate() %>";
+				postRow += "	</td>";
+				postRow += "</tr>";
+				$("#myPost").after(postRow);
+				<%
+			}
 		}
 		%>
 	</script>

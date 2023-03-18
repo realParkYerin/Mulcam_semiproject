@@ -33,7 +33,7 @@
 		set species=#{species}, kind=#{kind}, pet_name=#{pet_name}, pet_yy=#{pet_yy}, gender=#{gender}
 		where user_id=#{user_id}
 	</update>
-	<select id="getAllPost" parameterType="a.dto.MemberDto" resultType="List">
+	<select id="getAllPost" parameterType="a.dto.MemberDto" resultType="a.dto.FreePostDto">
 		select *
 		from FreePost
 		where user_id=#{user_id}
