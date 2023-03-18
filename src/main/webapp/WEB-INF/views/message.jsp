@@ -79,6 +79,25 @@ if (petUpdateMsg != null && !petUpdateMsg.equals("")) {
 		<%
 	}
 }
+//로그인 후 메세지 출력
+String login = (String)request.getAttribute("login");
+if(login != null && !login.equals("")){
+	if(login.equals("LOGIN_OK")){
+		%>
+		<script type="text/javascript">
+		alert("성공적으로 로그인되었습니다");
+		location.href = "main.do";
+		</script>
+		<%
+	}else{
+		%>
+		<script type="text/javascript">
+		alert("아이디나 비밀번호를 다시 한 번 확인해주세요");
+		location.href = "login.do";
+		</script>
+		<%		
+	}
+}
 %>
 
 

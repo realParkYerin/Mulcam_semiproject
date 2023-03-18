@@ -4,89 +4,174 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>임시 로그인</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="http://lab.alexcican.com/set_cookies/cookie.js"
-	type="text/javascript"></script>
+<title>로그인</title>
 <style type="text/css">
-.divider:after, .divider:before {
-	content: "";
-	flex: 1;
-	height: 1px;
-	background: #eee;
-}
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
 
-.h-custom {
-	height: calc(100% - 73px);
+*{
+    padding: 0;
+    margin: auto;
+    border: none;
 }
-
-@media ( max-width : 450px) {
-	.h-custom {
-		height: 100%;
-	}
+body{
+    font-size: 14px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.login-container{
+	width: 450px;
+    height: 500px;
+    padding: 40px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #EAEAEA;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+}
+#login-form > input {
+    width: 100%;
+    height: 50px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    border: 1px #bebebe	solid;
+}
+#login-form > label {
+  	font-weight : bold;
+  	border-bottom: 20px;
+}
+#login-form > input::placeholder{
+    color: #787878;
+}
+#login-form > button[type="submit"]{
+	width: 200px;
+	height: 40px;
+    color: #fff;
+    font-size: 18px;
+    background-color: black;
+    border-radius: 3px;
+    text-align: center;
+    margin: 20px 85px;
+}
+#login-form > div{
+	padding: 0 0 20px 0;
+	text-align: right;
+}
+#login-form > div::label{
+	text-align: left;
+}
+.buttonCSS{
+	display: inline-block;
+	width: 150px;
+	height: 40px;
+	font-size : 13px;
+    background-color: #F5FFFA;
+    border-radius: 3px;
+    border: 1px #A9A9A9	solid;
+    text-align: center; 
+    text-decoration: none;
+    color : black;
+    line-height: 40px;
 }
 </style>
 </head>
 <body>
-	<section class="vh-100">
-		<div class="container-fluid h-custom">
-			<div
-				class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-md-9 col-lg-6 col-xl-5">
-					<img
-						src="https://www.multicampus.com/kr/images/main/2021/tab-image3.jpg"
-						class="img-fluid" alt="Sample image">
-				</div>
-				<div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-					<form action="loginAf.do" method="post">
-						<div
-							class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-							<p class="lead fw-normal mb-0 me-3">Sign in with</p>
-						</div>
+  <div class="login-container">
+    <span class="error id="msg"></span>
+    <form action="loginAf.do" method="post" id="login-form">
+      <h2>로그인</h2><br>
+      <h4>아이디와 비밀번호를 입력하세요</h4><br>
+      	<span id="checkId"></span>
+        <input type="text" id="user_id" name="user_id" placeholder="아이디"><br>
+        <input type="password" id="pwd" name="pwd" placeholder="비밀번호"><br>
+        <label>
+          <input type="checkbox" id="save_id">&nbsp;
+          <small>아이디 저장</small>
+        </label>
+        <button type="submit">로그인</button>
+        <div id="find">
+			<label>아이디/비밀번호를 잊으셨나요?</label>&nbsp;&nbsp;&nbsp;&nbsp;       
+			<a href="findMember.do" class="buttonCSS">아이디/비밀번호 찾기</a>
+		</div>	
+		<div id="regi">  	
+       		<label>회원이 아니신가요?</label>&nbsp;&nbsp;&nbsp;&nbsp;       	   
+       		<a href="register.do" class="buttonCSS">회원가입</a>  
+        </div>	
+ 
+      </form>
+  </div> 
+<script type="text/javascript">
+window.onload = function() {
+	
+    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 쿠키값 없으면 공백.
+    var userLoginId = getCookie("userLoginId");
+    document.getElementById("user_id").value = userLoginId;
+	
+    // ID가 있는경우 아이디 저장 체크박스 체크
+    if(document.getElementById("user_id").value != ""){
+    	document.getElementById("save_id").checked = true;
+    }
+	
+    // 아이디 저장하기 체크박스 onchange
+    var checkId = document.getElementById("save_id");
+    
+    checkId.onchange = function (event) {
+        if(checkId.checked){ //checked true
+            var userLoginId = document.getElementById("user_id").value;
+            setCookie("userLoginId", userLoginId, 30); // 30일 동안 쿠키 보관
+        }else{ //checked false
+        	deleteCookie("userLoginId");
+        }
+    };
+    
+    // 아이디 저장하기가  눌린상태에서, ID를 입력한 경우
+    var idInput = document.getElementById("ID");
+    
+    idInput.addEventListener("keyup", function(e) {
+    	if(checkId.checked){ //checked true
+        	var userLoginId = document.getElementById("ID").value;
+            setCookie("userLoginId", userLoginId, 30); // 30일 동안 쿠키 보관
+        }
+     })
+}
+// 쿠키 저장하기
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
 
-						<div class="divider d-flex align-items-center my-4">
-							<p class="text-center fw-bold mx-3 mb-0">Or</p>
-						</div>
-						<!-- id input -->
-						<div class="form-outline mb-4">
-							<input type="text" id="user_id" name="user_id"
-								class="form-control form-control-lg"
-								placeholder="Enter a valid id" /> <label class="form-label"
-								for="form3Example3">Id</label>
-						</div>
-						<!-- Password input -->
-						<div class="form-outline mb-3">
-							<input type="password" id="form3Example4" name="pwd"
-								class="form-control form-control-lg"
-								placeholder="Enter password" /> <label class="form-label"
-								for="form3Example4">Password</label>
-						</div>
-						<div class="text-center text-lg-start mt-4 pt-2">
-							<button type="submit" class="btn btn-primary btn-lg"
-								style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div
-			class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-			<!-- Copyright -->
-			<div class="text-white mb-3 mb-md-0">Copyright ©️ 2021.
-				MultiCampus.</div>
-		</div>
-	</section>
+// 쿠키 삭제
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+
+// 쿠키 가져오기
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+}
+
+</script> 
+
+  
 </body>
+
 </html>
 
 

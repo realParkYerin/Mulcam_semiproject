@@ -12,4 +12,7 @@ public interface MemberDao {
 	
 	// 회원가입
 	int addMember(MemberDto memDto);
+	
+	// 로그인
+	MemberDto login(MemberDto memDto);
 }

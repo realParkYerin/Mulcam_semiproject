@@ -1,4 +1,4 @@
-package a.service.impl;
+package a.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +30,12 @@ public class MemberServiceImpl implements MemberService {
 		int count = memDao.addMember(memDto);
 		return count>0?true:false;
 	}
+
+	@Override
+	public MemberDto login(MemberDto memDto) {
+		return memDao.login(memDto);
+	}
+	
 	
 	
 }
