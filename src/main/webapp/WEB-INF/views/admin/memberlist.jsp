@@ -69,7 +69,7 @@
         <tr>
             <th><%=i + 1 %>
             </th>
-            <td><a href="view.do?user_id=<%=dto.getUser_id() %>">
+            <td><a href="memberview.do?user_id=<%=dto.getUser_id() %>">
 				<%=dto.getUser_id() %>
             </a></td>
             <td><%=dto.getUsername() %>
