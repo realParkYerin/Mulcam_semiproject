@@ -2,7 +2,9 @@ package a.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import a.service.MemberService;
+import a.service.MyPageService;
 import a.util.PdsUtil;
+import a.dto.FreeCommentVO;
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 
 @Controller
 public class MemberController {
@@ -138,11 +144,20 @@ public class MemberController {
 	// 로그인 처리
 	@PostMapping(value = "loginAf.do")
 	public String loginAf(HttpServletRequest req, Model model, MemberDto memDto) {
-		
 		MemberDto mem = memService.login(memDto);
+		PetDto pet = memService.getMyPet(memDto);
+		List<FreePostDto> post = new ArrayList<>();
+		List<FreeCommentVO> comment = new ArrayList<>();
+		post = memService.getAllPost(memDto);
+		comment = memService.getAllComment(memDto);
+		
 		String msg = "";
 		if(mem != null) { // 로그인 성공
 			req.getSession().setAttribute("login", mem); // 로그인 정보를 세션에 저장
+			req.getSession().setAttribute("pet", pet); // 내 반려동물 정보 저장
+			req.getSession().setAttribute("post", post); // 내 글 정보 저장
+			req.getSession().setAttribute("comment", comment); // 내 댓글 정보 저장
+			req.getSession().setMaxInactiveInterval(60 * 60 * 2); // 세션 만료 기한 설정 (2시간)
 			msg = "LOGIN_OK";
 		}else { // 로그인 실패
 			msg = "LOGIN_FAIL";

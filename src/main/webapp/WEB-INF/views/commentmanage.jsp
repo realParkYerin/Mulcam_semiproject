@@ -1,61 +1,136 @@
+<%@page import="a.dto.FreeCommentVO"%>
+<%@page import="java.util.List"%>
 <%@page import="a.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
 	MemberDto login = (MemberDto) session.getAttribute("login");
+	List<FreeCommentVO> comment = (List) session.getAttribute("comment");
 %>
 <html>
 <head>
 <meta charset="UTF-8">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 부트스트랩 CSS 파일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+<!-- jQuery 스크립트 파일 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>내 댓글 관리</title>
 </head>
 <body>
-	<div>
+	<div class="container mt-3">
 		<div>
-			<ul>
-				<li>
-					<a href="memberUpdate.do">
-						<span>회원정보 수정</span>
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a class="nav-link" href="main.do">
+						메인화면으로
+					</a>
+				</li>			
+				<li class="nav-item">
+					<a class="nav-link" href="memberUpdate.do">
+						회원정보 수정
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="petUpdate.do">
+						내 반려동물 관리
 					</a>
 				</li>
 				<li>
-					<a href="petUpdate.do">
-						<span>내 반려동물 관리</span>
-					</a>
+					<div class="dropdown">
+						<a class="nav-link dropdown-toggle active" href="#" id="manageMenu" role="button" data-toggle="dropdown" aria-expanded="false">
+							내 활동 관리
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<li><a class="dropdown-item" href="postManage.do">내 글 관리</a></li>
+							<li><a class="dropdown-item active" href="commentManage.do">내 댓글 관리</a></li>
+						</ul>
+					</div>
 				</li>
-				<li>
-					<a href="#">
-						<span id="manageMenu">내 활동 관리</span>
-					</a>
-					<ul id="manageSubmenu" style="display: none;">
-						<li>
-							<a href="postManage.do">
-								<span>내 글 관리</span>
-							</a>
-						</li>
-						<li>
-							<a href="commentManage.do">
-								<span>내 댓글 관리</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#">
-						<span>회원 탈퇴</span>
+				<li class="nav-item">
+					<a class="nav-link" href="delMember.do">
+						회원 탈퇴
 					</a>
 				</li>
 			</ul>
 		</div>
+		<div>
+			<form action="sortComment.do" method="get" id="frm">
+				<select id="sortOption" name="sortOption">
+					<option value="new">최신순</option>
+					<option value="old">오래된 순</option>
+				</select>
+				<button type="button" id="sortCmtBtn">검색</button>
+			</form>
+		</div>
+		<div>
+			<table class="table table-bordered" style="text-align: center;">
+				<tr id="myComment">
+					<th>내용</th>
+					<th>작성일</th>
+				</tr>
+			</table>
+		</div>
+		
 	</div>
 	<script type="text/javascript">
 		// 내 활동 관리 클릭 시 마다 show / hide 토글
 		$("#manageMenu").click(function() {
 			$("#manageSubmenu").toggle();
 		})
-
+		
+		// 정렬
+		$("#sortCmtBtn").click(function() {
+			$("#frm").submit();
+			
+			<%
+			comment = (List) request.getAttribute("sortComment");
+			%>
+		})
+		
+		// 내 댓글 출력
+		<%
+		if (comment == null) {
+			%>
+			let commentRow = "";
+			commentRow += "<tr>";
+			commentRow += "	<td colspan='4' align='center'>";
+			commentRow += "		조건을 선택 후 검색 버튼을 눌러주세요.";
+			commentRow += "	</td>";
+			commentRow += "</tr>";
+			$("#myComment").after(commentRow);
+			<%
+		} else {
+			%>
+			let commentRow = "";
+			<%
+			if (comment.size() == 0) {
+				%>
+				alert("작성된 댓글이 없습니다.");
+				<%
+			} else {
+				for (int i = 0; i < comment.size(); i++) {
+					%>
+					commentRow = "";
+					commentRow += "<tr>";
+					commentRow += "	<td>";
+					commentRow += "		<%=comment.get(i).getCmt_content() %>";
+					commentRow += "	</td>";
+					commentRow += "	<td>";
+					commentRow += "		<%=comment.get(i).getReg_cmtdate() %>";
+					commentRow += "	</td>";
+					commentRow += "</tr>";
+					$("#myComment").after(commentRow);
+					<%
+				}
+			}
+		}
+		%>
 	</script>
 </body>
 </html>

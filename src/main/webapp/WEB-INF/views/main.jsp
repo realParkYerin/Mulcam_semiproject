@@ -61,6 +61,9 @@
         <li class="nav-item">
           <a class="nav-link" href="#" style="font-family: 'Lobster', cursive">login</a>
         </li>
+        <li>
+        	<a href="apitest.do">api test</a>
+        </li>
       </ul>
     </div>
   </div>

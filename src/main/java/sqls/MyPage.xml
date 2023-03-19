@@ -6,11 +6,13 @@
 		from Member2
 		where user_id=#{user_id}
 	</select>
+	
 	<select id="nickCheck" parameterType="String" resultType="Integer">
 		select count(*)
 		from Member2
 		where nickname=#{nickname}
 	</select>
+	
 	<update id="updateMember" parameterType="a.dto.MemberDto">
 		update Member2
 		set nickname=if(#{nickname} is null, nickname, #{nickname}),
@@ -19,23 +21,34 @@
 			<!-- img_path=if(, , ) -->
 		where user_id=#{user_id}
 	</update>
-	<select id="getMyPet" parameterType="a.dto.MemberDto" resultType="a.dto.PetDto">
-		select pet_seq, species, kind, pet_name, pet_yy, user_id, gender
-		from Pet
-		where user_id=#{user_id}
-	</select>
+	
 	<insert id="insertPet" parameterType="a.dto.PetDto">
 		insert into Pet(species, kind, pet_name, pet_yy, user_id, gender)
 		values(#{species}, #{kind}, #{pet_name}, #{pet_yy}, #{user_id}, #{gender})
 	</insert>
+	
 	<update id="updatePet" parameterType="a.dto.PetDto">
 		update Pet
 		set species=#{species}, kind=#{kind}, pet_name=#{pet_name}, pet_yy=#{pet_yy}, gender=#{gender}
 		where user_id=#{user_id}
 	</update>
-	<select id="getAllPost" parameterType="a.dto.MemberDto" resultType="a.dto.FreePostDto">
+	
+	<select id="getSortPost" parameterType="Map" resultType="a.dto.FreePostDto">
 		select *
 		from FreePost
 		where user_id=#{user_id}
+		order by ${option}
 	</select>
+		
+	<select id="getSortCmt" parameterType="Map" resultType="a.dto.FreeCommentVO">
+		select *
+		from FreeComment
+		where user_id=#{user_id}
+		order by ${option}
+	</select>
+	
+	<delete id="delMember" parameterType="a.dto.MemberDto">
+		delete from Member2
+		where user_id=#{user_id}
+	</delete>
 </mapper>

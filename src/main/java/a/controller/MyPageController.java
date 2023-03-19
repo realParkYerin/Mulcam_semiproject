@@ -1,6 +1,7 @@
 package a.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
@@ -27,24 +29,14 @@ public class MyPageController {
 //	@PostMapping("loginAf.do")
 //	public String loginAf(HttpServletRequest req, MemberDto dto) {
 //		MemberDto mem = service.login(dto);
-//		PetDto pet = service.getMyPet(dto);
-//		List<FreePostDto> post = new ArrayList<>();
-//		post = service.getAllPost(dto);
+
 //		if (mem != null) {
 //			req.getSession().setAttribute("login", mem); // session에 로그인 정보 저장
-//			req.getSession().setAttribute("pet", pet); // session에 펫 정보 저장
-//			req.getSession().setAttribute("post", post); // session에 내 글 정보 저장
 //			req.getSession().setMaxInactiveInterval(60 * 60 * 2);
 //			return "main";
 //		} else {
 //			return "";
 //		}
-//	}
-	
-	// 메인화면으로 이동
-//	@GetMapping("main.do")
-//	public String goMain() {
-//		return "main";
 //	}
 	
 	// 세션 만료 시 message.jsp로 이동
@@ -146,11 +138,86 @@ public class MyPageController {
 		return "postmanage";
 	}
 	
-	
+	// 내 글 목록 정렬하여 데이터 재 전송
+	@GetMapping("sortPost.do")
+	public String sortPost(String sortOption, Model model, HttpServletRequest req) {
+		if (sortOption.equals("new")) {
+			sortOption = "bbs_seq";
+		} else if (sortOption.equals("old")) {
+			sortOption = "bbs_seq desc";
+		} else if (sortOption.equals("comment")) {
+			sortOption = "cmtcount desc";
+		} else if (sortOption.equals("like")) {
+			sortOption = "likecount desc";
+		}
+		
+		MemberDto memDto = (MemberDto) req.getSession().getAttribute("login");
+		
+		HashMap<String, String> paramMap = new HashMap<>();
+		paramMap.put("option", sortOption);
+		paramMap.put("user_id", memDto.getUser_id());
+		
+		List<FreePostDto> sortPostList = service.getSortPost(paramMap);
+		
+		model.addAttribute("sortPost", sortPostList);
+		
+		return "postmanage";
+	}
 	
 	// 내 댓글 관리 페이지로 이동
 	@GetMapping("commentManage.do")
 	public String commentmanage() {
 		return "commentmanage";
 	}
+	
+	// 댓글 목록 정렬 후 재 전송
+	@GetMapping("sortComment.do")
+	public String sortComment(String sortOption, Model model, HttpServletRequest req) {
+		if (sortOption.equals("new")) {
+			sortOption = "comment_seq";
+		} else if (sortOption.equals("old")) {
+			sortOption = "comment_seq desc";
+		}
+		
+		MemberDto memDto = (MemberDto) req.getSession().getAttribute("login");
+		
+		HashMap<String, String> paramMap = new HashMap<>();
+		paramMap.put("option", sortOption);
+		paramMap.put("user_id", memDto.getUser_id());
+		
+		List<FreeCommentVO> sortCmtList = service.getSortCmt(paramMap);
+		
+		model.addAttribute("sortComment", sortCmtList);
+		
+		return "commentmanage";
+	}
+	
+	// 회원탈퇴 페이지로 이동
+	@GetMapping("delMember.do")
+	public String delMember() {
+		return "deletemember";
+	}
+	
+	@GetMapping("delMemberAf.do")
+	public String delMemberAf(Model model, HttpServletRequest req) {
+		MemberDto memDto = (MemberDto) req.getSession().getAttribute("login");
+		boolean isS = service.delMember(memDto);
+		String delMemMsg = "";
+		
+		if (isS) {
+			delMemMsg = "DELETE_SUCCESS";
+		} else {
+			delMemMsg = "DELETE_FAIL";
+		}
+		
+		model.addAttribute("delMemMsg", delMemMsg);
+		
+		return "message";
+	}
+	
+	@GetMapping("apitest.do")
+	public String apiTest() {
+		return "apiTest";
+	}
+	
 }

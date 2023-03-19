@@ -98,6 +98,27 @@ if(login != null && !login.equals("")){
 		<%		
 	}
 }
+
+// 회원 탈퇴 후 메시지 출력
+String delMemMsg = (String) request.getAttribute("delMemMsg");
+if (delMemMsg != null && !delMemMsg.equals("")) {
+	if (delMemMsg.equals("DELETE_SUCCESS")) {
+		%>
+		<script type="text/javascript">
+			alert("회원 탈퇴되었습니다.");
+			<%
+			session.invalidate(); // 세션 삭제
+			%>
+			location.href = "login.do";
+		</script>
+		<%
+	} else {
+		%>
+		alert("오류가 발생하였습니다 : " + <%=delMemMsg%>);
+		location.href = "delMember.do";
+		<%
+	}
+}
 %>
 
 

@@ -5,116 +5,130 @@
 <%
 	MemberDto login = (MemberDto) session.getAttribute("login");
 %>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 부트스트랩 CSS 파일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+<!-- jQuery 스크립트 파일 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>회원정보 수정</title>
+<style type="text/css">
+th {
+	text-align: center;
+}
+</style>
 </head>
 <body>
-	<div>
+	<div class="container mt-3">
 		<div>
-			<ul>
-				<li>
-					<a href="main.do">
-						<span>메인화면으로</span>
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a class="nav-link" href="main.do">
+						메인화면으로
 					</a>
 				</li>			
-				<li>
-					<a href="memberUpdate.do">
-						<span>회원정보 수정</span>
+				<li class="nav-item">
+					<a class="nav-link active" href="memberUpdate.do">
+						회원정보 수정
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="petUpdate.do">
+						내 반려동물 관리
 					</a>
 				</li>
 				<li>
-					<a href="petUpdate.do">
-						<span>내 반려동물 관리</span>
-					</a>
+					<div class="dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="manageMenu" role="button" data-toggle="dropdown" aria-expanded="false">
+							내 활동 관리
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<li><a class="dropdown-item" href="postManage.do">내 글 관리</a></li>
+							<li><a class="dropdown-item" href="commentManage.do">내 댓글 관리</a></li>
+						</ul>
+					</div>
 				</li>
-				<li>
-					<a href="#">
-						<span id="manageMenu">내 활동 관리</span>
-					</a>
-					<ul id="manageSubmenu" style="display: none;">
-						<li>
-							<a href="postManage.do">
-								<span>내 글 관리</span>
-							</a>
-						</li>
-						<li>
-							<a href="commentManage.do">
-								<span>내 댓글 관리</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#">
-						<span>회원 탈퇴</span>
+				<li class="nav-item">
+					<a class="nav-link" href="delMember.do">
+						회원 탈퇴
 					</a>
 				</li>
 			</ul>
 		</div>
-		<div id="updateInputPwd">
-			비밀번호를 입력하세요
-			<br>
-			<input type="password" id="pwd" placeholder="●●●●●●●●" />
-			<button type="button" id="pwdChkBtn">확인</button>
-		</div>
-		<div style="display: none;" id="updateDetail">
-			<form action="memberUpdateAf.do" method="post" id="frm">
-				<table border="1" style="width: 500px; text-align: center;">
-					<tr>
-						<td>이름</td>
-						<td>
-							<%=login.getUsername() %>
-						</td>
-					</tr>
-					<tr>
-						<td>ID</td>
-						<td>
-							<%=login.getUser_id()%>
-							<input type="hidden" value="<%=login.getUser_id()%>" name="user_id">
-						</td>					
-					</tr>
-					<tr>
-						<td>닉네임</td>
-						<td>
-							<input type="text" value="<%=login.getNickname()%>" id="nickname" name="nickname">&nbsp;
-							<button type="button" id="nickChkBtn">중복확인</button>
-							<p id="nickCheck" />
-						</td>
-					</tr>
-					<tr>
-						<td>이메일</td>
-						<td>
-							<input type="text" value="<%=login.getEmail()%>" id="email" name="email">
-						</td>
-					</tr>
-					<tr>
-						<td>새 비밀번호</td>
-						<td>
-							<input type="password" placeholder="●●●●●●●●" id="newPwd1">
-						</td>
-					</tr>
-					<tr>
-						<td>비밀번호 확인</td>
-						<td>
-							<input type="password" placeholder="●●●●●●●●" id="newPwd2" onchange="newPwdChk()" name="pwd">
-							<p id="newPwdCheck" />
-						</td>
-					</tr>
-					<tr style="height: 100px;">
-						<td>프로필 사진</td>
-						<td>
-							<img src="asdf">
-							<input type="text" value="이미지 경로" readonly="readonly">
-							<button type="button">찾아보기</button>
-						</td>
-					</tr>
-				</table>
-				<br>
-				<button type="button" id="memberUpdateBtn">저장</button>
-			</form>
+		<div class="card mt-3">
+			<div class="card-body">
+				<div id="updateInputPwd">
+					<p class="mb-1">비밀번호를 입력하세요</p>
+					<div class="input-group mb-3">
+						<input type="password" class="form-control" id="pwd" placeholder="●●●●●●●●" />
+						<div class="input-group-append">
+							<button type="button" class="btn btn-primary" id="pwdChkBtn">확인</button>
+						</div>
+					</div>
+				</div>
+				<div style="display: none;" id="updateDetail">
+					<form action="memberUpdateAf.do" method="post" id="frm">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="row">이름</th>
+									<td><%=login.getUsername() %></td>
+								</tr>
+								<tr>
+									<th scope="row">ID</th>
+									<td>
+										<%=login.getUser_id()%>
+										<input type="hidden" value="<%=login.getUser_id()%>" name="user_id">
+									</td>					
+								</tr>
+								<tr>
+									<th scope="row">닉네임</th>
+									<td>
+										<input type="text" value="<%=login.getNickname()%>" id="nickname" name="nickname">&nbsp;
+										<button type="button" id="nickChkBtn" class="btn btn-sm btn-secondary">중복확인</button>
+										<p id="nickCheck" style="display: none;" />
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">이메일</th>
+									<td>
+										<input type="text" value="<%=login.getEmail()%>" id="email" name="email">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">새 비밀번호</th>
+									<td>
+										<input type="password" placeholder="●●●●●●●●" id="newPwd1">
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">비밀번호 확인</th>
+									<td>
+										<input type="password" placeholder="●●●●●●●●" id="newPwd2" onchange="newPwdChk()" name="pwd">
+										<p id="newPwdCheck" style="display: none;" />
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">프로필 사진</th>
+									<td>
+										<img src="asdf">
+										<input type="text" value="이미지 경로" readonly="readonly">
+										<button type="button" class="btn btn-sm btn-secondary">찾아보기</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+						<button type="button" id="memberUpdateBtn" class="btn btn-primary">저장</button>
+					</form>
+				</div>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
