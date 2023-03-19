@@ -1,3 +1,4 @@
+<%@page import="a.dto.MemberDto"%>
 <%@page import="java.util.List"%>
 <%@page import="a.dto.BbsImgVO"%>
 <%@page import="a.dto.FpdImgDto"%>
@@ -88,6 +89,10 @@ img {
 
 <body>
 
+<%
+	MemberDto login = (MemberDto)session.getAttribute("login");		
+%> 
+
 <div class="container bg-light py-4">
     <div class="row">
         <div class="col-md-8 mx-auto">
@@ -128,12 +133,30 @@ img {
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-primary" onclick="bbslist()">글 목록</button>
+                    
+                    <!-- 주소창으로 인한 접근을 막기위해 인터셉터가 필요한데, 사용법을 모르겠습니다.. -->
+                    <!-- 아래의 내용은 로그인 세션과 글 작성자가 동일해야지만 보이도록 하겠음. -->
+                    <%if(dto.getuser_id().equals(login.getUser_id())){
+                    	%>
+                    <button type="button" class="btn btn-primary" onclick="bbsupdate()">글 수정</button>
+                    <button type="button" class="btn btn-primary" onclick="bbsdelete()">글 삭제</button>
+                                        	<%
+                    }
+                    %>
                 </div>
             </div>
 
             <script type="text/javascript">
             function bbslist(){
                 location.href = "bbslist.do";
+            }
+            
+            function bbsupdate(){
+            	location.href = "bbsupdate.do?bbs_seq=<%=dto.getBbs_seq() %>";
+            }
+            
+            function bbsdelete(){
+            	location.href = "bbsdelete.do?bbs_seq=<%=dto.getBbs_seq() %>";
             }
             </script>
         </div>

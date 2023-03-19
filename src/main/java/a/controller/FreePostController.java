@@ -115,10 +115,12 @@ public class FreePostController {
 			}
 		} else {
 			boolean isS = freePostService.writeBbs(dto);
+			if(isS) {
+				System.out.println("이미지 없는 글 작성 완료");	
+			}
 		}
 		
 		
-		// return "message";
 		return "redirect:/bbslist.do";	// controller에서  controller로 이동시 == sendRedirect
 		// return "forward:/bbslist.do";	// controller에서  controller로 이동시 == forward
 	}
@@ -130,6 +132,92 @@ public class FreePostController {
 		model.addAttribute("bbsdto", dto);
 		
 		return "bbsdetail";
+	}
+	
+	@GetMapping(value = "bbsupdate.do")
+	public String bbsupdate(Model model, int bbs_seq) {
+		model.addAttribute("bbs_seq", bbs_seq); 
+		//System.out.println(bbs_seq);
+		return "bbsupdate";
+	}
+	
+	
+	@PostMapping(value = "bbsupdateAf.do")
+	public String bbsupdateAf(Model model, @RequestParam(value="file", required = false) List<MultipartFile> files, FreePostDto dto, int bbs_seq) {
+		
+		
+		// 문자열만 들어가도 파일이 들어가는 오류가 있음. 따라서 조건문 아래와 같이 작성했습니다.
+		// System.out.println("files.get(0):" + files.get(0));
+		// System.out.println("filename:" + files.get(0).getOriginalFilename());
+		
+		if(files.get(0).getOriginalFilename() != null && !files.get(0).getOriginalFilename().equals("")) {	// 파일이 있는경우
+			// 임시 절대경로
+			String uploadPath = "C:\\Users\\kstur\\AppData\\Roaming\\SPB_Data\\git\\Mulcam_semiproject\\src\\main\\webapp\\resources\\upload\\";
+			// fileName = 원본 파일 이름,
+		    List<BbsImgVO> BbsImglist = new ArrayList<BbsImgVO>();
+		    for (MultipartFile file : files) {
+		    	BbsImgVO imgdto = new BbsImgVO();
+		    	imgdto.setImg_name(BbsUtil.getNewFileName(file.getOriginalFilename()));
+		    	imgdto.setImg_path(uploadPath);
+		        String mimeType = file.getContentType();
+		        imgdto.setImg_type(mimeType.substring(mimeType.lastIndexOf("/") + 1));
+		        
+		        
+		        // 파일을 지정한 경로에 저장하는 부분
+		        try {
+		            byte[] bytes = file.getBytes();
+		            Path path = Paths.get(uploadPath + imgdto.getImg_name());
+		            Files.write(path, bytes);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+
+		        System.out.println("파일 상세정보: "+ imgdto.toString());
+		        BbsImglist.add(imgdto);
+	    	} // for문의 끝 (모든 들어온 파일 list에 다 담기.)
+	    	  // 
+			// System.out.println(dto.getBbs_seq()); DB에서 자동설정..
+			// model.addAttribute("bbswrite", bbswrite);
+		    
+		    boolean isS = freePostService.updateBbs(dto, BbsImglist, bbs_seq);
+			if(isS) {	
+				System.out.println("이미지 있는 글 작성 완료");	
+				return "redirect:/bbslist.do";
+			}else {
+				System.out.println("등록 실패");
+				return "redirect:/bbslist.do";
+			}
+		} else {
+			boolean isS = freePostService.updateBbs(dto, bbs_seq);
+			if(isS) {
+				System.out.println("이미지 없는 글 작성 완료");	
+				return "redirect:/bbslist.do";
+			}
+		}
+		
+		
+		 return "redirect:/bbslist.do";	// controller에서  controller로 이동시 == sendRedirect
+		// return "forward:/bbslist.do";	// controller에서  controller로 이동시 == forward
+	}
+	
+	
+	
+	@GetMapping(value = "bbsdelete.do")
+	public String bbsdelete(int bbs_seq) {
+		
+		// DB에서 삭제
+		boolean isS = freePostService.deleteFreePost(bbs_seq);
+		if(isS) {
+			return "redirect:/bbslist.do";
+		}else {
+			System.out.println("삭제 실패");
+		}
+		
+		// 실제 경로에서 이미지파일의 삭제는 DAO에서 처리하도록 했습니다.
+		
+		
+		
+		return "redirect:/bbslist.do";
 	}
 	
 
