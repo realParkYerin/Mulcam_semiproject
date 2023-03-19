@@ -12,62 +12,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 부트스트랩 CSS 파일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+<!-- jQuery 스크립트 파일 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>내 글 관리</title>
 </head>
 <body>
-	<div>
+	<div class="container mt-3">
 		<div>
-			<ul>
-				<li>
-					<a href="main.do">
-						<span>메인화면으로</span>
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a class="nav-link" href="main.do">
+						메인화면으로
+					</a>
+				</li>			
+				<li class="nav-item">
+					<a class="nav-link" href="memberUpdate.do">
+						회원정보 수정
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="petUpdate.do">
+						내 반려동물 관리
 					</a>
 				</li>
 				<li>
-					<a href="memberUpdate.do">
-						<span>회원정보 수정</span>
-					</a>
+					<div class="dropdown">
+						<a class="nav-link dropdown-toggle active" href="#" id="manageMenu" role="button" data-toggle="dropdown" aria-expanded="false">
+							내 활동 관리
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<li><a class="dropdown-item active" href="postManage.do">내 글 관리</a></li>
+							<li><a class="dropdown-item" href="commentManage.do">내 댓글 관리</a></li>
+						</ul>
+					</div>
 				</li>
-				<li>
-					<a href="petUpdate.do">
-						<span>내 반려동물 관리</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<span id="manageMenu">내 활동 관리</span>
-					</a>
-					<ul id="manageSubmenu" style="display: none;">
-						<li>
-							<a href="postManage.do">
-								<span>내 글 관리</span>
-							</a>
-						</li>
-						<li>
-							<a href="commentManage.do">
-								<span>내 댓글 관리</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#">
-						<span>회원 탈퇴</span>
+				<li class="nav-item">
+					<a class="nav-link" href="delMember.do">
+						회원 탈퇴
 					</a>
 				</li>
 			</ul>
 		</div>
 		<div>
-			<table border="1" width="500px" style="text-align: center;">
-				<tr>
+			<form action="sortPost.do" method="get" id="frm">
+				<select id="sortOption" name="sortOption">
+					<option value="new">최신순</option>
+					<option value="old">오래된 순</option>
+					<option value="comment">댓글 순</option>
+					<option value="like">좋아요 순</option>
+				</select>
+				<button type="button" id="sortPostBtn">검색</button>
+			</form>
+		</div>
+		<div>
+			<table class="table table-bordered" style="text-align: center;">
+				<tr id="myPost">
 					<th>제목</th>
 					<th>댓글</th>
 					<th>좋아요</th>
 					<th>작성일</th>
 				</tr>
-				<!-- 이 행 위로 추가되게 함. 빈 행이므로 숨김 처리 -->
-				<tr id="myPost" style="display: none;"></tr>
 			</table>
 		</div>
 	</div>
@@ -76,42 +87,57 @@
 		$("#manageMenu").click(function() {
 			$("#manageSubmenu").toggle();
 		})
-
+		
+		// 정렬
+		$("#sortPostBtn").click(function() {
+			$("#frm").submit();
+			
+			<%
+			post = (List) request.getAttribute("sortPost");
+			%>
+		})
+		
 		// 내 글 출력
 		<%
 		if (post == null) {
 			%>
-			let noPostRow = "";
-			noPostRow += "<tr>";
-			noPostRow += "	<td colspan='4' align='center'>";
-			noPostRow += "		작성된 글이 없습니다.";
-			noPostRow += "	</td>";
-			noPostRow += "</tr>";
-			$("#myPost").before(noPostRow);
+			let postRow = "";
+			postRow += "<tr>";
+			postRow += "	<td colspan='4' align='center'>";
+			postRow += "		조건을 선택 후 검색 버튼을 눌러주세요.";
+			postRow += "	</td>";
+			postRow += "</tr>";
+			$("#myPost").after(postRow);
 			<%
 		} else {
 			%>
-			let postRow = "";
+			postRow = "";
 			<%
-			for (int i = 0; i < post.size(); i++) {
+			if (post.size() == 0) {
 				%>
-				postRow = "";
-				postRow += "<tr>";
-				postRow += "	<td>";
-				postRow += "		<%=post.get(i).getTitle() %>";
-				postRow += "	</td>";
-				postRow += "	<td>";
-				postRow += "		<%=post.get(i).getCmtcount() %>";
-				postRow += "	</td>";
-				postRow += "	<td>";
-				postRow += "		<%=post.get(i).getLikecount() %>";
-				postRow += "	</td>";
-				postRow += "	<td>";
-				postRow += "		<%=post.get(i).getWdate() %>";
-				postRow += "	</td>";
-				postRow += "</tr>";
-				$("#myPost").after(postRow);
+				alert("작성된 글이 없습니다.");
 				<%
+			} else {
+				for (int i = 0; i < post.size(); i++) {
+					%>
+					postRow = "";
+					postRow += "<tr>";
+					postRow += "	<td>";
+					postRow += "		<%=post.get(i).getTitle() %>";
+					postRow += "	</td>";
+					postRow += "	<td>";
+					postRow += "		<%=post.get(i).getCmtcount() %>";
+					postRow += "	</td>";
+					postRow += "	<td>";
+					postRow += "		<%=post.get(i).getLikecount() %>";
+					postRow += "	</td>";
+					postRow += "	<td>";
+					postRow += "		<%=post.get(i).getWdate() %>";
+					postRow += "	</td>";
+					postRow += "</tr>";
+					$("#myPost").after(postRow);
+					<%
+				}
 			}
 		}
 		%>

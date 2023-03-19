@@ -1,5 +1,6 @@
 package a.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import a.dao.MyPageDao;
+import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
@@ -43,11 +45,6 @@ public class MyPageDaoImpl implements MyPageDao {
 	}
 	
 	@Override
-	public PetDto getMyPet(MemberDto dto) {
-		return session.selectOne(ns1 + "getMyPet", dto);
-	}
-	
-	@Override
 	public int insertPet(PetDto pet) {
 		int n = session.insert(ns1 + "insertPet", pet);
 		return n;
@@ -60,8 +57,23 @@ public class MyPageDaoImpl implements MyPageDao {
 	}
 	
 	@Override
-	public List<FreePostDto> getAllPost(MemberDto dto) {
-		return session.selectList(ns1 + "getAllPost", dto);
+	public PetDto getMyPet(MemberDto dto) {
+		return session.selectOne(ns2 + "getMyPet", dto);
+	}
+	
+	@Override
+	public List<FreePostDto> getSortPost(HashMap<String, String> paramMap) {
+		return session.selectList(ns1 + "getSortPost", paramMap);
+	}
+	
+	@Override
+	public List<FreeCommentVO> getSortCmt(HashMap<String, String> paramMap) {
+		return session.selectList(ns1 + "getSortCmt", paramMap);
+	}
+	
+	@Override
+	public int delMember(MemberDto dto) {
+		return session.delete(ns1 + "delMember", dto);
 	}
 	
 }

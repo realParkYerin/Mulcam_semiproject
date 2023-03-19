@@ -1,11 +1,13 @@
 package a.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import a.dao.MyPageDao;
+import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
@@ -39,11 +41,6 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 	
 	@Override
-	public PetDto getMyPet(MemberDto dto) {
-		return dao.getMyPet(dto);
-	}
-	
-	@Override
 	public boolean insertPet(PetDto pet) {
 		int n = dao.insertPet(pet);
 		return n > 0 ? true : false;
@@ -56,8 +53,24 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 	
 	@Override
-	public List<FreePostDto> getAllPost(MemberDto dto) {
-		return dao.getAllPost(dto);
+	public PetDto getMyPet(MemberDto dto) {
+		return dao.getMyPet(dto);
+	}
+	
+	@Override
+	public List<FreePostDto> getSortPost(HashMap<String, String> paramMap) {
+		return dao.getSortPost(paramMap);
+	}
+	
+	@Override
+	public List<FreeCommentVO> getSortCmt(HashMap<String, String> paramMap) {
+		return dao.getSortCmt(paramMap);
+	}
+	
+	@Override
+	public boolean delMember(MemberDto dto) {
+		int n = dao.delMember(dto);
+		return n > 0 ? true : false;
 	}
 	
 }

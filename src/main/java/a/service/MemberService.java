@@ -1,6 +1,11 @@
 package a.service;
 
+import java.util.List;
+
+import a.dto.FreeCommentVO;
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 
 public interface MemberService {
 	
@@ -11,4 +16,11 @@ public interface MemberService {
 	boolean addMember(MemberDto memDto);
 	
 	MemberDto login(MemberDto memDto);
+	
+	List<FreePostDto> getAllPost(MemberDto dto);
+	
+	PetDto getMyPet(MemberDto dto);
+	
+	List<FreeCommentVO> getAllComment(MemberDto dto);
+	
 }

@@ -7,109 +7,118 @@
 	MemberDto login = (MemberDto) session.getAttribute("login");
 	PetDto pet = (PetDto) session.getAttribute("pet");
 %>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 부트스트랩 CSS 파일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+<!-- jQuery 스크립트 파일 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>내 반려동물 관리</title>
+<style type="text/css">
+th {
+	text-align: center;
+}
+</style>
 </head>
 <body>
-	<script type="text/javascript">
-		// 저장된 펫 정보 없을 시 alert
-		<%
+ 	<script type="text/javascript"> 
+ 		// 저장된 펫 정보 없을 시 alert
+		<% 
 		if (pet == null) {
-		%>
-			alert("등록된 반려동물이 없습니다. 새로 등록해주세요.");
-		<%
-		}
-		%>
-	</script>
-	<div>
+ 		%> 
+ 			alert("등록된 반려동물이 없습니다. 새로 등록해주세요.");
+		<% 
+ 		}
+		%> 
+ 	</script> 
+	<div class="container mt-3">
 		<div>
-			<ul>
-				<li>
-					<a href="main.do">
-						<span>메인화면으로</span>
+			<ul class="nav nav-pills">
+				<li class="nav-item">
+					<a class="nav-link" href="main.do">
+						메인화면으로
 					</a>
 				</li>			
-				<li>
-					<a href="memberUpdate.do">
-						<span>회원정보 수정</span>
+				<li class="nav-item">
+					<a class="nav-link" href="memberUpdate.do">
+						회원정보 수정
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="petUpdate.do">
+						내 반려동물 관리
 					</a>
 				</li>
 				<li>
-					<a href="petUpdate.do">
-						<span>내 반려동물 관리</span>
-					</a>
+					<div class="dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="manageMenu" role="button" data-toggle="dropdown" aria-expanded="false">
+							내 활동 관리
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<li><a class="dropdown-item" href="postManage.do">내 글 관리</a></li>
+							<li><a class="dropdown-item" href="commentManage.do">내 댓글 관리</a></li>
+						</ul>
+					</div>
 				</li>
-				<li>
-					<a href="#">
-						<span id="manageMenu">내 활동 관리</span>
-					</a>
-					<ul id="manageSubmenu" style="display: none;">
-						<li>
-							<a href="postManage.do">
-								<span>내 글 관리</span>
-							</a>
-						</li>
-						<li>
-							<a href="commentManage.do">
-								<span>내 댓글 관리</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#">
-						<span>회원 탈퇴</span>
+				<li class="nav-item">
+					<a class="nav-link" href="delMember.do">
+						회원 탈퇴
 					</a>
 				</li>
 			</ul>
 		</div>
-		<div id="petUpdateDetail">
-			<form action="petUpdateAf.do" method="post" id="frm">
-				<input type="hidden" name="user_id" value="<%=login.getUser_id()%>">
-				<table border="1" style="text-align: center;">
-					<tr>
-						<td width="100px">종</td>
-						<td width="250px">
-							<select id="species" name="species">
-								<option value="">종을 선택해주세요</option>
-								<option value="dog">강아지</option>
-								<option value="cat">고양이</option>
-								<option value="etc">기타</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>종류</td>
-						<td>
-							<input type="text" value="" id="kind" name="kind">
-						</td>					
-					</tr>
-					<tr>
-						<td>이름</td>
-						<td>
-							<input type="text" value="" id="pet_name" name="pet_name">
-						</td>
-					</tr>
-					<tr>
-						<td>생년</td>
-						<td>
-							<input type="text" value="" id="pet_yy" name="pet_yy" placeholder="YYYY">
-						</td>
-					</tr>
-					<tr>
-						<td>성별</td>
-						<td>
-							<input type="radio" id="radioMale" name="gender" value="male">♂&nbsp;
-							<input type="radio" id="radioFemale" name="gender" value="female">♀
-						</td>
-					</tr>
-				</table>
-				<br>
-				<button type="button" id="petUpdateBtn">저장</button>
-			</form>
+		<div class="card mt-3">
+			<div id="petUpdateDetail" class="card-body">
+				<form action="petUpdateAf.do" method="post" id="frm">
+					<input type="hidden" name="user_id" value="<%=login.getUser_id()%>">
+					<table class="table table-bordered">
+						<tr>
+							<th scope="row" width="305px">종</th>
+							<td>
+								<select id="species" name="species">
+									<option value="">종을 선택해주세요</option>
+									<option value="dog">강아지</option>
+									<option value="cat">고양이</option>
+									<option value="etc">기타</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">종류</th>
+							<td>
+								<input type="text" value="" id="kind" name="kind">
+							</td>					
+						</tr>
+						<tr>
+							<th scope="row">이름</th>
+							<td>
+								<input type="text" value="" id="pet_name" name="pet_name">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">생년</th>
+							<td>
+								<input type="text" value="" id="pet_yy" name="pet_yy" placeholder="YYYY">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">성별</th>
+							<td>
+								<input type="radio" id="radioMale" name="gender" value="male">♂&nbsp;&nbsp;&nbsp;
+								<input type="radio" id="radioFemale" name="gender" value="female">♀
+							</td>
+						</tr>
+					</table>
+					<br>
+					<button type="button" id="petUpdateBtn" class="btn btn-primary">저장</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">

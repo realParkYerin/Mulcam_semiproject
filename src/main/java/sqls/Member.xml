@@ -31,4 +31,25 @@
 	where user_id=#{user_id} and pwd=#{pwd}
 </select>
 
+<!-- 내 반려동물 정보 -->
+<select id="getMyPet" parameterType="a.dto.MemberDto" resultType="a.dto.PetDto">
+	select pet_seq, species, kind, pet_name, pet_yy, user_id, gender
+	from Pet
+	where user_id=#{user_id}
+</select>
+
+<!-- 내 글 정보 -->
+<select id="getAllPost" parameterType="a.dto.MemberDto" resultType="a.dto.FreePostDto">
+	select *
+	from FreePost
+	where user_id=#{user_id}
+</select>
+
+<!-- 내 댓글 정보 -->
+<select id="getAllComment" parameterType="a.dto.MemberDto" resultType="a.dto.FreeCommentVO">
+	select *
+	from FreeComment
+	where user_id=#{user_id}
+</select>
+
 </mapper>

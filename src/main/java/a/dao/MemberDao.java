@@ -1,6 +1,11 @@
 package a.dao;
 
+import java.util.List;
+
+import a.dto.FreeCommentVO;
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 
 public interface MemberDao {
 	
@@ -15,4 +20,14 @@ public interface MemberDao {
 	
 	// 로그인
 	MemberDto login(MemberDto memDto);
+	
+	// 펫 정보 불러오기
+	PetDto getMyPet(MemberDto dto);
+	
+	// 내 글 정보 불러오기
+	List<FreePostDto> getAllPost(MemberDto dto);
+	
+	// 내 댓글 정보 불러오기
+	List<FreeCommentVO> getAllComment(MemberDto dto);
+
 }

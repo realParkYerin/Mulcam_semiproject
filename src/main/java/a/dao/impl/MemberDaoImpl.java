@@ -1,11 +1,16 @@
-package a.dao.Impl;
+package a.dao.impl;
+
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import a.dao.MemberDao;
+import a.dto.FreeCommentVO;
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -35,5 +40,19 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne(ns + "login", memDto);
 	}
 	
+	@Override
+	public PetDto getMyPet(MemberDto dto) {
+		return session.selectOne(ns + "getMyPet", dto);
+	}
+	
+	@Override
+	public List<FreePostDto> getAllPost(MemberDto dto) {
+		return session.selectList(ns + "getAllPost", dto);
+	}
+	
+	@Override
+	public List<FreeCommentVO> getAllComment(MemberDto dto) {
+		return session.selectList(ns + "getAllComment", dto);
+	}
 	
 }

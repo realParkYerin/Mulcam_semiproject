@@ -1,10 +1,15 @@
-package a.serviceImpl;
+package a.service.impl;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import a.dao.MemberDao;
+import a.dto.FreeCommentVO;
+import a.dto.FreePostDto;
 import a.dto.MemberDto;
+import a.dto.PetDto;
 import a.service.MemberService;
 
 @Service
@@ -36,6 +41,19 @@ public class MemberServiceImpl implements MemberService {
 		return memDao.login(memDto);
 	}
 	
+	@Override
+	public PetDto getMyPet(MemberDto dto) {
+		return memDao.getMyPet(dto);
+	}
 	
+	@Override
+	public List<FreePostDto> getAllPost(MemberDto dto) {
+		return memDao.getAllPost(dto);
+	}
+	
+	@Override
+	public List<FreeCommentVO> getAllComment(MemberDto dto) {
+		return memDao.getAllComment(dto);
+	}
 	
 }
