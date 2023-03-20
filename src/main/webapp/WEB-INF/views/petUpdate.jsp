@@ -24,6 +24,19 @@
 th {
 	text-align: center;
 }
+@font-face {
+	font-family: 'Katuri';
+	src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+   font-size: 14px;
+   font-family: Katuri, sans-serif;
+}
+.form-control {
+	width: 300px;
+}
 </style>
 </head>
 <body>
@@ -73,51 +86,53 @@ th {
 				</li>
 			</ul>
 		</div>
-		<div class="card mt-3">
-			<div id="petUpdateDetail" class="card-body">
-				<form action="petUpdateAf.do" method="post" id="frm">
-					<input type="hidden" name="user_id" value="<%=login.getUser_id()%>">
-					<table class="table table-bordered">
-						<tr>
-							<th scope="row" width="305px">종</th>
-							<td>
-								<select id="species" name="species">
-									<option value="">종을 선택해주세요</option>
-									<option value="dog">강아지</option>
-									<option value="cat">고양이</option>
-									<option value="etc">기타</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">종류</th>
-							<td>
-								<input type="text" value="" id="kind" name="kind">
-							</td>					
-						</tr>
-						<tr>
-							<th scope="row">이름</th>
-							<td>
-								<input type="text" value="" id="pet_name" name="pet_name">
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">생년</th>
-							<td>
-								<input type="text" value="" id="pet_yy" name="pet_yy" placeholder="YYYY">
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">성별</th>
-							<td>
-								<input type="radio" id="radioMale" name="gender" value="male">♂&nbsp;&nbsp;&nbsp;
-								<input type="radio" id="radioFemale" name="gender" value="female">♀
-							</td>
-						</tr>
-					</table>
-					<br>
-					<button type="button" id="petUpdateBtn" class="btn btn-primary">저장</button>
-				</form>
+		<div align="center">
+			<div class="card mt-3" style="width: 700px;">
+				<div id="petUpdateDetail" class="card-body">
+					<form action="petUpdateAf.do" method="post" id="frm">
+						<input type="hidden" name="user_id" value="<%=login.getUser_id()%>">
+						<table class="table table-bordered">
+							<tr>
+								<th scope="row" width="305px">종</th>
+								<td>
+									<select id="species" name="species" class="custom-select">
+										<option value="">종을 선택해주세요</option>
+										<option value="dog">강아지</option>
+										<option value="cat">고양이</option>
+										<option value="etc">기타</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">종류</th>
+								<td>
+									<input type="text" value="" id="kind" name="kind" class="form-control">
+								</td>					
+							</tr>
+							<tr>
+								<th scope="row">이름</th>
+								<td>
+									<input type="text" value="" id="pet_name" name="pet_name" class="form-control">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">생년</th>
+								<td>
+									<input type="text" value="" id="pet_yy" name="pet_yy" placeholder="YYYY" class="form-control">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">성별</th>
+								<td>
+									<input type="radio" id="radioMale" name="gender" value="male">♂&nbsp;&nbsp;&nbsp;
+									<input type="radio" id="radioFemale" name="gender" value="female">♀
+								</td>
+							</tr>
+						</table>
+						<br>
+						<button type="button" id="petUpdateBtn" class="btn btn-primary">저장</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

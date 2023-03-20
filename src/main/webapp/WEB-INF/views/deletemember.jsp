@@ -18,6 +18,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>회원 탈퇴</title>
+<style type="text/css">
+@font-face {
+	font-family: 'Katuri';
+	src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+   font-size: 14px;
+   font-family: Katuri, sans-serif;
+}
+</style>
 </head>
 <body>
 	<div class="container mt-3">
@@ -62,7 +74,7 @@
 					<p>회원 탈퇴 시, 모든 개인정보가 삭제되며 되돌릴 수 없습니다.</p>
 					<p>탈퇴하시겠습니까?</p>
 					<br>
-					<button type="button" id="delMemBtn">회원 탈퇴</button>
+					<button type="button" id="delMemBtn" class="btn btn-primary">회원 탈퇴</button>
 					<input type="hidden" name="user_id" value="<%=login.getUser_id()%>">
 				</form>
 			</div>

@@ -263,7 +263,7 @@ td a.btn-danger:hover {
                     
                      <table class="table table-borderless">
                         <tbody>
-							<tr>
+							<tr style="text-align: center;">
 							    <td width="200px"></td>
 							    <th width="200px"><%=dto.getuser_id() %></th> <%-- 작성자 --%>
 							    <td width="50px"></td>

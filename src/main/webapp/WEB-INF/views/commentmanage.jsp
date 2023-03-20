@@ -7,6 +7,10 @@
 <%
 	MemberDto login = (MemberDto) session.getAttribute("login");
 	List<FreeCommentVO> comment = (List) session.getAttribute("comment");
+	String sortOption = (String) request.getParameter("sortOption");
+	if (sortOption == null) {
+		sortOption = "new";
+	}
 %>
 <html>
 <head>
@@ -21,6 +25,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>내 댓글 관리</title>
+<style type="text/css">
+@font-face {
+	font-family: 'Katuri';
+	src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+   font-size: 14px;
+   font-family: Katuri, sans-serif;
+}
+</style>
 </head>
 <body>
 	<div class="container mt-3">
@@ -60,13 +76,16 @@
 			</ul>
 		</div>
 		<div>
+			<br>
 			<form action="sortComment.do" method="get" id="frm">
-				<select id="sortOption" name="sortOption">
+				<select id="sortOption" name="sortOption" class="custom-select">
 					<option value="new">최신순</option>
 					<option value="old">오래된 순</option>
 				</select>
-				<button type="button" id="sortCmtBtn">검색</button>
+				&nbsp;&nbsp;
+				<button type="button" id="sortCmtBtn" class="btn btn-primary">검색</button>
 			</form>
+			<br>
 		</div>
 		<div>
 			<table class="table table-bordered" style="text-align: center;">
@@ -76,9 +95,12 @@
 				</tr>
 			</table>
 		</div>
-		
 	</div>
 	<script type="text/javascript">
+		// 정렬 시 select에서 해당 옵션 유지
+	    $("#sortOption").val("<%=sortOption%>");
+	    $("#sortOption").attr("selected", "selected");
+	
 		// 내 활동 관리 클릭 시 마다 show / hide 토글
 		$("#manageMenu").click(function() {
 			$("#manageSubmenu").toggle();

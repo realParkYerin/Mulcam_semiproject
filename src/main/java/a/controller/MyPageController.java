@@ -185,6 +185,7 @@ public class MyPageController {
 		List<FreePostDto> sortPostList = service.getSortPost(paramMap);
 		
 		model.addAttribute("sortPost", sortPostList);
+		model.addAttribute("sortOption", sortOption);
 		
 		return "postmanage";
 	}
@@ -213,6 +214,7 @@ public class MyPageController {
 		List<FreeCommentVO> sortCmtList = service.getSortCmt(paramMap);
 		
 		model.addAttribute("sortComment", sortCmtList);
+		model.addAttribute("sortOption", sortOption);
 		
 		return "commentmanage";
 	}
