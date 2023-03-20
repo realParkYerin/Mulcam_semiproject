@@ -61,15 +61,17 @@
 			</ul>
 		</div>
 		<div>
+			<br>
 			<form action="sortPost.do" method="get" id="frm">
-				<select id="sortOption" name="sortOption">
+				<select id="sortOption" name="sortOption" class="custom-select">
 					<option value="new">최신순</option>
 					<option value="old">오래된 순</option>
 					<option value="comment">댓글 순</option>
 					<option value="like">좋아요 순</option>
 				</select>
-				<button type="button" id="sortPostBtn">검색</button>
+				<button type="button" id="sortPostBtn" class="btn btn-primary">검색</button>
 			</form>
+			<br>
 		</div>
 		<div>
 			<table class="table table-bordered" style="text-align: center;">
@@ -141,6 +143,12 @@
 			}
 		}
 		%>
+		
+	    function sortPostBtn() {
+	        let choice = document.getElementById('choice').value;
+	        
+	        location.href = "bbslist.do?choice=" + choice;
+	    }
 	</script>
 </body>
 </html>

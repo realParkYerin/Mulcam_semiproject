@@ -113,7 +113,7 @@ img {
                     
                     <table class="table table-borderless">
                         <tbody>
-                            <tr>	<%-- 추후에 작성자프로필 사진 연동하는 작업 필요. --%>
+                            <tr style="text-align: center;">	<%-- 추후에 작성자프로필 사진 연동하는 작업 필요. --%>
                                 <td><%=dto.getuser_id() %></td> <%-- 작성자 --%>
                                 <td><%=dateString %></td>   <%-- 작성일 --%>
                                 <td>조회수 : <%=dto.getReadcount() %></td> <%-- 조회수 --%>
