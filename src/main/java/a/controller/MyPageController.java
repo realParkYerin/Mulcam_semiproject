@@ -1,23 +1,31 @@
 package a.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import a.aop.AopSkip;
 import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
 import a.service.MyPageService;
+import a.util.PdsUtil;
 
 @Controller
 public class MyPageController {
@@ -25,21 +33,8 @@ public class MyPageController {
 	@Autowired
 	MyPageService service;
 	
-	// 로그인 시 세션 설정 및 메인 이동
-//	@PostMapping("loginAf.do")
-//	public String loginAf(HttpServletRequest req, MemberDto dto) {
-//		MemberDto mem = service.login(dto);
-
-//		if (mem != null) {
-//			req.getSession().setAttribute("login", mem); // session에 로그인 정보 저장
-//			req.getSession().setMaxInactiveInterval(60 * 60 * 2);
-//			return "main";
-//		} else {
-//			return "";
-//		}
-//	}
-	
 	// 세션 만료 시 message.jsp로 이동
+	@AopSkip
 	@GetMapping("sessionOut.do")
 	public String sessionOut(Model model) {
 		String sessionOut = "logout";
@@ -86,7 +81,37 @@ public class MyPageController {
 	
 	// 정보 수정 완료 후 message.jsp로 이동
 	@PostMapping("memberUpdateAf.do")
-	public String updateAf(Model model, MemberDto dto) {
+	public String updateAf(Model model, MemberDto dto, 
+							@RequestParam(value = "newMemImg", required = false)
+							MultipartFile newMemImg) {
+		if(!newMemImg.isEmpty()) { // 업로드한 파일이 존재
+			// filename 취득 : 원본 파일명
+			String filename = newMemImg.getOriginalFilename();
+			System.out.println("original: " + filename);
+			
+			// upload의 경로 설정(2가지 : server / folder)
+			// folder
+			
+			// TODO : 임시 절대 경로. test 시 수정 필요
+			String filepath = "C:\\Users\\ahgus\\Desktop\\multiCampus\\SemiProject\\semiProj\\src\\main\\webapp\\memberImgs\\";
+			System.out.println("fupload: " + filepath);
+			
+			// 파일명을 충돌되지 않는 명칭(Date)으로 변경
+			String newfilename = PdsUtil.getNewFileName(filename);
+			
+			// 변경된 파일명
+			dto.setImg_path(newfilename);
+			
+			File file = new File(filepath + "/" + newfilename);
+			try {
+				// 실제로 파일 생성 + 기입 = 업로드
+				FileUtils.writeByteArrayToFile(file, newMemImg.getBytes());			
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		boolean isS = service.updateMember(dto);
 		String message = "";
 		
@@ -198,10 +223,11 @@ public class MyPageController {
 		return "deletemember";
 	}
 	
+	// 회원 탈퇴 - DB 접근하여 delete 후 message로 이동
+	// TODO : 수정 필요
 	@GetMapping("delMemberAf.do")
-	public String delMemberAf(Model model, HttpServletRequest req) {
-		MemberDto memDto = (MemberDto) req.getSession().getAttribute("login");
-		boolean isS = service.delMember(memDto);
+	public String delMemberAf(Model model, MemberDto dto) {
+		boolean isS = service.delMember(dto);
 		String delMemMsg = "";
 		
 		if (isS) {
@@ -213,11 +239,6 @@ public class MyPageController {
 		model.addAttribute("delMemMsg", delMemMsg);
 		
 		return "message";
-	}
-	
-	@GetMapping("apitest.do")
-	public String apiTest() {
-		return "apiTest";
 	}
 	
 }

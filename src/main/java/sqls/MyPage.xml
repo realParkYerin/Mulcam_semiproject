@@ -17,8 +17,8 @@
 		update Member2
 		set nickname=if(#{nickname} is null, nickname, #{nickname}),
 			email=if(#{email} is null, email, #{email}),
-			pwd=if(#{pwd} is null or #{pwd}="", pwd, #{pwd})
-			<!-- img_path=if(, , ) -->
+			pwd=if(#{pwd} is null or #{pwd}="", pwd, #{pwd}),
+			img_path=#{img_path}
 		where user_id=#{user_id}
 	</update>
 	
@@ -48,7 +48,9 @@
 	</select>
 	
 	<delete id="delMember" parameterType="a.dto.MemberDto">
-		delete from Member2
-		where user_id=#{user_id}
+		delete from FreeComment where user_id=#{user_id};
+		delete from FreePost where user_id=#{user_id};
+		delete from Pet where user_id=#{user_id};
+		delete from Member2 where user_id=#{user_id};
 	</delete>
 </mapper>
