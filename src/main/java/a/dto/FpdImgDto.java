@@ -5,15 +5,17 @@ import java.util.List;
 public class FpdImgDto {
 	FreePostDto freepostdto;
 	List<BbsImgVO> bbsimgvo;
+	List<FreeCommentVO> commentvo;
 	
 	public FpdImgDto() {
 		super();
 	}
 
-	public FpdImgDto(FreePostDto freepostdto, List<BbsImgVO> bbsimgvo) {
+	public FpdImgDto(FreePostDto freepostdto, List<BbsImgVO> bbsimgvo, List<FreeCommentVO> commentvo) {
 		super();
 		this.freepostdto = freepostdto;
 		this.bbsimgvo = bbsimgvo;
+		this.commentvo = commentvo;
 	}
 
 	public FreePostDto getFreepostdto() {
@@ -32,10 +34,24 @@ public class FpdImgDto {
 		this.bbsimgvo = bbsimgvo;
 	}
 
+	public List<FreeCommentVO> getCommentvo() {
+		return commentvo;
+	}
+
+	public void setCommentvo(List<FreeCommentVO> commentvo) {
+		this.commentvo = commentvo;
+	}
+
 	@Override
 	public String toString() {
-		return "FpdImgDto [freepostdto=" + freepostdto + ", bbsimgvo=" + bbsimgvo + "]";
+		return "FpdImgDto [freepostdto=" + freepostdto + ", bbsimgvo=" + bbsimgvo + ", commentvo=" + commentvo + "]";
 	}
+	
+	
+
+	
+
+	
 
 	
 	

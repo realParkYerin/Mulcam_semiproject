@@ -90,7 +90,7 @@ if(list == null || list.size() == 0){
                 }else if(dto.isDel() == 1){
                     %>
                     <td>
-                        <font color="#ff0000">*** 이 글은 삭제되었습니다 ***</font>    
+                        <font color="#ff0000">*** 이 글은 관리자 또는 사용자에 의해 삭제되었습니다 ***</font>    
                     </td>
                     <%
                 }   

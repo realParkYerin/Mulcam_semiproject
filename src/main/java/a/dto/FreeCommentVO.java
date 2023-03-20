@@ -7,7 +7,7 @@ public class FreeCommentVO {
 	private String user_id;
 	private int bbs_seq;
 	private String cmt_content;
-	private int target_id;
+	private String target_id;
 	private int comment_group;
 	private int del_cmt;
 	private Date reg_cmtdate;
@@ -15,7 +15,7 @@ public class FreeCommentVO {
 	public FreeCommentVO() {	
 	}
 
-	public FreeCommentVO(int comment_seq, String user_id, int bbs_seq, String cmt_content, int target_id,
+	public FreeCommentVO(int comment_seq, String user_id, int bbs_seq, String cmt_content, String target_id,
 			int comment_group, int del_cmt, Date reg_cmtdate) {
 		super();
 		this.comment_seq = comment_seq;
@@ -60,11 +60,11 @@ public class FreeCommentVO {
 		this.cmt_content = cmt_content;
 	}
 
-	public int getTarget_id() {
+	public String getTarget_id() {
 		return target_id;
 	}
 
-	public void setTarget_id(int target_id) {
+	public void setTarget_id(String target_id) {
 		this.target_id = target_id;
 	}
 
