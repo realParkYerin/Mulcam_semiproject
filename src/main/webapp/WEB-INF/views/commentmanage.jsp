@@ -25,6 +25,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <title>내 댓글 관리</title>
+<style type="text/css">
+@font-face {
+	font-family: 'Katuri';
+	src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+   font-size: 14px;
+   font-family: Katuri, sans-serif;
+}
+</style>
 </head>
 <body>
 	<div class="container mt-3">

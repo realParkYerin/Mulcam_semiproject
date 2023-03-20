@@ -22,6 +22,25 @@
 th {
 	text-align: center;
 }
+@font-face {
+	font-family: 'Katuri';
+	src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+.form-control {
+	width: 300px;
+}
+body{
+   font-size: 14px;
+   font-family: Katuri, sans-serif;
+}
+input[type=file]::file-selector-button {
+	background-color: #337AB7;
+	color: white;
+	border: hidden;
+	border-radius: 3px;
+}
 </style>
 </head>
 <body>
@@ -61,71 +80,73 @@ th {
 				</li>
 			</ul>
 		</div>
-		<div class="card mt-3">
-			<div class="card-body">
-				<div id="updateInputPwd">
-					<p class="mb-1">비밀번호를 입력하세요</p>
-					<div class="input-group mb-3">
-						<input type="password" class="form-control" id="pwd" placeholder="●●●●●●●●" />
-						<div class="input-group-append">
-							<button type="button" class="btn btn-primary" id="pwdChkBtn">확인</button>
+		<div align="center">
+			<div class="card mt-3" style="width: 700px;">
+				<div class="card-body">
+					<div id="updateInputPwd">
+						<p class="mb-1">비밀번호를 입력하세요</p>
+						<div class="input-group mb-3">
+							<input type="password" id="pwd" placeholder="●●●●●●●●" class="form-control" />
+							<div class="input-group-append">
+								<button type="button" class="btn btn-primary" id="pwdChkBtn">확인</button>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div style="display: none;" id="updateDetail">
-					<form action="memberUpdateAf.do" method="post" id="frm" enctype="multipart/form-data">
-						<table class="table table-bordered">
-							<tbody>
-								<tr>
-									<th scope="row">이름</th>
-									<td><%=login.getUsername() %></td>
-								</tr>
-								<tr>
-									<th scope="row">ID</th>
-									<td>
-										<%=login.getUser_id()%>
-										<input type="hidden" value="<%=login.getUser_id()%>" name="user_id">
-									</td>					
-								</tr>
-								<tr>
-									<th scope="row">닉네임</th>
-									<td>
-										<input type="text" value="<%=login.getNickname()%>" id="nickname" name="nickname">&nbsp;
-										<button type="button" id="nickChkBtn" class="btn btn-sm btn-secondary">중복확인</button>
-										<p id="nickCheck" />
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">이메일</th>
-									<td>
-										<input type="text" value="<%=login.getEmail()%>" id="email" name="email">
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">새 비밀번호</th>
-									<td>
-										<input type="password" placeholder="●●●●●●●●" id="newPwd1">
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">비밀번호 확인</th>
-									<td>
-										<input type="password" placeholder="●●●●●●●●" id="newPwd2" onchange="newPwdChk()" name="pwd">
-										<p id="newPwdCheck" />
-									</td>
-								</tr>
-								<tr>
-									<th scope="row">프로필 사진</th>
-									<td>
-										<img src="<%=request.getContextPath() + "/memberImgs/" + login.getImg_path()%>" id="memberImg" width="100px">
-										<input type="file" id="newMemImg" name="newMemImg" accept="image/*">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<br>
-						<button type="button" id="memberUpdateBtn" class="btn btn-primary">저장</button>
-					</form>
+					<div style="display: none;" id="updateDetail">
+						<form action="memberUpdateAf.do" method="post" id="frm" enctype="multipart/form-data">
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<th scope="row">이름</th>
+										<td><%=login.getUsername() %></td>
+									</tr>
+									<tr>
+										<th scope="row">ID</th>
+										<td>
+											<%=login.getUser_id()%>
+											<input type="hidden" value="<%=login.getUser_id()%>" name="user_id">
+										</td>					
+									</tr>
+									<tr>
+										<th scope="row">닉네임</th>
+										<td>
+											<input type="text" value="<%=login.getNickname()%>" id="nickname" name="nickname" class="form-control" style="display: inline;">
+											<button type="button" id="nickChkBtn" class="btn btn-sm btn-primary">중복확인</button>
+											<p id="nickCheck" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">이메일</th>
+										<td>
+											<input type="text" value="<%=login.getEmail()%>" id="email" name="email" class="form-control">
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">새 비밀번호</th>
+										<td>
+											<input type="password" placeholder="●●●●●●●●" id="newPwd1" class="form-control">
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">비밀번호 확인</th>
+										<td>
+											<input type="password" placeholder="●●●●●●●●" id="newPwd2" onchange="newPwdChk()" name="pwd" class="form-control">
+											<p id="newPwdCheck" />
+										</td>
+									</tr>
+									<tr>
+										<th scope="row">프로필 사진</th>
+										<td>
+											<img src="<%=request.getContextPath() + "/memberImgs/" + login.getImg_path()%>" id="memberImg" width="100px">
+											<input type="file" id="newMemImg" name="newMemImg" accept="image/*">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<br>
+							<button type="button" id="memberUpdateBtn" class="btn btn-primary">저장</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
