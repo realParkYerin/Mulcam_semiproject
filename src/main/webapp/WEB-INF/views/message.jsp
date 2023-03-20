@@ -73,7 +73,7 @@ if (petUpdateMsg != null && !petUpdateMsg.equals("")) {
 	} else {
 		%>
 		<script type="text/javascript">
-			alert("오류가 발생하였습니다 : " + <%=petUpdateMsg%>);
+			alert("오류가 발생하였습니다 : " + "<%=petUpdateMsg%>");
 			location.href = "petUpdate.do";
 		</script>
 		<%
@@ -114,8 +114,10 @@ if (delMemMsg != null && !delMemMsg.equals("")) {
 		<%
 	} else {
 		%>
-		alert("오류가 발생하였습니다 : " + <%=delMemMsg%>);
-		location.href = "delMember.do";
+		<script type="text/javascript">
+			alert("오류가 발생하였습니다 : " + "<%=delMemMsg%>");
+			location.href = "delMember.do";
+		</script>
 		<%
 	}
 }

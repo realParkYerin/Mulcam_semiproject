@@ -70,7 +70,7 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public boolean delMember(MemberDto dto) {
 		int n = dao.delMember(dto);
-		return n > 0 ? true : false;
+		return n == 0 ? true : false;
 	}
 	
 }

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import a.service.MemberService;
 import a.service.MyPageService;
 import a.util.PdsUtil;
+import a.aop.AopSkip;
 import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
@@ -41,6 +42,7 @@ public class MemberController {
 	}
 	
 	// 로그인 화면 이동
+	@AopSkip
 	@GetMapping(value = "login.do")
 	public String login() {
 		return "login";
@@ -142,6 +144,7 @@ public class MemberController {
 	}
 	
 	// 로그인 처리
+	@AopSkip
 	@PostMapping(value = "loginAf.do")
 	public String loginAf(HttpServletRequest req, Model model, MemberDto memDto) {
 		MemberDto mem = memService.login(memDto);

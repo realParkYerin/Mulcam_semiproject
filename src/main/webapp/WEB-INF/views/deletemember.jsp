@@ -58,10 +58,13 @@
 		</div>
 		<div class="card mt-3">
 			<div class="card-body" style="text-align: center;">
-				<p>회원 탈퇴 시, 모든 개인정보가 삭제되며 되돌릴 수 없습니다.</p>
-				<p>탈퇴하시겠습니까?</p>
-				<br>
-				<button type="button" id="delMemBtn">회원 탈퇴</button>
+				<form action="delMemberAf.do" id="frm">
+					<p>회원 탈퇴 시, 모든 개인정보가 삭제되며 되돌릴 수 없습니다.</p>
+					<p>탈퇴하시겠습니까?</p>
+					<br>
+					<button type="button" id="delMemBtn">회원 탈퇴</button>
+					<input type="hidden" name="user_id" value="<%=login.getUser_id()%>">
+				</form>
 			</div>
 		</div>
 	</div>
@@ -73,7 +76,7 @@
 		
 		// 회원 탈퇴
 		$("#delMemBtn").click(function() {
-			location.href = "delMemberAf.do";
+			frm.submit();
 		})
 	</script>
 </body>

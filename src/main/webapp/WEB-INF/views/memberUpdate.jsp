@@ -73,7 +73,7 @@ th {
 					</div>
 				</div>
 				<div style="display: none;" id="updateDetail">
-					<form action="memberUpdateAf.do" method="post" id="frm">
+					<form action="memberUpdateAf.do" method="post" id="frm" enctype="multipart/form-data">
 						<table class="table table-bordered">
 							<tbody>
 								<tr>
@@ -92,7 +92,7 @@ th {
 									<td>
 										<input type="text" value="<%=login.getNickname()%>" id="nickname" name="nickname">&nbsp;
 										<button type="button" id="nickChkBtn" class="btn btn-sm btn-secondary">중복확인</button>
-										<p id="nickCheck" style="display: none;" />
+										<p id="nickCheck" />
 									</td>
 								</tr>
 								<tr>
@@ -111,15 +111,14 @@ th {
 									<th scope="row">비밀번호 확인</th>
 									<td>
 										<input type="password" placeholder="●●●●●●●●" id="newPwd2" onchange="newPwdChk()" name="pwd">
-										<p id="newPwdCheck" style="display: none;" />
+										<p id="newPwdCheck" />
 									</td>
 								</tr>
 								<tr>
 									<th scope="row">프로필 사진</th>
 									<td>
-										<img src="asdf">
-										<input type="text" value="이미지 경로" readonly="readonly">
-										<button type="button" class="btn btn-sm btn-secondary">찾아보기</button>
+										<img src="<%=request.getContextPath() + "/memberImgs/" + login.getImg_path()%>" id="memberImg" width="100px">
+										<input type="file" id="newMemImg" name="newMemImg" accept="image/*">
 									</td>
 								</tr>
 							</tbody>
@@ -157,6 +156,9 @@ th {
 			})
 		})
 		
+		// 중복확인 여부
+		let isNickChecked = 0;
+		
 		// 닉네임 중복확인
 		$("#nickChkBtn").click(function() {
 			// 빈칸 조사
@@ -183,6 +185,9 @@ th {
 					alert("memberUpdate.jsp nickChkBtn ajax error");
 				}
 			})
+			
+			// 중복확인 여부 반영
+			isNickChecked = 1;
 		})
 		
 		// 새 비밀번호 확인
@@ -202,13 +207,14 @@ th {
 		let isNickChanged = 0;
 		let isEmailChanged = 0;
 		let isPwdChanged = 0;
-		let isPhotoChanged = 0;
+		let isImgChanged = 0;
 		
 		// 닉네임
 		$("#nickname").change(function() {
 			isNickChanged = 1;
-			if ($("#nickname").val() == '<%=login.getNickname()%>') {
+			if ($("#nickname").val() == "<%=login.getNickname()%>") {
 				isNickChanged = 0;
+				isNickChecked = 0;
 			}
 		})
 		
@@ -228,20 +234,40 @@ th {
 			}
 		})
 		
-		// 프사
-		
-		
-		// 변경 여부 체크 끝
+		// 프사 변경 시 미리보기, 변경 여부 반영
+		$("#newMemImg").on("change", function(event) {
+			// 취소 눌러 파일이 선택되지 않았을 경우
+			if (event.target.files[0] == null) {
+				$("#memberImg").attr("src", "<%=request.getContextPath() + "/memberImgs/" + login.getImg_path()%>");
+				isImgChanged = 0;
+				return;
+			}
+			
+			$("#isImgReset").attr("value", "n");
+			
+			var file = event.target.files[0];
+	
+			var reader = new FileReader();
+			
+			reader.onload = function(e) {
+				$("#memberImg").attr("src", e.target.result);
+			}
+
+			reader.readAsDataURL(file);
+			
+			// 변경 여부 반영
+			isImgChanged = 1;
+		});
 		
 		// 수정 사항 저장
 		$("#memberUpdateBtn").click(function() {
-			if (isNickChanged == 0 && isEmailChanged == 0 && isPwdChanged == 0) {
+			if (isNickChanged == 0 && isEmailChanged == 0 && isPwdChanged == 0 && isImgChanged == 0) {
 				alert("변경 사항이 없습니다");
 				return;
 			}
 			
-			// 닉네임 수정 후 중복확인 미 실시 혹은 중복된 닉네임일 경우 alert
-			if (isNickChanged > 0 && ($("#nickCheck").html() == "" || $("#nickCheck").html() == "사용중인 닉네임입니다")) {
+			// 닉네임이 빈칸이거나, 중복 확인을 안 했거나, 중복된 닉네임일 경우 return
+			if ($("#nickname").val() == "" || isNickChecked == 0 || $("#nickCheck").html() == "사용중인 닉네임입니다") {
 				alert("닉네임을 확인해주세요");
 				return;
 			}
