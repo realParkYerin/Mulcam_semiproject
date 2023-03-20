@@ -49,6 +49,7 @@ public class MemberController {
 	}
 	
 	// 회원가입 화면 이동
+	@AopSkip
 	@GetMapping(value = "register.do")
 	public String register() {
 		return "register";
@@ -61,6 +62,7 @@ public class MemberController {
 //	}
 	
 	// 아이디 중복확인
+	@AopSkip
 	@ResponseBody
 	@PostMapping(value = "idcheck.do")
 	public String idcheck(String user_id) {
@@ -74,6 +76,7 @@ public class MemberController {
 	}
 	
 	// 닉네임 중복확인
+	@AopSkip
 	@ResponseBody
 	@PostMapping(value = "nicknamecheck.do")
 	public String nicknamecheck(String nickname) {
@@ -87,6 +90,7 @@ public class MemberController {
 	}
 	
 	// 회원가입 처리 
+	@AopSkip
 	@PostMapping(value = "registerAf.do")
 	public String registerAf(MemberDto memDto,							 
 							@RequestParam(value = "memberImg", required = false)
