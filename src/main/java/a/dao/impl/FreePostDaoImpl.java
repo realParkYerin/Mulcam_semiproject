@@ -14,6 +14,7 @@ import a.dto.FreePostDto;
 import a.dto.BbsImgVO;
 import a.dto.BbsParam;
 import a.dto.FpdImgDto;
+import a.dto.FreeCommentVO;
 
 @Repository
 public class FreePostDaoImpl {
@@ -70,16 +71,23 @@ public class FreePostDaoImpl {
     	FreePostDto fdto = sqlSession.selectOne(ns + "getBbs", bbs_seq);
     	List<BbsImgVO> ivo = sqlSession.selectList(ns + "getImg", bbs_seq);
     	
-    	
-    	// System.out.println(ivo.toString());
+    	// 댓글 관련 sqlSession 추가. + FpdImgDto에 commentDto추가
+    	List<FreeCommentVO> cvo = sqlSession.selectList(ns + "getComment", bbs_seq);
+
     	dto.setFreepostdto(fdto);
     	dto.setBbsimgvo(ivo);
+    	dto.setCommentvo(cvo);
+
     	return dto;
     }
 
     // 게시글 수정 (사진이 없는 경우)
 	public int updateBbs(FreePostDto dto, int bbs_seq) {
-		sqlSession.update(ns + "updateBbs", dto);
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("bbs_seq", bbs_seq);
+	    paramMap.put("dto", dto);
+	    
+		sqlSession.update(ns + "updateBbs", paramMap);
 		return 0;
 	}
     
@@ -97,18 +105,17 @@ public class FreePostDaoImpl {
 		// (경로에 이미지 자체를 삭제하기 때문에 남겨두는게 의미가 없음.) 
 		// + detail에서 불러올때 삭제하지않으면 404에러 발생.
 		// 이를 해결하기 위해선 DB에 del 컬럼도 하나더 추가해야합니다.
-		sqlSession.delete(ns + "deleteMultiImg", bbs_seq);
 		sqlSession.delete(ns + "deleteimg_rel", bbs_seq);
-		
+		sqlSession.delete(ns + "deleteMultiImg", bbs_seq);
 		
 		int n=0;
 		// 이미지 내용 DB에 삭제후 수정
 		for (BbsImgVO bbsImg : bbsImglist) {
 			// 각각의 모든 img를 콘트롤러에서 set된 dto for문 돌면서 모두 추가.
-			System.out.println("multiimg + img_rel : " + (n+1));
+			System.out.println("multiimg + img_rel 삭제중.. : " + (n+1));
 			
 			sqlSession.insert(ns + "multiimg", bbsImg);
-			sqlSession.insert(ns + "img_rel");
+			sqlSession.insert(ns + "img_rel", bbs_seq);
 			
 			n++;
 		}

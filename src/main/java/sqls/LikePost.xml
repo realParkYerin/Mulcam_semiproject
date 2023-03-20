@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="LikePost">
+	
+	<select id ="findLike" parameterType="a.dto.LikePostDto" resultType="java.lang.Integer">
+		select count(*) from likepost
+		where user_id = #{user_id} and bbs_seq = #{bbs_seq} 		
+	</select>
+	
+	<insert id="likepostinsert" parameterType="a.dto.LikePostDto">
+		insert into likepost (user_id, bbs_seq)
+		values (#{user_id}, #{bbs_seq})
+	</insert>
+	
+	<update id="likeupCount" parameterType="a.dto.LikePostDto">
+		update freepost
+		set likecount = likecount + 1
+		where bbs_seq = #{bbs_seq}
+	</update>
+	
+	<delete id="dislikepostdel" parameterType="a.dto.LikePostDto">
+		delete from likepost
+		where user_id = #{user_id} and bbs_seq = #{bbs_seq}
+	</delete>
+	
+	<update id="likedownCount" parameterType="a.dto.LikePostDto">
+		update freepost
+		set likecount = likecount - 1
+		where bbs_seq = #{bbs_seq}
+	</update>
+	</mapper>
