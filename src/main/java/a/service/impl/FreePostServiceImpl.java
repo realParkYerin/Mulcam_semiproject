@@ -63,13 +63,13 @@ public class FreePostServiceImpl {
     // 게시물 수정(사진이 있다면)
 	public boolean updateBbs(FreePostDto dto, List<BbsImgVO> bbsImglist, int bbs_seq) {
 		int n = freePostDAO.updateBbs(dto, bbsImglist, bbs_seq);
-		return false;
+		return n>0?true:false;
 	}
 	
 	// 게시물 수정(사진이 없다면)
 	public boolean updateBbs(FreePostDto dto, int bbs_seq) {
 		int n = freePostDAO.updateBbs(dto, bbs_seq);
-		return false;
+		return n>0?true:false;
 	}
 
     // 게시물 삭제하기

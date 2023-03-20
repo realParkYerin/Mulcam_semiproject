@@ -54,12 +54,9 @@
 	    VALUES (#{img_name}, #{img_path}, #{img_type})
 	</insert>
 	
-	<insert id="img_rel">
+	<insert id="img_rel" parameterType="int">
 	    INSERT INTO img_rel (bbs_seq, img_seq)
-	    VALUES (
-	        (SELECT MAX(bbs_seq) FROM FreePost),
-	        LAST_INSERT_ID()
-	    )
+	    VALUES ( #{bbs_seq}, LAST_INSERT_ID() )
 	</insert>
 	
 	<!-- 조회수 증가(중복고려 X) -->
@@ -79,6 +76,14 @@
 	    FROM MultiImg i
 	    JOIN IMG_REL r ON i.img_seq = r.img_seq
 	    WHERE r.bbs_seq = #{bbs_seq}
+	</select>
+	
+	<!-- bbs_seq값에 해당하는 FreeComment 리스트 반환 -->
+	<!-- 삭제된 댓글들은 jsp파일에서 del = 0인경우 "삭제된 댓글입니다." 로표현할 예정. -->
+	<select id="getComment" parameterType="int" resultType="a.dto.FreeCommentVO">
+		select * from freecomment
+		where bbs_seq = #{bbs_seq}
+		<!-- order by reg_cmtdate DESC -->
 	</select>
 
 	
@@ -107,7 +112,13 @@
 			update_date = CURRENT_TIMESTAMP
 		WHERE bbs_seq = #{bbs_seq}
 	</update>
-	
+	<!-- 
+	<select id="getlikecount" parameterType="a.dto.LikePostDto">
+		select *
+		from likepost
+		where user_id = #{user_id} and bbs_seq = #{bbs_seq}
+	</select>
+	 -->
 <!--     <select id="getImgList" parameterType="int" resultMap="a.dto.BbsImgVO">
 	  SELECT mi.img_seq, mi.img_name, mi.img_path, mi.img_type
 	  FROM FreePost fp

@@ -80,7 +80,8 @@ public class FreePostController {
 		
 		if(files.get(0).getOriginalFilename() != null && !files.get(0).getOriginalFilename().equals("")) {	// 파일이 있는경우
 			// 임시 절대경로
-			String uploadPath = "C:\\Users\\kstur\\AppData\\Roaming\\SPB_Data\\git\\Mulcam_semiproject\\src\\main\\webapp\\resources\\upload\\";
+			 String uploadPath = "C:\\Users\\kstur\\AppData\\Roaming\\SPB_Data\\git\\Mulcam_semiproject\\src\\main\\webapp\\resources\\upload\\";
+			//String uploadPath = "..\\..\\resources\\upload\\"; // detail에서 찾아가기위한 경로(DB에 이렇게 저장)
 			// fileName = 원본 파일 이름,
 		    List<BbsImgVO> BbsImglist = new ArrayList<BbsImgVO>();
 		    for (MultipartFile file : files) {
@@ -90,11 +91,12 @@ public class FreePostController {
 		        String mimeType = file.getContentType();
 		        imgdto.setImg_type(mimeType.substring(mimeType.lastIndexOf("/") + 1));
 		        
-		        
+		       // uploadPath = "..\\..\\..\\webapp\\resources\\upload\\";	// 컨트롤러에서 업로드폴더에 저장하기위한 경로..
 		        // 파일을 지정한 경로에 저장하는 부분
 		        try {
 		            byte[] bytes = file.getBytes();
 		            Path path = Paths.get(uploadPath + imgdto.getImg_name());
+		            System.out.println(uploadPath + imgdto.getImg_name() + "에 저장.");
 		            Files.write(path, bytes);
 		        } catch (IOException e) {
 		            e.printStackTrace();
@@ -146,13 +148,11 @@ public class FreePostController {
 	public String bbsupdateAf(Model model, @RequestParam(value="file", required = false) List<MultipartFile> files, FreePostDto dto, int bbs_seq) {
 		
 		
-		// 문자열만 들어가도 파일이 들어가는 오류가 있음. 따라서 조건문 아래와 같이 작성했습니다.
-		// System.out.println("files.get(0):" + files.get(0));
-		// System.out.println("filename:" + files.get(0).getOriginalFilename());
 		
 		if(files.get(0).getOriginalFilename() != null && !files.get(0).getOriginalFilename().equals("")) {	// 파일이 있는경우
 			// 임시 절대경로
 			String uploadPath = "C:\\Users\\kstur\\AppData\\Roaming\\SPB_Data\\git\\Mulcam_semiproject\\src\\main\\webapp\\resources\\upload\\";
+			//String uploadPath = "../../webapp/resources/upload/";
 			// fileName = 원본 파일 이름,
 		    List<BbsImgVO> BbsImglist = new ArrayList<BbsImgVO>();
 		    for (MultipartFile file : files) {
@@ -172,7 +172,7 @@ public class FreePostController {
 		            e.printStackTrace();
 		        }
 
-		        System.out.println("파일 상세정보: "+ imgdto.toString());
+		        System.out.println("파일 저장완료. 상세정보: "+ imgdto.toString());
 		        BbsImglist.add(imgdto);
 	    	} // for문의 끝 (모든 들어온 파일 list에 다 담기.)
 	    	  // 
@@ -181,7 +181,7 @@ public class FreePostController {
 		    
 		    boolean isS = freePostService.updateBbs(dto, BbsImglist, bbs_seq);
 			if(isS) {	
-				System.out.println("이미지 있는 글 작성 완료");	
+				System.out.println("이미지 있는 글 수정 완료");	
 				return "redirect:/bbslist.do";
 			}else {
 				System.out.println("등록 실패");
@@ -190,7 +190,7 @@ public class FreePostController {
 		} else {
 			boolean isS = freePostService.updateBbs(dto, bbs_seq);
 			if(isS) {
-				System.out.println("이미지 없는 글 작성 완료");	
+				System.out.println("이미지 없는 글 수정 완료");	
 				return "redirect:/bbslist.do";
 			}
 		}

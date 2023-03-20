@@ -230,6 +230,3 @@ a, a:hover {
 	</script>
 </body>
 </html>
-
-
-

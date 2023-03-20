@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="FreeCommentBbs">
+	
+	<insert id="cmtinsert" parameterType="a.dto.FreeCommentVO">
+		INSERT INTO FreeComment (user_id, bbs_seq, cmt_content, target_id, comment_group)
+VALUES (#{user_id}, #{bbs_seq}, #{cmt_content}, #{target_id}, #{comment_group})
+	</insert>
+	
+	<update id="bbscmtcountUp" parameterType="a.dto.FreeCommentVO">
+			update freepost
+			set cmtcount = cmtcount + 1
+			where bbs_seq = #{bbs_seq}
+	</update>
+	
+	<update id="cmtupdate" parameterType="a.dto.FreeCommentVO">
+	  UPDATE freecomment
+	  SET cmt_content = #{cmt_content}
+	  WHERE comment_seq = #{comment_seq}
+	</update>
+	
+	<update id="cmtdelete" parameterType="a.dto.FreeCommentVO">
+	  UPDATE freecomment
+	  SET del_cmt = 1
+	  WHERE comment_seq = #{comment_seq}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</mapper>
