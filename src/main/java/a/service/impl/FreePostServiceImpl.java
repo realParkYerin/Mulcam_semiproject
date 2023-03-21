@@ -85,6 +85,12 @@ public class FreePostServiceImpl {
     public String getFreePostFirstImagePath(int postId) {
         return freePostDAO.getFreePostFirstImage(postId);
     }
+    
+    public List<FreePostDto> getMainBbs(){
+    	List<FreePostDto> list = freePostDAO.getMainBbs();
+    	return list;
+    }
+
 
 
 

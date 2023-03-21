@@ -190,7 +190,10 @@ public class FreePostDaoImpl {
     }
 
 
-
+    public List<FreePostDto> getMainBbs(){
+    	List<FreePostDto> list = sqlSession.selectList("FreeBbs.getMainBbs");
+    	return list;
+    }
 
 
 
