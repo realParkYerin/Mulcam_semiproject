@@ -152,6 +152,13 @@
 	  JOIN MultiImg mi ON ir.img_seq = mi.img_seq
 	  WHERE fp.bbs_seq = #{bbs_seq}
 	</select>  -->
+	
+		<!-- 메인화면에 좋아요 수 5개 뿌리기 -->
+	<select id="getMainBbs" resultType="a.dto.FreePostDto">
+		select *
+		from FreePost
+		order by likecount desc limit 5;
+	</select>
 
 
 </mapper>
