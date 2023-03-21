@@ -234,7 +234,6 @@ ul li a:hover {
 .my-table td {
     color: #000;
   }
-
 </style>
 
 <!-- js -->
@@ -424,57 +423,13 @@ $(function(){
 </head>
 
 <body>
-<!-- Header -->
- <header>
- <nav class="navbar navbar-light bg-light" style="background-color: #e3f2fd;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="./resources/main/animalFoot.png" alt="" width="30" height="24" class="d-inline-block align-text-bottom">
-      <h1 style="font-family: 'Lobster', cursive">Happy Tails</h1>
-    </a>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="main.do" style="font-family: 'Lobster', cursive">Main Page</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="bbslist.do" style="font-family: 'Lobster', cursive">Board</a>
-        </li>
-        
-        <li class="nav-item dropdown">
-		  <a class="nav-link dropdown-toggle" href="memberUpdate.do" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: 'Lobster', cursive">
-		    MyPage
-		  </a>
-		  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="memberUpdate.do">회원정보 수정</a>
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="petUpdate.do">내 반려동물 관리</a>
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="">내 활동 관리</a>
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="">로그아웃</a>
-		  </div>
-		</li>
-		
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="font-family: 'Lobster', cursive">logout</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-</div>
-</nav>
-</header>
-<!-- header 끝 -->
-
+<%@ include file="/WEB-INF/include/header.jsp" %>
 <div>
 <ul style="display: flex;">
 		    <li><a href="main.do" style="font-family: 'Lobster', cursive">Home</a></li>
 		    <li><a href="bbslist.do" style="font-family: 'Lobster', cursive">Community</a></li>
-		    <li><a href="animalhospital.do" style="font-family: 'Lobster', cursive">Hospital</a></li>
-		    <li><a href="postmanage.do" style="font-family: 'Lobster', cursive">MY</a></li>
+		    <li><a href="#" style="font-family: 'Lobster', cursive">Hospital</a></li>
+		    <li><a href="memberUpdate.do" style="font-family: 'Lobster', cursive">MY</a></li>
 		    <%if(member.getAuth()==2){
         	%>
         <li class="nav-item">
@@ -548,19 +503,6 @@ $(function(){
 </div>
 
 <!-- footer -->
-<footer class="bg-light text-center text-white">
-  Grid container
-  <div class="container p-4 pb-0">
-  </div>
-  Grid container
-
-  Copyright
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2023 Copyright:
-    <a class="text-white" href="https://mdbootstrap.com/">Happy Tails</a>
-  </div>
-  Copyright
-</footer>
-<!-- footer 끝   -->
+<%@ include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

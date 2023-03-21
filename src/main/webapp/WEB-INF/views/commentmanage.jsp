@@ -39,6 +39,7 @@ body{
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/include/header.jsp" %>
 	<div class="container mt-3">
 		<div>
 			<ul class="nav nav-pills">
@@ -154,5 +155,6 @@ body{
 		}
 		%>
 	</script>
+ <%@ include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>
