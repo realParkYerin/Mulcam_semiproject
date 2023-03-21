@@ -38,11 +38,11 @@ public class MemberController {
 	MemberService memService;
 		
 	/* 메인화면으로 이동 */
-	@AopSkip
-	@GetMapping(value = "main.do")
-	public String main() {
-		return "main";
-	}
+	/*
+	 * @AopSkip
+	 * 
+	 * @GetMapping(value = "main.do") public String main() { return "main"; }
+	 */
 	
 	// 로그인 화면 이동
 	@AopSkip
@@ -154,7 +154,6 @@ public class MemberController {
 			String filepath = "../../../../spSample1/resources/memberImg/default_profile.png";
 			memDto.setImg_path(filepath);
 			
-			 
 		}
 		
 		boolean isS = memService.addMember(memDto);
@@ -182,7 +181,7 @@ public class MemberController {
 		comment = memService.getAllComment(memDto);
 		
 		String msg = "";
-		if(mem != null) { // 로그인 성공
+		if(mem != null && mem.getAuth() != 3) { // 로그인 성공
 			req.getSession().setAttribute("login", mem); // 로그인 정보를 세션에 저장
 			req.getSession().setAttribute("pet", pet); // 내 반려동물 정보 저장
 			req.getSession().setAttribute("post", post); // 내 글 정보 저장

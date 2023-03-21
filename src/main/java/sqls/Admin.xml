@@ -39,6 +39,12 @@
 		(#{user_id}, #{pwd}, #{username})
 </insert>
 
+<!-- 추방 click -> 회원 auth값 3으로 변경 -->
+<update id="delete">
+		update Member2 set auth =3
+		where user_id = #{userId}
+</update>
+
 <!--회원정보 상세조회 -->
 <select id="viewMember" resultType="a.dto.MemberDto">
 	select
@@ -54,8 +60,8 @@
 </select>
 
 <!--게시글목록 -->
-<select id="bbsList" parameterType="a.dto.BbsParam"
-	resultType="a.dto.FreePostDto">
+<select id="bbsList"
+	resultType="a.dto.FpdImgDto">
 	select
 		bbs_seq,
 		user_id,
@@ -65,8 +71,7 @@
 		cmtcount,
 		wdate,
 		del
-		from FreePost
-			
+		from FreePost	
 </select>
 
 <select id="searchByFreePostList"
@@ -106,18 +111,13 @@
 			${param1} like CONCAT('%', #{param2}, '%')
 </select>
 
-<!-- title 클릭 시 클릭한 bbs_seq와 같은 bbs_seq가져와 게시물 보이기 -->
-<!-- 성국님 bbs.xml확인 필요 -->
-<select id="getBbs" parameterType="Integer" resultType="a.dto.FreePostDto">
-	select bbs_seq, user_id, title, content, readcount, likecount, cmtcount, wdate, update_date, del
-	from FreePost
-	where bbs_seq = #{bbs_seq}
-</select>
+<!-- 댓글 - 삭제 click -> del_cmt값 1로 변경 -->
+<update id="deleteComment">
+		update FreeComment set del_cmt = 1
+		where comment_seq in
+	<foreach collection="commentIds" item="commentId" open="(" separator="," close=")">
+		#{commentId}
+	</foreach>
+</update>
 
-<!-- 로그인 체크 - 관리자페이지 접근..--> 
-<select id="login_check" parameterType="a.dto.MemberDto" resultType="String">
-	select user_id
-	from Member2
-	where user_id=#{user_id}
-</select>
 </mapper>

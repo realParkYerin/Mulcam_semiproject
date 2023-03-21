@@ -1,7 +1,6 @@
 package a.controller;
 
 
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -221,7 +220,15 @@ public class FreePostController {
 	}
 	
 
-    
+	@GetMapping(value="main.do")
+	public String getMainBbs(Model model) {
+		List<FreePostDto> bbslist = freePostService.getMainBbs();
+		model.addAttribute("bbslist", bbslist);
+		
+		System.out.println("FreePostController getMainBbs() " + bbslist.toString());
+		
+		return "main";
+	}
     
     
     

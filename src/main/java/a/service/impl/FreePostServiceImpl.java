@@ -28,7 +28,6 @@ public class FreePostServiceImpl {
         return freePostDAO.getAllBbs(param);
     }
     
-
 	// 사진이 없다면.
 	public boolean writeBbs(FreePostDto dto) {
 		int n = freePostDAO.writeBbs(dto);
@@ -85,6 +84,12 @@ public class FreePostServiceImpl {
     public String getFreePostFirstImagePath(int postId) {
         return freePostDAO.getFreePostFirstImage(postId);
     }
+    
+    public List<FreePostDto> getMainBbs(){
+    	List<FreePostDto> list = freePostDAO.getMainBbs();
+    	return list;
+    }
+
 
 
 

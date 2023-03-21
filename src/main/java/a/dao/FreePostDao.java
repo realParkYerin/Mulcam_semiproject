@@ -13,4 +13,7 @@ public interface FreePostDao {
 	int writeBbs(FreePostDto dto);
 	
 	FreePostDto getBbs(int seq);
+	
+	List<FreePostDto> getMainBbs();
+	
 }
