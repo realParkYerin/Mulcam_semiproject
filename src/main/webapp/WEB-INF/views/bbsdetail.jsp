@@ -32,12 +32,11 @@
 
 <style>
 body {
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 16px;
     color: #555;
     line-height: 1.5;
-    margin-top: 50px;
 }
 
 .container {
@@ -126,6 +125,10 @@ body {
 }
 
 .table td img{
+	margin-top: 10px;
+}
+
+.table th img{
 	margin-top: 10px;
 }
 
@@ -227,6 +230,12 @@ td a.btn-danger:hover {
 	border-radius: 50%;
 	width: 30px;
 	height: 30px;
+	background-color: orange; 
+}
+
+.table td, .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
 }
 	
 </style>
@@ -234,7 +243,7 @@ td a.btn-danger:hover {
 </head>
 
 <body>
-
+<%@ include file="/WEB-INF/include/header.jsp" %>
 <%
 	MemberDto login = (MemberDto)session.getAttribute("login");		
 %> 
@@ -264,7 +273,7 @@ td a.btn-danger:hover {
                 
                 int showcount = dto.getLikecount(); 	// 출력용 변수
             %>
-            <h3 class="mb-4">자유게시판</h3>
+            <!-- <h3 class="mb-4">자유게시판</h3> -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">"<%=dto.getTitle() %>"</h5>
@@ -272,8 +281,8 @@ td a.btn-danger:hover {
                      <table class="table table-borderless">
                         <tbody>
 							<tr> <%-- 작성자의 대표이미지 --%>
-							    <td width="10px" class="text-middle"><img src="<%=mdto.getImg_path() %>" class="round-img"></td>
-							    <th width="200px" class="text-middle"><%=dto.getuser_id() %></th> <%-- 작성자 --%>
+							    <th width="10px" class="text-middle"><img src="<%=mdto.getImg_path() %>" class="round-img"></th>
+							    <th width="200px" style="vertical-align: middle;"><b><%=dto.getuser_id() %></b></th> <%-- 작성자 --%>
 							    <td width="50px"></td>
 							      <td class="text-right">
 								    <span class="mb-1"><%=dateString %></span> <%-- 작성일 --%>
@@ -380,11 +389,11 @@ td a.btn-danger:hover {
 	                    %>
 						<div class="card">
 			                <div class="card-body"><!-- class="table table-borderless" -->
-			                    <table class="table table-borderless"> <!-- <table  border="1"> -->
+			                    <table class="table table-borderless"  style="text-align: center;"> <!-- <table  border="1"> -->
 									<tr>
-									  <%-- 작성자의 프로필이미지 불러오기 추가해야함.!! --%>
-									  <th class="col-md-1" width="200px"><img src="<%=cmtwritor.getImg_path() %>" class="round-img"></th>
-									  <th class="col-md-2" width="400px"><%=comment.getUser_id() %></th>
+									  <%-- 댓글 작성자의 프로필이미지 --%>
+									  <th class="col-md-1" width="200px" class="text-middle"><img src="<%=cmtwritor.getImg_path() %>" class="round-img" style="background-repeat: no-repeat; back"></th>
+									  <th class="col-md-2" width="400px" class="text-middle"><%=comment.getUser_id() %></th>
 									  <%-- 댓글 작성자 --%>
 									  <%
 									  // 양식 치환
@@ -420,7 +429,7 @@ td a.btn-danger:hover {
 						         <tr>
 						         </tr>
 						          <tr>
-						            <td colspan="6" id="bbscomment-<%=comment.getComment_seq() %>"><%=comment.getCmt_content() %></td>
+						            <td colspan="6" id="bbscomment-<%=comment.getComment_seq() %>" align="left"><%=comment.getCmt_content() %></td>
 						            <%-- 내용 --%>
 						          </tr>
 								</table>
@@ -497,7 +506,7 @@ td a.btn-danger:hover {
 
 			
 			
-			<!-- 
+
 			<script type="text/javascript">
 			function validateForm() {
 				  var cmt_content = document.getElementsByName("cmt_content")[0].value;
@@ -507,7 +516,7 @@ td a.btn-danger:hover {
 				  }
 				}
 			</script>
-			 -->
+
 			 
 			 		
             <script type="text/javascript">
@@ -727,6 +736,6 @@ td a.btn-danger:hover {
         </div>
     </div>
 </div>
-
+<%@ include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>
