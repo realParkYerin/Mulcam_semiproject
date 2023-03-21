@@ -49,9 +49,19 @@
 	    values (#{user_id}, #{title}, #{content}, now())
 	</insert>
 		
+		
+
 	<insert id="multiimg" parameterType="a.dto.BbsImgVO">
 	    INSERT INTO multiimg (img_name, img_path, img_type)
 	    VALUES (#{img_name}, #{img_path}, #{img_type})
+	</insert>
+		
+	<insert id="img_rel2">
+		    INSERT INTO img_rel (bbs_seq, img_seq)
+		    VALUES (
+		        (SELECT MAX(bbs_seq) FROM FreePost),
+		        LAST_INSERT_ID()
+		    )
 	</insert>
 	
 	<insert id="img_rel" parameterType="int">
@@ -112,6 +122,22 @@
 			update_date = CURRENT_TIMESTAMP
 		WHERE bbs_seq = #{bbs_seq}
 	</update>
+	
+	<select id="getWitor" parameterType="int" resultType="a.dto.MemberDto">
+		SELECT m.*
+		FROM Member2 m
+		JOIN FreePost f ON m.user_id = f.user_id
+		WHERE f.bbs_seq = #{bbs_seq};	
+	</select>
+	
+	<select id ="getCmtWritors" parameterType="int" resultType="a.dto.MemberDto">
+		SELECT *
+		FROM Member2 m
+		INNER JOIN FreeComment fc ON m.user_id = fc.user_id
+		INNER JOIN FreePost fp ON fc.bbs_seq = fp.bbs_seq
+		WHERE fp.bbs_seq = #{bbs_seq}
+		ORDER BY fc.comment_seq ASC
+	</select>
 	<!-- 
 	<select id="getlikecount" parameterType="a.dto.LikePostDto">
 		select *

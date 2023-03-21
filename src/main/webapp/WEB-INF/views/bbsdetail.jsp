@@ -223,7 +223,11 @@ td a.btn-danger:hover {
   border-color: #bd2130;
 }
 	
-
+.round-img{
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+}
 	
 </style>
 
@@ -233,8 +237,6 @@ td a.btn-danger:hover {
 
 <%
 	MemberDto login = (MemberDto)session.getAttribute("login");		
-	
-
 %> 
 
 <div class="container bg-light py-4">
@@ -250,9 +252,15 @@ td a.btn-danger:hover {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm");
                 String dateString = sdf.format(date);
                 
+                if(login.getUser_id() != null && login.getUser_id() == ""){ // 유저 세션이 null이 아닌경우에만.
                 LikePostDto likedto = new LikePostDto();	// 게시물 좋아요 DTO
                 likedto.setBbs_seq(dto.getBbs_seq());	// 현재 게시판의 bbs_seq setter
                 likedto.setUser_id(login.getUser_id());	// 로그인한 사람의 user_id setter
+                }
+                
+                MemberDto mdto = dto2.getWritor();
+                List<MemberDto> cmtwritordto = dto2.getCmtwritorlist();
+                
                 
                 int showcount = dto.getLikecount(); 	// 출력용 변수
             %>
@@ -263,9 +271,9 @@ td a.btn-danger:hover {
                     
                      <table class="table table-borderless">
                         <tbody>
-							<tr style="text-align: center;">
-							    <td width="200px"></td>
-							    <th width="200px"><%=dto.getuser_id() %></th> <%-- 작성자 --%>
+							<tr> <%-- 작성자의 대표이미지 --%>
+							    <td width="10px" class="text-middle"><img src="<%=mdto.getImg_path() %>" class="round-img"></td>
+							    <th width="200px" class="text-middle"><%=dto.getuser_id() %></th> <%-- 작성자 --%>
 							    <td width="50px"></td>
 							      <td class="text-right">
 								    <span class="mb-1"><%=dateString %></span> <%-- 작성일 --%>
@@ -361,7 +369,9 @@ td a.btn-danger:hover {
 		}else{	
 	        for(int i = 0;i < cvo.size(); i++)
 	        {
-	        	FreeCommentVO comment = cvo.get(i);
+	        	FreeCommentVO comment = cvo.get(i);	// 각각의 코멘트들에 대한 정보를 취득하기 위함.
+	        	MemberDto cmtwritor = cmtwritordto.get(i);	// 각각의 댓글 작성자의 이미지를 출력하기 위함.
+	        	// System.out.println(cmtwritor.toString());
 	            	%>
 				
 	                
@@ -373,7 +383,7 @@ td a.btn-danger:hover {
 			                    <table class="table table-borderless"> <!-- <table  border="1"> -->
 									<tr>
 									  <%-- 작성자의 프로필이미지 불러오기 추가해야함.!! --%>
-									  <td class="col-md-1" width="200px"></td>
+									  <th class="col-md-1" width="200px"><img src="<%=cmtwritor.getImg_path() %>" class="round-img"></th>
 									  <th class="col-md-2" width="400px"><%=comment.getUser_id() %></th>
 									  <%-- 댓글 작성자 --%>
 									  <%
@@ -505,10 +515,12 @@ td a.btn-danger:hover {
             // 무조건 문서가 처음 실행되었을 경우 AJAX 최초 통신으로 값을 받아와야 함.
             // 좋아요 값
             $(document).ready(function(){
+            	
                 var user_id = '<%=login.getUser_id() %>';
                 var bbs_seq = '<%=dto.getBbs_seq() %>';
                 var img = document.getElementById("like-img");
             	
+                if(<%=login.getUser_id() != null && login.getUser_id() != "" %>){
                 $.ajax({	// 현재상태 취득해서 상태에 맞는 이미지 세팅.
                     type: 'GET',
                     url: 'checkstate.do',
@@ -534,6 +546,7 @@ td a.btn-danger:hover {
                         console.log('error!');
                     }
                 });
+            	}
                 
                 
               	$('.edit-comment-btn').click(function() {
@@ -549,6 +562,12 @@ td a.btn-danger:hover {
                 var user_id = '<%=login.getUser_id() %>';
                 var bbs_seq = '<%=dto.getBbs_seq() %>';
                 var img = document.getElementById("like-img");
+                
+                if(user_id == null || user_id =="" ){
+                	alert("로그인 되어있지 않습니다. 로그인 후 사용 가능합니다.");
+                	
+                	return;
+                }
 
                 $.ajax({	// DB에 접근하여 값을 토글한다.
                     type: 'GET',

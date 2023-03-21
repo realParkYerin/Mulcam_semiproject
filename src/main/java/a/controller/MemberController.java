@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import a.service.MemberService;
 import a.service.MyPageService;
+import a.util.BbsUtil;
 import a.util.PdsUtil;
 import a.aop.AopSkip;
 import a.dto.FreeCommentVO;
@@ -32,10 +33,13 @@ import a.dto.PetDto;
 @Controller
 public class MemberController {
 	
+	
 	@Autowired
 	MemberService memService;
 	
+	
 	/* 메인화면으로 이동 */
+	@AopSkip
 	@GetMapping(value = "main.do")
 	public String main() {
 		return "main";
@@ -89,6 +93,8 @@ public class MemberController {
 		}
 	}
 	
+	
+	// Stringpath와 filepath 총 2개 수정하셔야합니다.
 	// 회원가입 처리 
 	@AopSkip
 	@PostMapping(value = "registerAf.do")
@@ -104,33 +110,51 @@ public class MemberController {
 			
 			// filename 취득 : 원본 파일명
 			String filename = memberImg.getOriginalFilename();
-			System.out.println("original: " + filename);
+			// System.out.println("original: " + filename);
+			String newfilename = BbsUtil.getNewFileName(filename);
+			System.out.println(newfilename);
 			
 			// upload의 경로 설정(2가지 : server / folder)
 			// folder
-			String filepath = "c:\\memberImgs";
-			System.out.println("fupload: " + filepath);
+			// String filepath = "c:\\memberImgs";	// 일단 절대경로로 설정했습니다. tiles 배치 후 상대경로 시도해보죠.
+			
+			
+			// 여기에 저장된 filepath는 저장이 된후 찾아가기 위한 DB의 경로입니다!!! 헷갈리시면 안됩니다.
+			String filepath = "../../../../spSample1/resources/memberImg/";
+			memDto.setImg_path(filepath + newfilename);	// 여기서, 우리는 컬럼이 하나로 시작해서.. 무조건 경로와 파일명을 모두 가지고 있어야합니다.
+			// memDto에 저장해놓았으니 밑에서 재할당해도 문제 X
+			
+			// 여기에 저장된 filepath는 당장 컨트롤러에서 파일을 생성하기위한 경로입니다!!!
+			filepath = "C:\\Users\\kstur\\AppData\\Roaming\\SPB_Data\\git\\Mulcam_semiproject\\src\\main\\webapp\\resources\\memberImg\\";
+			
 			
 			// 파일명을 충돌되지 않는 명칭(Date)으로 변경
-			String newfilename = PdsUtil.getNewFileName(filename);
+			// String newfilename = PdsUtil.getNewFileName(filename);
 			
-			// 변경된 파일명
-			memDto.setImg_path(newfilename);
 			
-			File file = new File(filepath + "/" + newfilename);
+			
+			
+			File file = new File(filepath + newfilename);
+			System.out.println("다음의 경로에 유저 프로필 이미지 업로드 : " + filepath + newfilename);
+			
+			
 			try {
-				// 실제로 파일 생성 + 기입 = 업로드
-				FileUtils.writeByteArrayToFile(file, memberImg.getBytes());			
+				// 실제로 파일 생성 + 기입 = 업로드 (newFileName으로 변형되어 저장)
+				FileUtils.writeByteArrayToFile(file, memberImg.getBytes());	
+				
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-		} else { // 업로드한 파일 미존재시 기본 사진 정보를 DB에 저장
+		}	// 파일 존재 로직 끝 
+		else { // 업로드한 파일 미존재시 기본 사진 정보를 DB에 저장
 			
 			 // 기본 프로필이 있는 경로를 DB에 저장
-			String filepath = "C:" + File.separator + "memberImgs" + File.separator +"default_profile.png";
+			// String filepath = "C:" + File.separator + "memberImgs" + File.separator +"default_profile.png";
+			String filepath = "../../../../spSample1/resources/memberImg/default_profile.png";
 			memDto.setImg_path(filepath);
+			
 			 
 		}
 		

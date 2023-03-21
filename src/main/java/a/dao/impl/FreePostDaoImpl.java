@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import a.dto.FreePostDto;
+import a.dto.MemberDto;
 import a.dto.BbsImgVO;
 import a.dto.BbsParam;
 import a.dto.FpdImgDto;
@@ -43,7 +44,7 @@ public class FreePostDaoImpl {
     // 글 작성 (사진이 있다면)
 	public int writeBbs(FreePostDto dto, List<BbsImgVO> bbsImglist) {
 		sqlSession.insert(ns + "writeBbs", dto);
-		// System.out.println("DAO.writeBbs");
+		System.out.println(dto.toString());
 		
 		// 글 내용 DB에 추가
 		int n=0;
@@ -52,7 +53,7 @@ public class FreePostDaoImpl {
 			// 각각의 모든 img를 콘트롤러에서 set된 dto for문 돌면서 모두 추가.
 			System.out.println("multiimg + img_rel : " + (n+1));
 			sqlSession.insert(ns + "multiimg", bbsImg);
-			sqlSession.insert(ns + "img_rel");
+			sqlSession.insert(ns + "img_rel2");
 			
 			n++;
 		}
@@ -65,6 +66,7 @@ public class FreePostDaoImpl {
     
     public FpdImgDto getBbs(int bbs_seq) {
 
+    	//게시물 영역
     	sqlSession.update(ns + "increaseReadcount", bbs_seq);
     	FpdImgDto dto = new FpdImgDto();
     	
@@ -77,6 +79,18 @@ public class FreePostDaoImpl {
     	dto.setFreepostdto(fdto);
     	dto.setBbsimgvo(ivo);
     	dto.setCommentvo(cvo);
+    	
+    	
+    	// 아래는 댓글영역
+    	// 게시물 작성자
+    	MemberDto writorbbs = sqlSession.selectOne(ns + "getWitor", bbs_seq);
+    	// 댓글 작성자들
+    	List<MemberDto> cmtwriotrs = sqlSession.selectList(ns + "getCmtWritors", bbs_seq);
+    	
+    	
+    	dto.setWritor(writorbbs);
+    	dto.setCmtwritorlist(cmtwriotrs);
+    	
 
     	return dto;
     }
