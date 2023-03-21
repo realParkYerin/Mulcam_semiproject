@@ -24,7 +24,6 @@
             vertical-align: middle !important;
         }
     </style>
-
 </head>
 <body bgcolor="#e9e9e9">
 <%

@@ -14,10 +14,11 @@ MemberDto dto = (MemberDto)request.getAttribute("dto");
 	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
+
 <body>
 <div class="card mx-auto" style="width: 400px;">
   <div class="card-header text-center">
-    회원 정보 수정
+    회원 상세 정보
   </div>
   <div class="card-body">
     <form name="form1" method="post">

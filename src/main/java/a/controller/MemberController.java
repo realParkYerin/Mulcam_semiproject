@@ -154,7 +154,6 @@ public class MemberController {
 			String filepath = "../../../../spSample1/resources/memberImg/default_profile.png";
 			memDto.setImg_path(filepath);
 			
-			 
 		}
 		
 		boolean isS = memService.addMember(memDto);

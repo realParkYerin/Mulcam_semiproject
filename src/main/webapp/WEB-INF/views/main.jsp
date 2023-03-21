@@ -412,8 +412,6 @@ $(function(){
                  miniSlide3(ide3);
              });
      
-     
-     
             //미니 슬라이드 구현 함수
              function miniSlide3(ide3) {
                  $('.slid3').animate({

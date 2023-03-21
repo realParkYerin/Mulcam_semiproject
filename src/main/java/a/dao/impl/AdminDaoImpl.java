@@ -23,8 +23,6 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Autowired
 	SqlSession sqlSession;
-	
-	//로그인한 회원이 관리자인지 확인 -> 추후 수정
 
 	//회원 목록 - 조회
 	@Override

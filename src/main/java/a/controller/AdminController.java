@@ -152,7 +152,7 @@ public class AdminController {
 	@PostMapping("admin/deleteComment.do")
 		public ModelAndView commentDelete(@RequestBody List<Long> deleteList) {
 	
-	        service.deleteComment(deleteList);
+        service.deleteComment(deleteList);
 	
 	    ModelAndView mv = new ModelAndView("redirect:/admin/commentList.do");
 	    return mv;

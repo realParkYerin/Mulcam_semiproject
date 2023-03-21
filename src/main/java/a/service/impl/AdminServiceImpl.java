@@ -24,8 +24,6 @@ import a.service.MemberService;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	AdminDao dao;
-	
-	//로그인한 회원이 관리자인지 확인
 
 	//회원목록 조회
 	@Override

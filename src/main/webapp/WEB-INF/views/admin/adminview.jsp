@@ -56,6 +56,7 @@
     </style>
   </head>
   <body>
+  
 <%
 MemberDto member = (MemberDto)session.getAttribute("login"); 
 %>

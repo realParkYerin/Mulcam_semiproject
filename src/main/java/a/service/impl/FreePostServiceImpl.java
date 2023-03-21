@@ -28,7 +28,6 @@ public class FreePostServiceImpl {
         return freePostDAO.getAllBbs(param);
     }
     
-
 	// 사진이 없다면.
 	public boolean writeBbs(FreePostDto dto) {
 		int n = freePostDAO.writeBbs(dto);

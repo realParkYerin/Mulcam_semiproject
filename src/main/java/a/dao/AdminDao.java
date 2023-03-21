@@ -35,4 +35,5 @@ public interface AdminDao {
 
 	void deleteComment(List<Long> commentId);
 	
+	
 }

@@ -12,7 +12,6 @@ import com.github.pagehelper.PageInfo;
 
 public interface AdminService {
 	
-	
 	//회원 목록 조회
 	List<MemberDto> memberList();
 	PageInfo<MemberDto> searchByMemberList(String keyword, String choice);

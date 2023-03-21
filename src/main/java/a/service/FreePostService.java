@@ -17,4 +17,5 @@ public interface FreePostService {
 	
 	List<FreePostDto> getMainBbs();
 	
+	
 }

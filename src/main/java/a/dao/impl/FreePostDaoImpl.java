@@ -32,8 +32,6 @@ public class FreePostDaoImpl {
     public int getAllBbs(BbsParam param) {
         return sqlSession.selectOne(ns + "getAllBbs", param);
     }
-    
-    
      
      
     // 글 작성 (사진이 없다면)
