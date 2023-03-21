@@ -1,5 +1,3 @@
-<%@page import="java.util.List"%>
-<%@page import="a.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
