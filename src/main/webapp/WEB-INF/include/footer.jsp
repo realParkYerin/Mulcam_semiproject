@@ -1,30 +1,19 @@
-<%@page import="a.dto.FreePostDto"%>
-<%@page import="java.util.List"%>
-<%@page import="a.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-MemberDto member = (MemberDto)session.getAttribute("login"); 
-List<FreePostDto> latestPosts = (List<FreePostDto>) request.getAttribute("bbslist");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<!-- jQuery library -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-/dXNJTm3nZz9RnA6U9a6U5X9s1K3sYx7NNmZ+STNQ/2KR3W8jGvqE9DH3MPhvv1Q" crossorigin="anonymous"></script>
-<!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-nYrOZrjK/pB0W8TWvOg21h9yOxixKjSzWq3z7+NKn0AaPOV7w/lW6ibDJcdHQCUe" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
 <title>mulcam.SemiProj_Pet MainPage</title>
 
 <!-- GOOGLE FONTS LINK -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
 <!-- css -->
 <style>
@@ -113,7 +102,6 @@ ul li a:hover {
     right: 6px;
     display: inline-block;
     margin: 0 auto;
-    font-family: Katuri, sans-serif;
     font-size: 16px;
     line-height: 24px;
     color: #a5a5a5;
@@ -229,22 +217,12 @@ ul li a:hover {
     border-radius: 12px;
     transition: 0.2 all linear;
 }
+
 /* slid_baner2 종료 */
-
-.my-table td {
-    color: #000;
-  }
-
 </style>
 
 <!-- js -->
-<script>
-$(document).ready(function() {
-    $('#navbarDropdownMenuLink').click(function() {
-      $('.dropdown-menu').toggle();
-    });
-  });
-
+<!-- <script>
 $(function(){
     $(window).scroll(function(){
         let pos = $(this).scrollTop();
@@ -412,6 +390,8 @@ $(function(){
                  miniSlide3(ide3);
              });
      
+     
+     
             //미니 슬라이드 구현 함수
              function miniSlide3(ide3) {
                  $('.slid3').animate({
@@ -420,147 +400,18 @@ $(function(){
              }
             
            })
-</script>
+</script> -->
 </head>
-
 <body>
-<!-- Header -->
- <header>
- <nav class="navbar navbar-light bg-light" style="background-color: #e3f2fd;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="./resources/main/animalFoot.png" alt="" width="30" height="24" class="d-inline-block align-text-bottom">
-      <h1 style="font-family: 'Lobster', cursive">Happy Tails</h1>
-    </a>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="main.do" style="font-family: 'Lobster', cursive">Main Page</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="bbslist.do" style="font-family: 'Lobster', cursive">Board</a>
-        </li>
-        
-        <li class="nav-item dropdown">
-		  <a class="nav-link dropdown-toggle" href="memberUpdate.do" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: 'Lobster', cursive">
-		    MyPage
-		  </a>
-		  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="memberUpdate.do">회원정보 수정</a>
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="petUpdate.do">내 반려동물 관리</a>
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="">내 활동 관리</a>
-		    <a font-family: 'Noto Sans KR', sans-serif; class="dropdown-item" href="">로그아웃</a>
-		  </div>
-		</li>
-		
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="font-family: 'Lobster', cursive">logout</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-</div>
-</nav>
-</header>
-<!-- header 끝 -->
-
-<div>
-<ul style="display: flex;">
-		    <li><a href="main.do" style="font-family: 'Lobster', cursive">Home</a></li>
-		    <li><a href="bbslist.do" style="font-family: 'Lobster', cursive">Community</a></li>
-		    <li><a href="animalhospital.do" style="font-family: 'Lobster', cursive">Hospital</a></li>
-		    <li><a href="postmanage.do" style="font-family: 'Lobster', cursive">MY</a></li>
-		    <%if(member.getAuth()==2){
-        	%>
-        <li class="nav-item">
-          <a class="nav-link" href="admin/adminview.do" style="font-family: 'Lobster', cursive">adminPage</a>
-        </li>
-         <% }
-        %>
-</ul>
-</div>
-
-<div id="content">
-    <section id="main_banner">
-    </section>
-</div>
-
-<section class="slid_baner">
-      <div class="vanner">
-        <div class="slid_wapper">
-          <div class="tit1">
-            <span font-family: 'Noto Sans KR', sans-serif;>나의 반려동물을 자랑해주세요!</span>
-            <a href="#" class="btnMore">더보기 ></a>
-          </div>
-          <ul class="slid">
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/bird.jpg" alt="bird"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/cat.jpg" alt="cat"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/dog2.jpg" alt="dog2"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/cat3.jpg" alt="cat3"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/dog4.jpg" alt="dog4"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/dog.jpg" alt="dog"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/dog3.jpg" alt="dog3"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/rabbit.png" alt="rabbit"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/chick.jpg" alt="chick"></a></div></li>
-            <li><div class="img_slid"><a href="#"><img src="./resources/main/cat2.jpg" alt="cat2"></a></div></li>
-          </ul>
-          <p class="le"><img src="./resources/main/left.png" alt=""></p>
-          <p class="re"><img src="./resources/main/right.png" alt=""></p>
-        </div>
-      </div>
-</section>
-
-<div align="center">
- <span style="display: block;
- 		font-family: 'Noto Sans KR', sans-serif;;
-    	font-size: 24px;
-    	line-height: 36px;
-    	color: #000000;
-    	margin-bottom: 12px;">
-    	멍냥 게시판 HOT!</span>
-    	
-<table class="table table-striped my-table" style="width :900px;">
-  <tbody style="color:#000">
-    <% if (latestPosts != null) { %>
-      <% for (FreePostDto dto : latestPosts) { %>
-        <tr>
-          <td>
-            <a href="<%= request.getContextPath() %>/bbsdetail.do?bbs_seq=<%= dto.getBbs_seq() %>">
-              제목 : <%= dto.getTitle() %><br>
-              <span style="padding-right: 10px;">작성자 : <%=dto.getuser_id() %></span>
-  			  <span>좋아요 : <%=dto.getLikecount() %></span>
-            </a>
-          </td>
-        </tr>
-      <% } %>
-    <% } else { %>
-      <tr>
-        <td>최신글이 없습니다.</td>
-      </tr>
-    <% } %>
-  </tbody>
-</table>
-</div>
-
-<!-- footer -->
 <footer class="bg-light text-center text-white">
-  Grid container
   <div class="container p-4 pb-0">
   </div>
-  Grid container
 
-  Copyright
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     © 2023 Copyright:
     <a class="text-white" href="https://mdbootstrap.com/">Happy Tails</a>
   </div>
   Copyright
 </footer>
-<!-- footer 끝   -->
 </body>
 </html>
