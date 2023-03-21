@@ -17,7 +17,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-    <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
     <style type="text/css">
         .table th, .table td {
             text-align: center;
@@ -125,7 +125,7 @@
 
     <!-- 이전 버튼 -->
     <c:if test="${dto.hasPreviousPage}">
-        <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.previousPage}${searchParam}${choiceParam}">이전</a>
+        <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.prePage}${searchParam}${choiceParam}">이전</a>
     </c:if>
 
     <!-- 페이지 번호 -->
@@ -145,5 +145,9 @@
         <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.nextPage}${searchParam}${choiceParam}">다음</a>
     </c:if>
 </div>
+<p>dto.prePage: ${dto.prePage}</p>
+<p>choiceParam: ${choiceParam}</p>
+<p>searchParam: ${searchParam}</p>
+<p>dto.nextPage: ${dto.nextPage}</p>
 </body>
 </html>

@@ -204,8 +204,8 @@ public class MemberController {
 		HttpSession session = req.getSession();	
 		// 세션 전체를 무효화
 		session.invalidate();
-
-		return "main";
+		System.out.println(session.getId());
+		return "redirect:/main.do";
 	}
 	
 }

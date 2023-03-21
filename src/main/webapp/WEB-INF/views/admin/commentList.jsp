@@ -39,14 +39,14 @@
 <h2>댓글 관리</h2>
 </div>
 <div align="center" class="container">
-    <table class="table table-hover table-primary" style="width: 1300px; background-color: #f1f1f1; margin: 0 auto;">
-        <col width="100">
+    <table class="table table-hover table-primary" style="width: 1200px; background-color: #f1f1f1; margin:">
+        <col width="20">
         <col width="150">
         <col width="150">
-        <col width="150">
-        <col width="250">
-        <col width="150">
-        <col width="100">
+        <col width="200">
+        <col width="260">
+        <col width="200">
+        <col width="130">
         <tr class="bg-primary" style="color: white;">
             <th><label class="checkbox-inline"><input type="checkbox" id="ck_all"></label></th>
             <th>번호</th>
@@ -120,8 +120,9 @@ if(list == null || list.size() == 0){
             </tr>
 
             </tbody>
-
     </table>
+
+  
     <div style="display: flex; justify-content: flex-end;">
   <button id="deleteButton" class="btn btn-danger" onclick="deleteChecked();" type="button">삭제</button>
 	</div>
@@ -150,6 +151,7 @@ if(list == null || list.size() == 0){
             </table>
     </form>
 </div>
+
 
 <div class="paging">
     <c:if test="${not empty search}">
@@ -242,5 +244,6 @@ if(list == null || list.size() == 0){
         }
     }
 </script>
+</div>
 </body>
 </html>
