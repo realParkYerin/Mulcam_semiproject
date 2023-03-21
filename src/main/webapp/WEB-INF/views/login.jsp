@@ -7,8 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>로그인</title>
 <style type="text/css">
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
-
+@font-face {
+    font-family: 'Katuri';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 *{
     padding: 0;
     margin: auto;
@@ -16,11 +20,11 @@
 }
 body{
     font-size: 14px;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Katuri', sans-serif;
 }
 .login-container{
 	width: 450px;
-    height: 500px;
+    height: 450px;
     padding: 40px;
     box-sizing: border-box;
     border-radius: 20px;
@@ -45,12 +49,14 @@ body{
 }
 #login-form > input::placeholder{
     color: #787878;
+    font-family:'Katuri', sans-serif;
 }
 #login-form > button[type="submit"]{
 	width: 200px;
 	height: 40px;
     color: #fff;
     font-size: 18px;
+    font-family:'Katuri', sans-serif;
     background-color: black;
     border-radius: 3px;
     text-align: center;
@@ -80,22 +86,16 @@ body{
 </head>
 <body>
   <div class="login-container">
-    <span class="error id="msg"></span>
     <form action="loginAf.do" method="post" id="login-form">
       <h2>로그인</h2><br>
       <h4>아이디와 비밀번호를 입력하세요</h4><br>
-      	<span id="checkId"></span>
         <input type="text" id="user_id" name="user_id" placeholder="아이디"><br>
         <input type="password" id="pwd" name="pwd" placeholder="비밀번호"><br>
         <label>
           <input type="checkbox" id="save_id">&nbsp;
           <small>아이디 저장</small>
         </label>
-        <button type="submit">로그인</button>
-        <div id="find">
-			<label>아이디/비밀번호를 잊으셨나요?</label>&nbsp;&nbsp;&nbsp;&nbsp;       
-			<a href="findMember.do" class="buttonCSS">아이디/비밀번호 찾기</a>
-		</div>	
+        <button type="submit">로그인</button>	
 		<div id="regi">  	
        		<label>회원이 아니신가요?</label>&nbsp;&nbsp;&nbsp;&nbsp;       	   
        		<a href="register.do" class="buttonCSS">회원가입</a>  
@@ -128,11 +128,11 @@ window.onload = function() {
     };
     
     // 아이디 저장하기가  눌린상태에서, ID를 입력한 경우
-    var idInput = document.getElementById("ID");
+    var idInput = document.getElementById("user_id");
     
     idInput.addEventListener("keyup", function(e) {
     	if(checkId.checked){ //checked true
-        	var userLoginId = document.getElementById("ID").value;
+        	var userLoginId = document.getElementById("user_id").value;
             setCookie("userLoginId", userLoginId, 30); // 30일 동안 쿠키 보관
         }
      })

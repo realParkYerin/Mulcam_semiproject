@@ -7,7 +7,12 @@
 <title>회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <style type="text/css">
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
+@font-face {
+    font-family: 'Katuri';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Katuri.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 *{
     padding: 0;
     margin: auto;
@@ -15,11 +20,11 @@
 }
 body{
     font-size: 14px;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Katuri', sans-serif;
 }
 .regi-container{
 	width: 450px;
-    height: 900px;
+    height: 750px;
     padding: 40px;
     box-sizing: border-box;
     border-radius: 20px;
@@ -37,9 +42,10 @@ body{
     margin-bottom: 16px;
     border-radius: 6px;
     border: 1px #bebebe	solid;
+    font-family: 'Katuri', sans-serif;
 }
 #regi-form > label, #regi_user_id > label, #regi_nickname > label {
-  font-weight : bold;
+  	font-weight : bold;
 }
 #regi_user_id, #regi_nickname{
 	position: relative;
@@ -48,22 +54,25 @@ body{
 	position: absolute;
   	width: 90px;
   	height: 40px;
-  	top: 2px;
+  	top: 0;
   	bottom: 0;
   	right: 5px;
   	margin: auto 0;
   	border-radius: 6px;
   	background-color: black;
   	color: #fff;
+  	font-family: 'Katuri', sans-serif;
 }
 #regi-form > input::placeholder{
     color: #787878;
+    font-family: 'Katuri', sans-serif;
 }
 #regi-form > button[type="submit"]{
 	width: 200px;
 	height: 40px;
     color: #fff;
     font-size: 18px;
+    font-family: 'Katuri', sans-serif;
     background-color: black;
     border-radius: 3px;
     margin-top: 20px;

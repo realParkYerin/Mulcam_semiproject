@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,10 @@ import a.dto.PetDto;
 
 @Controller
 public class MemberController {
-	
-	
+		
 	@Autowired
 	MemberService memService;
-	
-	
+		
 	/* 메인화면으로 이동 */
 	@AopSkip
 	@GetMapping(value = "main.do")
@@ -58,12 +57,12 @@ public class MemberController {
 	public String register() {
 		return "register";
 	}
-	
-	// 게시판 이동(로그인 확인용 - 수정 필요)
-//	@GetMapping( value = "bbslist.do" )
-//	public String bbslist() {
-//		return "bbslist";
-//	}
+	// 동물병원 지도로 이동
+	@AopSkip
+	@GetMapping(value = "animalhospital.do")
+	public String animalhospital() {
+		return "animalhospital";
+	}
 	
 	// 아이디 중복확인
 	@AopSkip
@@ -196,6 +195,18 @@ public class MemberController {
 		model.addAttribute("login", msg);
 		
 		return "message";
+	}
+	
+	// 로그아웃 : 세션에 저장된 사용자의 정보 지우기
+	@AopSkip
+	@GetMapping(value = "logout.do")
+	public String logout(HttpServletRequest req) throws Exception{
+		
+		HttpSession session = req.getSession();	
+		// 세션 전체를 무효화
+		session.invalidate();
+
+		return "main";
 	}
 	
 }
