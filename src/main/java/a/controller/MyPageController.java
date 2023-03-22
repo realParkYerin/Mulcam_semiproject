@@ -25,6 +25,7 @@ import a.dto.FreePostDto;
 import a.dto.MemberDto;
 import a.dto.PetDto;
 import a.service.MyPageService;
+import a.util.BbsUtil;
 import a.util.PdsUtil;
 
 @Controller
@@ -83,30 +84,31 @@ public class MyPageController {
 	@PostMapping("memberUpdateAf.do")
 	public String updateAf(Model model, MemberDto dto, 
 							@RequestParam(value = "newMemImg", required = false)
-							MultipartFile newMemImg) {
-		if(!newMemImg.isEmpty()) { // 업로드한 파일이 존재
+							MultipartFile newMemImg,
+							HttpServletRequest req) {
+		if (!newMemImg.isEmpty()) { // 업로드한 파일이 존재
 			// filename 취득 : 원본 파일명
 			String filename = newMemImg.getOriginalFilename();
-			System.out.println("original: " + filename);
+			String newfilename = BbsUtil.getNewFileName(filename);
 			
 			// upload의 경로 설정(2가지 : server / folder)
 			// folder
+			// String filepath = "c:\\memberImgs";	// 일단 절대경로로 설정했습니다. tiles 배치 후 상대경로 시도해보죠.
 			
-			// TODO : 임시 절대 경로. test 시 수정 필요
-			String filepath = "C:\\Users\\ahgus\\Desktop\\multiCampus\\SemiProject\\semiProj\\src\\main\\webapp\\memberImgs\\";
-			System.out.println("fupload: " + filepath);
+			// 여기에 저장된 filepath는 저장이 된후 찾아가기 위한 DB의 경로입니다!!! 헷갈리시면 안됩니다.
+			String filepath = req.getContextPath() + "/resources/memberImg/";
+			dto.setImg_path(filepath + newfilename);	// 여기서, 우리는 컬럼이 하나로 시작해서.. 무조건 경로와 파일명을 모두 가지고 있어야합니다.
+			// memDto에 저장해놓았으니 밑에서 재할당해도 문제 X
 			
-			// 파일명을 충돌되지 않는 명칭(Date)으로 변경
-			String newfilename = PdsUtil.getNewFileName(filename);
+			// 여기에 저장된 filepath는 당장 컨트롤러에서 파일을 생성하기위한 경로입니다!!!
+			filepath = "C:\\Users\\ahgus\\Desktop\\multiCampus\\SemiProject\\semiProj\\src\\main\\webapp\\resources\\memberImg\\";
 			
-			// 변경된 파일명
-			dto.setImg_path(newfilename);
+			File file = new File(filepath + newfilename);
+			System.out.println("다음의 경로에 유저 프로필 이미지 업로드 : " + filepath + newfilename);
 			
-			File file = new File(filepath + "/" + newfilename);
 			try {
-				// 실제로 파일 생성 + 기입 = 업로드
-				FileUtils.writeByteArrayToFile(file, newMemImg.getBytes());			
-				
+				// 실제로 파일 생성 + 기입 = 업로드 (newFileName으로 변형되어 저장)
+				FileUtils.writeByteArrayToFile(file, newMemImg.getBytes());	
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
