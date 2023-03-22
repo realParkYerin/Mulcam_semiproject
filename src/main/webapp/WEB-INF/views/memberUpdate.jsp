@@ -44,6 +44,7 @@ input[type=file]::file-selector-button {
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/include/header.jsp" %>
 	<div class="container mt-3">
 		<div>
 			<ul class="nav nav-pills">
@@ -296,5 +297,6 @@ input[type=file]::file-selector-button {
 			$("#frm").submit();
 		})
 	</script>
+<%@ include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

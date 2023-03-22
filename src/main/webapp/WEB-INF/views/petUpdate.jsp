@@ -40,6 +40,7 @@ body{
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/include/header.jsp" %>
  	<script type="text/javascript"> 
  		// 저장된 펫 정보 없을 시 alert
 		<% 
@@ -173,5 +174,6 @@ body{
 			$("#frm").submit();
 		})
 	</script>
+ <%@ include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

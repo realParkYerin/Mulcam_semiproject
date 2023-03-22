@@ -24,12 +24,11 @@
 <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
 <style>
 body {
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 16px;
     color: #555;
     line-height: 1.5;
-    margin-top: 50px;
 }
 
 .container {
@@ -69,7 +68,7 @@ a, a:hover {
 </style>
 </head>
 <body>
-
+<%@ include file="/WEB-INF/include/header.jsp" %>
     <%
     List<FreePostDto> list = (List<FreePostDto>)request.getAttribute("bbslist");
     int pageBbs = (Integer)request.getAttribute("pageBbs");
@@ -89,20 +88,22 @@ a, a:hover {
 	<!-- <p><%=pageBbs  %>|<%=pageNumber %>|<%=choice %>|<%=search %><p>  -->
 	<div class="container bg-light py-4">
 		<div class="col-md-auto mx-auto">
-			<h3 class="mb-4">자유게시판</h3>
+			<!-- <h3 class="mb-4">자유게시판</h3> -->
 			<div class="card">
 				<div class="card-body">
 					<table class="table table-hover" style="text-align: center;">
-						<col width="70">
+						<col width="80">
 						<col width="600">
 						<col width="100">
 						<col width="150">
+						<col width="100">
 						<thead class="thead-dark">
 							<tr>
-								<th>번호</th>
+								<th>#</th>
 								<th>제목</th>
-								<th>조회수</th>
 								<th>작성자</th>
+								<th>공감수</th>
+								<th>조회수</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -126,21 +127,22 @@ a, a:hover {
 									<%
 									if (dto.isDel() == 0) {
 				                    	%>
-										<td>
+										<td style="text-align: left; padding-left: 50px; font-family: Arial, sans-serif; font-size: 16px;">
 											<!-- 조회수 로직은 bbsdetail과 관련된 Dao에서 추가로 서비스 호출하도록 작성하겠습니다. -->
 											<a href="bbsdetail.do?bbs_seq=<%=dto.getBbs_seq() %>">
-												<%=dto.getTitle() %>
+												<font color="#blue"><%=dto.getTitle() %><%if(dto.getCmtcount()>0){ %> (<%=dto.getCmtcount() %>)<%} %></font>
 											</a>
 										</td>
 										<%
 									} else if(dto.isDel() == 1) {
 										%>
-										<td><font color="#ff0000">*** 이 글은 삭제되었습니다 ***</font></td>
+										<td><font color="#ff0000">*** 이 글은 관리자 혹은 작성자에 의해 삭제되었습니다 ***</font></td>
 										<%
 			                		}   
 			                		%>
+			                		<td><%=dto.getuser_id() %></td>
+			                		<td><%=dto.getLikecount() %></td>
 									<td><%=dto.getReadcount() %></td>
-									<td><%=dto.getuser_id() %></td>
 								</tr>
 								<%
 			        			}
@@ -168,10 +170,11 @@ a, a:hover {
 						</div>
 						<button type="button" onclick="searchBtn()" class="btn btn-primary">검색</button>
 					</div>
-					<br>
 					<div align="center">
 						<button type="button" onclick="wrtieBtn()" class="btn btn-primary">글쓰기</button>
 					</div>
+					<br>
+
 				</div>
 			</div>
 		</div>
@@ -228,5 +231,6 @@ a, a:hover {
 	    });
 
 	</script>
+ <%@ include file="/WEB-INF/include/footer.jsp" %>
 </body>
 </html>

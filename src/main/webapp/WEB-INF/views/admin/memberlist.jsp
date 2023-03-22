@@ -17,12 +17,44 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-    <script type="text/javascript" src="./jquery/jquery.twbsPagination.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
     <style type="text/css">
         .table th, .table td {
             text-align: center;
             vertical-align: middle !important;
         }
+        
+.menu {
+  background-color: #f5f5f5;
+  padding: 10px;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.menu li:last-child {
+  margin-right: 0;
+}
+
+.menu a {
+  display: block;
+  padding: 5px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu a:hover {
+  background-color: #ddd;
+}
     </style>
 
 </head>
@@ -33,9 +65,18 @@
     String choice = (String)request.getAttribute("choice");
     String search = (String)request.getAttribute("search");
 %>
+<div class="menu" align="center">
+  <ul>
+  	<li><a href="http://localhost:8100/spSample1/main.do">메인페이지로 이동</a></li>&nbsp;&nbsp;
+    <li><a href="memberlist.do">회원 관리</a></li>&nbsp;&nbsp;
+    <li><a href="freepostList.do">게시판 관리</a></li>&nbsp;&nbsp;
+    <li><a href="commentList.do">댓글 관리</a></li>&nbsp;&nbsp;
+  </ul>
+</div>
+
 <br>
 <div style="text-align:center;">
-<h2>회원 목록</h2>
+<h2>회원 관리</h2>
 </div>
 
 <div align="center" class="panel panel-default">
@@ -115,7 +156,7 @@
             </table>
     </form>
 </div>
-<div class="paging">
+<%-- <div class="paging">
     <c:if test="${not empty search}">
         <c:set var="searchParam" value="&search=${search}"/>
     </c:if>
@@ -125,7 +166,7 @@
 
     <!-- 이전 버튼 -->
     <c:if test="${dto.hasPreviousPage}">
-        <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.previousPage}${searchParam}${choiceParam}">이전</a>
+        <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.prePage}${searchParam}${choiceParam}">이전</a>
     </c:if>
 
     <!-- 페이지 번호 -->
@@ -144,6 +185,7 @@
     <c:if test="${dto.hasNextPage}">
         <a href="${pageContext.request.contextPath}/admin/memberlist.do?page=${dto.nextPage}${searchParam}${choiceParam}">다음</a>
     </c:if>
-</div>
+</div> --%>
+<br><br>
 </body>
 </html>
