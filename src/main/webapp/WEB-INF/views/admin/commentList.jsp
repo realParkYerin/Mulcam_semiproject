@@ -23,7 +23,39 @@
             text-align: center;
             vertical-align: middle !important;
         }
-    </style>
+        .menu {
+  background-color: #f5f5f5;
+  padding: 10px;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.menu li:last-child {
+  margin-right: 0;
+}
+
+.menu a {
+  display: block;
+  padding: 5px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu a:hover {
+  background-color: #ddd;
+}
+</style>
+
 </head>
 
 <body bgcolor="#e9e9e9">
@@ -33,6 +65,14 @@
     String choice = (String)request.getAttribute("choice");
     String search = (String)request.getAttribute("search");
 %>
+<div class="menu" align="center">
+  <ul>
+  	<li><a href="http://localhost:8100/spSample1/main.do">메인페이지로 이동</a></li>&nbsp;&nbsp;
+    <li><a href="memberlist.do">회원 관리</a></li>&nbsp;&nbsp;
+    <li><a href="freepostList.do">게시판 관리</a></li>&nbsp;&nbsp;
+    <li><a href="commentList.do">댓글 관리</a></li>&nbsp;&nbsp;
+  </ul>
+</div>
 
 <br>
 <div style="text-align:center;">
@@ -40,12 +80,12 @@
 </div>
 <div align="center" class="container">
     <table class="table table-hover table-primary" style="width: 1200px; background-color: #f1f1f1; margin:">
-        <col width="20">
-        <col width="150">
-        <col width="150">
-        <col width="200">
-        <col width="260">
-        <col width="200">
+        <col width="10">
+        <col width="100">
+        <col width="100">
+        <col width="250">
+        <col width="300">
+        <col width="250">
         <col width="130">
         <tr class="bg-primary" style="color: white;">
             <th><label class="checkbox-inline"><input type="checkbox" id="ck_all"></label></th>
@@ -61,7 +101,7 @@
 if(list == null || list.size() == 0){
 	%>
             <tr>
-                <td colspan="7">등록된 회원이 없습니다.</td>
+                <td colspan="7">작성된 댓글이 없습니다.</td>
             </tr>
             <%
             } else {
@@ -92,7 +132,7 @@ if(list == null || list.size() == 0){
                 %>
                 <td>
                 	<a href="bbsdetail2.do?bbs_seq=<%=vo.getBbs_seq() %>">
-                    <font color="#ff0000">*** 이 댓글은 작성자 또는 관리자에의해 삭제되었습니다 ***</font>
+                    <font color="#ff0000">*** 이 댓글은 작성자 또는 관리자에의해 삭제되었습니다 ***<br><br><%=vo.getCmt_content() %></font>
                 </td>
                 <%
                     }
@@ -153,7 +193,7 @@ if(list == null || list.size() == 0){
 </div>
 
 
-<div class="paging">
+<%-- <div class="paging">
     <c:if test="${not empty search}">
         <c:set var="searchParam" value="&search=${search}"/>
     </c:if>
@@ -182,7 +222,8 @@ if(list == null || list.size() == 0){
     <c:if test="${dto.hasNextPage}">
         <a href="${pageContext.request.contextPath}/admin/commentList.do?page=${dto.nextPage}${searchParam}${choiceParam}">다음</a>
     </c:if>
-</div>
+</div> --%>
+<br><br>
 <script type="text/javascript">
 
     window.onload = function () {
