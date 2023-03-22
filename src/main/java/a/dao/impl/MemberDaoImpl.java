@@ -2,6 +2,8 @@ package a.dao.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,5 +56,11 @@ public class MemberDaoImpl implements MemberDao {
 	public List<FreeCommentVO> getAllComment(MemberDto dto) {
 		return session.selectList(ns + "getAllComment", dto);
 	}
+
+	@Override
+	public void logout(HttpSession session) {		
+	}
+	
+	
 	
 }

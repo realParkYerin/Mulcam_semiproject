@@ -2,6 +2,8 @@ package a.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +57,13 @@ public class MemberServiceImpl implements MemberService {
 	public List<FreeCommentVO> getAllComment(MemberDto dto) {
 		return memDao.getAllComment(dto);
 	}
+
+	@Override
+	public void logout(HttpSession session) {
+		// 세션 전체를 무효화
+		session.invalidate();
+		
+	}
+	
 	
 }

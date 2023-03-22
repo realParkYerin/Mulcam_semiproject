@@ -2,6 +2,8 @@ package a.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import a.dto.FreeCommentVO;
 import a.dto.FreePostDto;
 import a.dto.MemberDto;
@@ -29,5 +31,8 @@ public interface MemberDao {
 	
 	// 내 댓글 정보 불러오기
 	List<FreeCommentVO> getAllComment(MemberDto dto);
+	
+	// 로그아웃
+	void logout(HttpSession session);
 
 }
