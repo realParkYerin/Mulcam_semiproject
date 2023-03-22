@@ -53,7 +53,10 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#" style="font-family: 'Lobster', cursive">logout</a>
+          <a class="nav-link" href="login.do" style="font-family: 'Lobster', cursive">login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.do" style="font-family: 'Lobster', cursive">logout</a>
         </li>
     </div>
   </div>

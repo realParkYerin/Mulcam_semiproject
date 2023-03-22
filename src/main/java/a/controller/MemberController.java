@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import a.service.MemberService;
 import a.service.MyPageService;
@@ -199,13 +200,12 @@ public class MemberController {
 	// 로그아웃 : 세션에 저장된 사용자의 정보 지우기
 	@AopSkip
 	@GetMapping(value = "logout.do")
-	public String logout(HttpServletRequest req) throws Exception{
-		
-		HttpSession session = req.getSession();	
-		// 세션 전체를 무효화
-		session.invalidate();
-		System.out.println(session.getId());
-		return "redirect:/main.do";
+	public ModelAndView logout(HttpSession session){
+		System.out.println("MemberController logout " + new Date());
+		memService.logout(session);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("login");
+		return mav;
 	}
 	
 }
