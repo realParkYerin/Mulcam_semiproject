@@ -137,7 +137,7 @@ input[type=file]::file-selector-button {
 									<tr>
 										<th scope="row">프로필 사진</th>
 										<td>
-											<img src="<%=request.getContextPath() + "/memberImgs/" + login.getImg_path()%>" id="memberImg" width="100px">
+											<img src="<%=login.getImg_path()%>" id="memberImg" width="100px">
 											<input type="file" id="newMemImg" name="newMemImg" accept="image/*">
 										</td>
 									</tr>

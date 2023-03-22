@@ -48,9 +48,11 @@
 	</select>
 	
 	<delete id="delMember" parameterType="a.dto.MemberDto">
+		set	foreign_key_checks=0;
 		delete from FreeComment where user_id=#{user_id};
 		delete from FreePost where user_id=#{user_id};
 		delete from Pet where user_id=#{user_id};
 		delete from Member2 where user_id=#{user_id};
+		set foreign_key_checks=1;
 	</delete>
 </mapper>

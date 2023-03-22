@@ -474,7 +474,7 @@ $(function(){
 		    <li><a href="main.do" style="font-family: 'Lobster', cursive">Home</a></li>
 		    <li><a href="bbslist.do" style="font-family: 'Lobster', cursive">Community</a></li>
 		    <li><a href="animalhospital.do" style="font-family: 'Lobster', cursive">Hospital</a></li>
-		    <li><a href="postmanage.do" style="font-family: 'Lobster', cursive">MY</a></li>
+		    <li><a href="postManage.do" style="font-family: 'Lobster', cursive">MY</a></li>
 		    <%if(member.getAuth()==2){
         	%>
         <li class="nav-item">
